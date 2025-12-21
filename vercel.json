@@ -4,7 +4,7 @@
         {
             "src": "garantii/wsgi.py",
             "use": "@vercel/python",
-            "config": { "maxLambdaSize": "15mb", "runtime": "python3.15" }
+            "config": { "maxLambdaSize": "15mb", "runtime": "python3.14.0" }
         }
     ],
     "routes": [
