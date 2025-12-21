@@ -1,0 +1,3084 @@
+<!doctype html>
+<html lang="zxx">
+{% load static %}
+<head>
+    <!-- metas -->
+    <meta charset="utf-8">
+    <meta name="author" content="pxdraft">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
+    <meta name="keywords" content="Garantii - Buy confidently sell securely">
+    <meta name="description" content="Garantii -online fraud is on the rise DON'T BE THE NEXT VICTIM. protect your online payment with GARANTII">
+    <!-- title -->
+    <title>Protect your online payment with GARANTII</title>
+    <!-- Favicon -->
+    <link rel="shortcut icon" type="image/x-icon" href="{% static 'assets/img/favicon.ico' %}">
+    <link rel="shortcut icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicon-16x16.png' %}">
+    <link rel="shortcut icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicon-32x32.png' %}">
+    <link rel="apple-touch-icon" href="{% static 'assets/img/apple-touch-icon.' %}">
+    <link rel="manifest" href="{% static 'assets/img/site.webmanifest' %}">
+
+    <!-- CSS Template -->
+    <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
+    <style>
+    #pageBlocker {
+        position: fixed;
+        inset: 0;
+        background: rgba(0,0,0,0.3);
+        z-index: 2000;
+        display: none;
+    }
+    </style>
+
+
+</head>
+
+<body>
+    <!-- Skippy & Prload -->
+     <div id="pageBlocker"></div>
+    <!-- skippy -->
+    <a id="skippy" class="skippy visually-hidden-focusable overflow-hidden" href="#content">
+        <div class="container"><span class="u-skiplink-text">Skip to main content</span></div>
+    </a>
+    <!-- End skippy -->
+    <!-- Preload -->
+    <div id="loading" class="loading-preloader">
+        <div class="spinner-border text-primary" role="status"><span class="visually-hidden">Loading...</span></div>
+    </div>
+
+    
+    <!-- End Preload -->
+    <!-- Edn Skippy & Prload -->
+    <!-- Size Chart  -->
+    <!-- Ask Form -->
+    <div class="modal-askform-view modal fade" id="px_ask_modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Ask about product</h4><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body">
+                    <form>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3"><label class="form-label">Your Name</label> <input type="text" class="form-control" placeholder="Name"></div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3"><label class="form-label">Email address</label> <input type="email" class="form-control" placeholder="E-mail"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3"><label class="form-label" for="exampleInputEmail1">Subject</label> <input type="text" class="form-control" placeholder="Subject"></div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="mb-3"><label class="form-label" for="exampleInputEmail1">Your Message</label> <textarea class="form-control" rows="5" placeholder="Your Message"></textarea></div>
+                            </div>
+                        </div>
+                        <div class=""><button type="submit" class="btn btn-primary">Send Message</button></div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Ask Form -->
+    <!-- Header Search -->
+    <div class="px-search-full collapse bg-body p-3 position-fixed w-100 top-0" id="search-open">
+        <div class="container position-relative">
+            <div class="row vh-100 justify-content-center">
+                <div class="col-lg-8 pt-12">
+                    <h2 class="h1 mb-4"><span class="d-block">Search</span></h2>
+                    <form class="position-relative w-100">
+                        <div class="mb-3 input-group">
+                            <!-- Search input --><input class="form-control shadow-none" type="text" name="search" placeholder="What are you looking for?">
+                            <!-- Search button --><button type="button" class="btn btn-primary shadow-none"><i class="fi-search"></i></button></div>
+                    </form>
+                    <div class="row pt-3">
+                        <div class="col-6 col-lg-4"><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Search Results List </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Search Results Grid </a><a class="nav-link px-0 py-1"
+                                href="#"><i class="bi-chevron-right me-1"></i> About </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Services </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Invoice</a></div>
+                        <div
+                            class="col-6 col-lg-4"><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Profile </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> User Contacts </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Reviews </a>
+                            <a
+                                class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Settings</a>
+                    </div>
+                </div>
+            </div>
+            <!-- Search button close START --><a class="search-close" data-bs-toggle="collapse" href="javascript:void(0)" data-bs-target="#search-open" aria-expanded="true"><i class="bi bi-x p-0 lh-1"></i> </a>
+            <!-- Search button close END -->
+        </div>
+    </div>
+    </div>
+    <!-- End Header Search -->
+    <!-- Header Side Search -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="header_search_popup" aria-labelledby="header_search_popupLabel">
+        <div class="offcanvas-header border-bottom">
+            <h5 class="offcanvas-title" id="header_search_popupLabel">Search</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
+        <div class="offcanvas-body">
+            <form class="position-relative w-100">
+                <div class="input-group">
+                    <!-- Search input --><input class="form-control shadow-none" type="text" name="search" placeholder="What are you looking for?">
+                    <!-- Search button --><button type="button" class="btn btn-primary shadow-none"><i class="fi-search"></i></button></div>
+            </form>
+            <div class="pt-3">
+                <div class="nav tag-cloud"><a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Design</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Development</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode"
+                        href="#">Travel</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Web Design</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Marketing</a>                    <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Research</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Managment</a></div>
+            </div>
+        </div>
+    </div>
+    <!-- End Header Side Search -->
+
+    <!-- Feedback / Complaint Modal -->
+    <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="feedbackModalLabel">Send Feedback / Report a Complaint</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+            <form id="feedbackForm">
+            <!-- Hidden logged-in user id -->
+            <input type="hidden" name="user_id" id="feedbackUserId" value="">
+
+            <!-- Category select -->
+            <div class="mb-3">
+                <label for="feedbackCategory" class="form-label">Category</label>
+                <select class="form-select" id="feedbackCategory" name="category" required>
+                <option value="" disabled selected>Select a category</option>
+                <option value="staff">Staff</option>
+                <option value="product">Product</option>
+                <option value="website">Website</option>
+                <option value="payment">Payment</option>
+                <option value="other">Other</option>
+                </select>
+            </div>
+
+            <!-- Message textarea -->
+            <div class="mb-3">
+                <label for="feedbackMessage" class="form-label">Your Message</label>
+                <textarea class="form-control" id="feedbackMessage" name="message" rows="4" placeholder="Write your feedback or complaint here..." required></textarea>
+            </div>
+
+            <!-- Submit button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary">Submit Feedback</button>
+            </div>
+            </form>
+
+        </div>
+
+        </div>
+    </div>
+    </div>
+
+    <!-- Mini Cart  -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalMiniCart" aria-labelledby="modalMiniCartLabel">
+        <div class="offcanvas-header border-bottom">
+            <h6 class="offcanvas-title" id="modalMiniCartLabel">Your Cart (2)</h6><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
+        <div class="offcanvas-body">
+            <ul class="list-unstyled m-0 p-0">
+                <li class="py-2">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <!-- Image --><a href="#"><img class="img-fluid border" src="../../assets/img/fashion/product-x-1.jpg" alt="..."></a></div>
+                        <div class="col-8">
+                            <!-- Title -->
+                            <p class="mb-2"><a class="text-mode fw-500" href="#">Cotton floral print Dress</a> <span class="m-0 text-muted w-100 d-block">$40.00</span></p>
+                            <!--Footer -->
+                            <div class="d-flex align-items-center">
+                                <!-- Select --><select class="form-select form-select-sm w-auto"><option value="1">1</option><option value="1">2</option><option value="1">3</option></select>
+                                <!-- Remove --><a class="small text-mode ms-auto" href="#!"><i class="bi bi-x"></i> Remove</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="py-2">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <!-- Image --><a href="#"><img class="img-fluid border" src="../../assets/img/fashion/product-x-1.jpg" alt="..."></a></div>
+                        <div class="col-8">
+                            <!-- Title -->
+                            <p class="mb-2"><a class="text-mode fw-500" href="#">Cotton floral print Dress</a> <span class="m-0 text-muted w-100 d-block">$40.00</span></p>
+                            <!--Footer -->
+                            <div class="d-flex align-items-center">
+                                <!-- Select --><select class="form-select form-select-sm w-auto"><option value="1">1</option><option value="1">2</option><option value="1">3</option></select>
+                                <!-- Remove --><a class="small text-mode ms-auto" href="#!"><i class="bi bi-x"></i> Remove</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="py-2">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <!-- Image --><a href="#"><img class="img-fluid border" src="../../assets/img/fashion/product-x-1.jpg" alt="..."></a></div>
+                        <div class="col-8">
+                            <!-- Title -->
+                            <p class="mb-2"><a class="text-mode fw-500" href="#">Cotton floral print Dress</a> <span class="m-0 text-muted w-100 d-block">$40.00</span></p>
+                            <!--Footer -->
+                            <div class="d-flex align-items-center">
+                                <!-- Select --><select class="form-select form-select-sm w-auto"><option value="1">1</option><option value="1">2</option><option value="1">3</option></select>
+                                <!-- Remove --><a class="small text-mode ms-auto" href="#!"><i class="bi bi-x"></i> Remove</a></div>
+                        </div>
+                    </div>
+                </li>
+                <li class="py-2">
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <!-- Image --><a href="#"><img class="img-fluid border" src="../../assets/img/fashion/product-x-1.jpg" alt="..."></a></div>
+                        <div class="col-8">
+                            <!-- Title -->
+                            <p class="mb-2"><a class="text-mode fw-500" href="#">Cotton floral print Dress</a> <span class="m-0 text-muted w-100 d-block">$40.00</span></p>
+                            <!--Footer -->
+                            <div class="d-flex align-items-center">
+                                <!-- Select --><select class="form-select form-select-sm w-auto"><option value="1">1</option><option value="1">2</option><option value="1">3</option></select>
+                                <!-- Remove --><a class="small text-mode ms-auto" href="#!"><i class="bi bi-x"></i> Remove</a></div>
+                        </div>
+                    </div>
+                </li>
+            </ul>
+        </div>
+        <div class="offcanvas-footer border-top p-3">
+            <div class="row g-0 pt-2 mt-2 border-top fw-bold text-mode">
+                <div class="col-8"><span class="text-mode">Subtotal</span></div>
+                <div class="col-4 text-end"><span class="ml-auto">$89.00</span></div>
+            </div>
+        </div>
+    </div>
+    <!-- End Mini Cart  -->
+    <!-- Escrow Transactions Offcanvas (matches Mini Cart style, unique id to avoid clash) -->
+    
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalEscrowList" aria-labelledby="modalEscrowListLabel">
+        <div class="offcanvas-header border-bottom">
+            <h6 class="offcanvas-title d-flex align-items-center" id="modalEscrowListLabel">
+            <span><b id="escrowTransactionTittle">Garantii </b> Escrow Transactions</span>
+            <small class="ms-2 text-muted" id="escrowCount">(0)</small>
+            </h6>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            <div class="mb-3">
+            <div class="input-group input-group-sm">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input id="escrowSearchInput" type="search" class="form-control form-control-sm" placeholder="Search by order id, receiver, sender, phone..." aria-label="Search escrow transactions">
+            </div>
+            </div>
+
+            <div class="row g-2 mb-3">
+            <div class="col-6">
+                <select id="escrowFilterType" class="form-select form-select-sm" aria-label="Filter by type">
+                <option value="ALL">All (sent & received)</option>
+                <option value="SENT">Sent by me</option>
+                <option value="RECEIVED">Received by me</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <select id="escrowStatusFilter" class="form-select form-select-sm" aria-label="Filter by status">
+                <option value="ALL">All statuses</option>
+                <option value="HELD">Held</option>
+                <option value="RELEASE_REQUESTED">Release Requested</option>
+                <option value="RELEASED">Released</option>
+                <option value="REFUNDED">Refunded</option>
+                <option value="REVERSE_REQUESTED">Reverse Requested</option>
+                <option value="REVERSED">Reversed</option>
+                </select>
+            </div>
+            <div class="col-6">
+                <select id="escrowSortBy" class="form-select form-select-sm" aria-label="Sort transactions">
+                <option value="created_desc">Newest first</option>
+                <option value="created_asc">Oldest first</option>
+                <option value="amount_desc">Amount (high → low)</option>
+                <option value="amount_asc">Amount (low → high)</option>
+                <option value="status">Status (A → Z)</option>
+                </select>
+            </div>
+            <div class="col-6 d-flex align-items-center">
+                <button id="escrowClearFilters" type="button" class="btn btn-sm btn-outline-secondary ms-auto">Clear Filters</button>
+            </div>
+            </div>
+            
+            <div class="loading text-center p-3 d-none">
+                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
+
+            <div class="list-unstyled m-0 p-0" id="escrowList">
+            </div>
+
+        </div>
+
+        <div class="offcanvas-footer border-top p-3">
+            <div class="row g-0 fw-bold text-mode align-items-center">
+            <div class="col-8"><span>Total value (filtered)</span></div>
+            <div class="col-4 text-end"><span id="escrowTotalValue">KES 0.00</span></div>
+            </div>
+            <div class="row g-0 mt-2 small text-muted">
+            <div class="col-12">Tip: type to search; use filters to narrow down by status or direction.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Transactions Offcanvas (unique IDs – no clash with Escrow panel) -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalPaymentList" aria-labelledby="modalPaymentListLabel">
+        <div class="offcanvas-header border-bottom">
+            <h6 class="offcanvas-title d-flex align-items-center" id="modalPaymentListLabel">
+                <span><b id="paymentTransactionTittle">Garantii </b> Wallet Payment Transactions</span>
+                <small class="ms-2 text-muted" id="paymentCount">(0)</small>
+            </h6>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+
+            <!-- Search -->
+            <div class="mb-3">
+                <div class="input-group input-group-sm">
+                    <span class="input-group-text"><i class="bi bi-search"></i></span>
+                    <input id="paymentSearchInput" type="search"
+                        class="form-control form-control-sm"
+                        placeholder="Search by trans id, phone, provider..."
+                        aria-label="Search payment transactions">
+                </div>
+            </div>
+
+            <!-- Filters -->
+            <div class="row g-2 mb-3">
+
+                <div class="col-6">
+                    <!-- Filter by type -->
+                    <select id="paymentFilterType" class="form-select form-select-sm">
+                        <option value="ALL">All types</option>
+                        <option value="DEPOSIT">Deposits</option>
+                        <option value="WITHDRAWAL">Withdrawals</option>
+                    </select>
+                </div>
+
+                <div class="col-6">
+                    <!-- Filter by status -->
+                    <select id="paymentStatusFilter" class="form-select form-select-sm">
+                        <option value="ALL">All statuses</option>
+                        <option value="PENDING">Pending</option>
+                        <option value="SUCCESS">Success</option>
+                        <option value="FAILED">Failed</option>
+                    </select>
+                </div>
+
+                <div class="col-6">
+                    <!-- Sort -->
+                    <select id="paymentSortBy" class="form-select form-select-sm">
+                        <option value="created_desc">Newest first</option>
+                        <option value="created_asc">Oldest first</option>
+                        <option value="amount_desc">Amount (high → low)</option>
+                        <option value="amount_asc">Amount (low → high)</option>
+                        <option value="status">Status (A → Z)</option>
+                    </select>
+                </div>
+
+                <div class="col-6 d-flex align-items-center">
+                    <!-- Clear filters -->
+                    <button id="paymentClearFilters" type="button" class="btn btn-sm ms-auto">Clear</button>
+                </div>
+            </div>
+
+            <!-- Payment transactions list -->
+            <ul class="list-unstyled m-0 p-0" id="paymentList">
+
+                <!-- Example template (JS will replace this) -->
+                <li class="py-2 payment-item"
+                    data-type="DEPOSIT"
+                    data-amount="500.00"
+                    data-status="SUCCESS"
+                    data-phone="254712345678"
+                    data-provider="MPESA">
+
+                    <div class="row align-items-center">
+                        <div class="col-4">
+                            <!-- Icon -->
+                            <div class="border d-flex align-items-center justify-content-center" style="height:56px;">
+                                <i class="bi bi-credit-card fs-4"></i>
+                            </div>
+                        </div>
+
+                        <div class="col-8">
+                            <p class="mb-1">
+                                <a href="#" class="text-mode fw-500 payment-title">
+                                    DEPOSIT – TXN123456
+                                </a>
+                                <span class="d-block text-muted small">
+                                    MPESA — +254712345678
+                                </span>
+                            </p>
+
+                            <div class="d-flex align-items-center">
+                                <small class="text-mode fw-bold">KES <span class="payment-amount">500.00</span></small>
+                                <small class="ms-auto text-muted small payment-created">2025-11-24</small>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+            </ul>
+        </div>
+
+        <!-- Footer -->
+        <div class="offcanvas-footer border-top p-3">
+            <div class="row g-0 fw-bold text-mode align-items-center">
+                <div class="col-8"><span>Total value (filtered)</span></div>
+                <div class="col-4 text-end"><span id="paymentTotalValue">KES 0.00</span></div>
+            </div>
+
+            <div class="row g-0 mt-2 small text-muted">
+                <div class="col-12">Tip: search by phone, provider or transaction ID.</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Testimonial Modal Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalTestimonial" aria-labelledby="modalTestimonialLabel">
+        <div class="offcanvas-header border-bottom">
+            <h6 class="offcanvas-title d-flex align-items-center" id="modalTestimonialLabel">
+                <span>Customer Testimonials</span>
+            </h6>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body d-flex flex-column justify-content-center align-items-center">
+
+            <!-- Carousel -->
+            <div id="testimonialCarousel" class="carousel slide w-100" data-bs-ride="carousel">
+                <div class="carousel-inner">
+
+                    <!-- Example testimonial 1 -->
+                    <div class="carousel-item active text-center">
+                        <img src="https://via.placeholder.com/80" class="rounded-circle mb-3" alt="Customer photo">
+                        <p class="mb-2 fst-italic">"Garantii kept my payment safe and the delivery was super fast. Highly recommend!"</p>
+                        <h6 class="fw-bold mb-0">Jane K.</h6>
+                    </div>
+                    
+
+                </div>
+
+                <!-- Carousel controls -->
+                <button class="carousel-control-prev" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon  rounded-circle p-2" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#testimonialCarousel" data-bs-slide="next">
+                    <span class="carousel-control-next-icon rounded-circle p-2" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
+
+        </div>
+
+        <!-- Optional Footer -->
+        <div class="offcanvas-footer border-top p-3 text-center">
+            <small class="text-muted">Swipe or click arrows to see more testimonials</small>
+            <div class="mt-2">
+                <a href="#" data-bs-toggle="modal" data-bs-target="#modalAddTestimonial" class="text-primary fw-bold">
+                    + Add your testimonial
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <!-- add testimonial modal  -->
+    <div class="modal fade" id="modalAddTestimonial">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary">
+                    <div class="modal-title p-3">
+                        <h5 class="m-0 text-white">Add Your Testimonial</h5>
+                        <p class="m-0 text-white">Share your experience with Garantii</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="w-100 p-3">
+
+                        <form id="testimonialForm" enctype="multipart/form-data">
+
+                            <div class="mb-3">
+                                <label class="form-label">Message</label>
+                                <textarea class="form-control" id="testimonialMessage" rows="3" required></textarea>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label">Screenshot / Image (optional)</label>
+                                <input type="file" class="form-control" id="testimonialImage" accept="image/*">
+                            </div>
+
+                            <div id="testimonialStatus" style="display:none;" class="alert"></div>
+
+                            <div class="text-center mb-3">
+                                <div id="testimonialLoading" class="spinner-border" style="display:none; width:2rem; height:2rem;"></div>
+                            </div>
+
+                            <button type="submit" class="btn btn-primary w-100">Submit Testimonial</button>
+
+                        </form>
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- submit fedback or complint modal -->
+    <!-- Feedback & Complaint Modal -->
+    <div class="modal fade" id="modalFeedbackAndComplaint">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <!-- Modal Header -->
+                <div class="modal-header bg-primary">
+                    <div class="modal-title p-3">
+                        <h5 class="m-0 text-white">Submit Feedback / Complaint</h5>
+                        <p class="m-0 text-white">We value your feedback and complaints</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <!-- Modal Body -->
+                <div class="modal-body">
+                    <form id="feedbackAndComplaintForm" enctype="multipart/form-data">
+
+                        <!-- Feedback Type -->
+                        <div class="mb-3">
+                            <label class="form-label">Type</label>
+                            <select id="feedbackAndComplaintType" class="form-control" required>
+                                <option value="FEEDBACK">General Feedback</option>
+                                <option value="COMPLAINT">Complaint / Issue</option>
+                            </select>
+                        </div>
+
+                        <!-- Message -->
+                        <div class="mb-3">
+                            <label class="form-label">Message</label>
+                            <textarea id="feedbackAndComplaintMessage" class="form-control" rows="3" required></textarea>
+                        </div>
+
+                        <!-- Optional Image -->
+                        <div class="mb-3">
+                            <label class="form-label">Upload Image (optional)</label>
+                            <input type="file" id="feedbackAndComplaintImage" class="form-control" accept="image/*">
+                        </div>
+
+                        <!-- Status Alert -->
+                        <div id="feedbackAndComplaintStatus" style="display:none;" class="alert"></div>
+
+                        <!-- Spinner -->
+                        <div class="text-center mb-3">
+                            <div id="feedbackAndComplaintLoading" class="spinner-border" style="display:none; width:2rem; height:2rem;"></div>
+                        </div>
+
+                        <!-- Submit Button -->
+                        <button class="btn btn-primary w-100" type="submit">Submit</button>
+
+                    </form>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- save infor modal  -->
+    <div class="modal fade" id="modalAddEscrowInfo">
+        <div class="modal-dialog">
+            <form class="modal-content" onsubmit="event.preventDefault(); submitEscrowInfo()"> 
+                <div class="modal-body">
+                    <textarea id="modalAddEscrowInfoText" class="form-control" name="extra_info" placeholder="Add reason"></textarea>
+                </div>
+                <div class="modal-footer">
+                    <button type="submit" class="btn btn-primary">Save Info</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Transaction Fees Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalTransactionFees" aria-labelledby="modalTransactionFeesLabel">
+        <div class="offcanvas-header border-bottom">
+            <h6 class="offcanvas-title" id="modalTransactionFeesLabel">Transaction Fees</h6>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body">
+            <div class="table-responsive">
+                <table class="table table-sm table-bordered text-center align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Transaction Type</th>
+                            <th>Amount</th>
+                            <th>Our Fee (0.1%)</th>
+                            <th>MPESA Fee</th>
+                            <th>Total Fee</th>
+                            <th>Notes</th>
+                        </tr>
+                    </thead>
+                    <tbody id="transactionFeesList">
+                        <tr><td>Withdrawal</td><td>KES 25</td><td>KES 0.025</td><td>KES 0</td><td>KES 0.025</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 75</td><td>KES 0.075</td><td>KES 0</td><td>KES 0.075</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 300</td><td>KES 0.3</td><td>KES 5</td><td>KES 5.3</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 750</td><td>KES 0.75</td><td>KES 5</td><td>KES 5.75</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 1,250</td><td>KES 1.25</td><td>KES 5</td><td>KES 6.25</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 2,000</td><td>KES 2</td><td>KES 9</td><td>KES 11</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 3,000</td><td>KES 3</td><td>KES 9</td><td>KES 12</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 4,250</td><td>KES 4.25</td><td>KES 9</td><td>KES 13.25</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 6,250</td><td>KES 6.25</td><td>KES 11</td><td>KES 17.25</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 8,750</td><td>KES 8.75</td><td>KES 11</td><td>KES 19.75</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 12,500</td><td>KES 12.5</td><td>KES 11</td><td>KES 23.5</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 17,500</td><td>KES 17.5</td><td>KES 11</td><td>KES 28.5</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 22,500</td><td>KES 22.5</td><td>KES 13</td><td>KES 35.5</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 27,500</td><td>KES 27.5</td><td>KES 13</td><td>KES 40.5</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 32,500</td><td>KES 32.5</td><td>KES 13</td><td>KES 45.5</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 37,500</td><td>KES 37.5</td><td>KES 13</td><td>KES 50.5</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 42,500</td><td>KES 42.5</td><td>KES 13</td><td>KES 55.5</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 47,500</td><td>KES 47.5</td><td>KES 13</td><td>KES 60.5</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 60,000</td><td>KES 60</td><td>KES 13</td><td>KES 73</td><td>B2C Bank charges included</td></tr>
+                        <tr><td>Withdrawal</td><td>KES 160,000</td><td>KES 160</td><td>KES 13</td><td>KES 173</td><td>B2C Bank charges included</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <small class="text-muted">Fees are updated regularly and may change based on provider rates.</small>
+        </div>
+    </div>
+
+
+    <!-- Policies & Conditions Offcanvas -->
+    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalPolicies" aria-labelledby="modalPoliciesLabel">
+        <div class="offcanvas-header border-bottom">
+            <h6 class="offcanvas-title" id="modalPoliciesLabel">Policies & Terms</h6>
+            <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+        </div>
+
+        <div class="offcanvas-body overflow-auto" style="max-height: 80vh; line-height: 1.6; font-size: 0.95rem;">
+
+            <div style="white-space: normal;">
+                
+                <h4 class="mt-3">GARANTII — TERMS & CONDITIONS</h4>
+                <p><strong>Last Updated:</strong> 16-12-2025</p>
+
+                <p>These Terms and Conditions (“Terms”) govern your access to and use of the Garantii escrow payment platform (“Garantii”, “we”, “our”, or “us”). By creating an account, initiating a transaction, or using any part of our services, you (“User”, “Customer”, “Seller”, “Buyer”) agree to these Terms.</p>
+                <p>If you do not agree to these Terms, you must immediately discontinue use of our platform.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">1. DEFINITIONS</h5>
+                <p><strong>“Escrow Service”</strong> – A payment protection service where Garantii temporarily holds funds on behalf of a Buyer until the Buyer confirms receipt of goods or services.</p>
+                <p><strong>“Buyer/Customer”</strong> – A user who purchases goods/services and sends payment into escrow.</p>
+                <p><strong>“Seller”</strong> – A user who provides goods/services and receives payment from escrow once conditions are met.</p>
+                <p><strong>“User”</strong> – Any person using the Garantii platform, including Buyers and Sellers.</p>
+                <p><strong>“Transaction”</strong> – A payment initiated by a Buyer to a Seller through the Garantii platform.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">2. NATURE OF SERVICE</h5>
+                <p>Garantii is an independent escrow and payment facilitation platform, not a bank, financial institution, or marketplace. We do not own, inspect, verify, or guarantee the goods or services exchanged between Users. Our responsibility is strictly to hold funds securely and release them according to these Terms.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">3. USER ELIGIBILITY</h5>
+                <p>Users must be at least 18 years old and legally able to enter binding agreements. Users must provide accurate personal information including legal name, phone number, email, and identification when required. Accounts with false information may be suspended or terminated.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">4. HOW THE ESCROW PROCESS WORKS</h5>
+                <ul>
+                    <li><strong>Step 1 – Payment:</strong> Buyer deposits funds into escrow.</li>
+                    <li><strong>Step 2 – Notification:</strong> Seller is notified to deliver the product/service.</li>
+                    <li><strong>Step 3 – Confirmation:</strong> Buyer confirms receipt.</li>
+                    <li><strong>Step 4 – Release:</strong> Funds are released to the seller.</li>
+                    <li><strong>Step 5 – Disputes:</strong> Funds remain in escrow until resolved.</li>
+                </ul>
+
+                <hr>
+
+                <h5 class="fw-bold">5. BUYER RESPONSIBILITIES</h5>
+                <ul>
+                    <li>Confirm product receipt within the specified timeframe.</li>
+                    <li>Provide accurate delivery & contact information.</li>
+                    <li>Act in good faith.</li>
+                    <li>Understand that failure to confirm may result in automatic release of funds to the Seller.</li>
+                </ul>
+
+                <hr>
+
+                <h5 class="fw-bold">6. SELLER RESPONSIBILITIES</h5>
+                <ul>
+                    <li>Deliver goods/services exactly as described.</li>
+                    <li>Provide proof of delivery when required.</li>
+                    <li>Respond to disputes promptly.</li>
+                    <li>Understand that mismatched delivery may result in refund.</li>
+                </ul>
+
+                <hr>
+
+                <h5 class="fw-bold">7. FEES</h5>
+                <p>Garantii may charge service or withdrawal fees. Fees are shown during each transaction. Continued use after updates means you accept new fees.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">8. DISPUTE RESOLUTION</h5>
+                <p>Funds remain in escrow until the dispute is resolved. Both parties must provide evidence. Garantii will review information and make a fair, final determination. If disagreement persists, arbitration or Kenyan courts may be used.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">9. REFUNDS</h5>
+                <ul>
+                    <li>Seller fails to deliver</li>
+                    <li>Product significantly differs from description</li>
+                    <li>Both parties agree to cancel</li>
+                </ul>
+                <p>Refunds may take 3–7 business days depending on banks or mobile money providers.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">10. PROHIBITED ACTIVITIES</h5>
+                <ul>
+                    <li>Illegal goods/services</li>
+                    <li>Fraudulent transactions</li>
+                    <li>Money laundering</li>
+                    <li>Identity falsification</li>
+                    <li>Circumventing the escrow system</li>
+                </ul>
+
+                <hr>
+
+                <h5 class="fw-bold">11. LIMITATION OF LIABILITY</h5>
+                <p>Garantii is not responsible for product quality, delays, or third-party payment failures. Total liability is limited to the amount of fees paid.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">12. PRIVACY & DATA PROTECTION</h5>
+                <p>We comply with the Kenya Data Protection Act. Data is collected only for transaction and security purposes and is never sold.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">13. ACCOUNT SUSPENSION & TERMINATION</h5>
+                <p>Accounts may be suspended for fraud, violations, legal reasons, or harm to users/platform.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">14. CHANGES TO TERMS</h5>
+                <p>Updates may occur at any time. Continued use means acceptance.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">15. GOVERNING LAW</h5>
+                <p>These Terms follow Kenyan law including the Consumer Protection Act and the Data Protection Act.</p>
+
+                <hr>
+
+                <h5 class="fw-bold">16. CONTACT INFORMATION</h5>
+                <p>Email: garantii37@gmail.com<br>Phone: 0706420043<br>Address: 4th floor Delta Corner, Westland</p>
+
+                <hr>
+
+                <h5 class="fw-bold">17. USER AGREEMENT</h5>
+                <p><strong>By using the Garantii platform, you agree to these Terms and Conditions.</strong></p>
+
+            </div>
+
+            <!-- KEEP YOUR ORIGINAL PLACEHOLDER CONTENT -->
+            <h5 class="fw-bold mt-4">Privacy Policy</h5>
+            <p>Explain how user data is collected, stored, and used. This should be transparent and concise for user trust.</p>
+
+            <h5 class="fw-bold mt-3">Payment Policy</h5>
+            <p>Describe how payments, refunds, and transaction processing work. Highlight any escrow rules or protection guarantees.</p>
+
+        </div>
+    </div>
+
+    <!-- Withdrawal Modal -->
+    <div class="modal fade" id="withdrawalModal" tabindex="-1" aria-labelledby="withdrawalModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+
+        <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title" id="withdrawalModalLabel">Withdraw Funds</h5>
+            <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+
+        <div class="modal-body">
+
+            <!-- Customer Balance Display -->
+            <div class="mb-3 text-center">
+            <p class="mb-1 fw-bold">Withdrawable Balance</p>
+            <h4 class="text-success" id="withdrawableBalance">KES 0.00</h4>
+            </div>
+
+            <!-- Withdrawal Form -->
+            <form id="withdrawalForm">
+            <!-- Hidden Customer ID -->
+            <input type="hidden" name="user_id" id="withdrawalUserId" value="">
+
+            <div class="mb-3">
+                <label for="withdrawalAmount" class="form-label">Amount to Withdraw</label>
+                <input type="number" class="form-control" id="withdrawalAmount" name="amount" placeholder="Enter amount" min="1" required>
+            </div>
+
+            <!-- Info / Alerts -->
+            <div id="withdrawalInfo" class="mb-3 text-center text-muted small">
+                Enter amount and click "Withdraw" to proceed.
+            </div>
+
+            <!-- Submit Button -->
+            <div class="d-grid">
+                <button type="submit" class="btn btn-primary" id="withdrawButton">Withdraw</button>
+            </div>
+            </form>
+
+        </div>
+        </div>
+    </div>
+    </div>
+
+    <!-- Create Wallet Modal -->
+    <div class="modal fade" id="createWalletModal">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary">
+                    <div class="modal-title p-3">
+                        <h5 class="m-0 text-white">Create Your Wallet</h5>
+                        <p class="m-0 text-white">Select wallet type and complete details.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="w-100 p-3">
+                        <form id="createWalletForm">
+
+                            <!-- Wallet Type -->
+                            <div class="mb-3">
+                                <label class="form-label">Wallet Type</label><br>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="walletType" id="personalWallet" value="personal" checked>
+                                    <label class="form-check-label" for="personalWallet">Personal Wallet</label>
+                                </div>
+
+                                <div class="form-check form-check-inline">
+                                    <input class="form-check-input" type="radio" name="walletType" id="businessWallet" value="business">
+                                    <label class="form-check-label" for="businessWallet">Business Wallet</label>
+                                </div>
+                            </div>
+
+                            <!-- Phone Number (Personal Only) -->
+                            <div class="mb-3" id="phoneNumberGroup">
+                                <label class="form-label" for="walletPhone">Phone Number</label>
+                                <input type="text" class="form-control" id="walletPhone" placeholder="07XXXXXXXX" required>
+                            </div>
+
+                            <!-- Status -->
+                            <div id="createWalletStatus" style="display:none;" class="alert"></div>
+
+                            <!-- Loader -->
+                            <div class="text-center mb-3">
+                                <div id="createWalletLoading" class="spinner-border" style="display:none; width:2rem; height:2rem;"></div>
+                            </div>
+
+                            <button id="createWalletBtn" type="submit" class="btn btn-primary w-100">
+                                Create Wallet
+                            </button>
+
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+
+    <!-- Quick View  -->
+    <div class="modal-quick-view modal fade" id="px-quick-view" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content"><button class="btn-close position-absolute end-0 top-0 me-2 mt-2 z-index-1" type="button" data-bs-dismiss="modal" aria-label="Close"></button>
+                <div class="modal-body p-3">
+                    <div class="row">
+                        <!-- Product Gallery -->
+                        <div class="col-lg-6 lightbox-gallery product-gallery"><img src="../../assets/img/fashion/product-x-1.jpg" class="img-fluid" title="" alt=""></div>
+                        <!-- End Product Gallery -->
+                        <!-- Product Details -->
+                        <div class="col-lg-6">
+                            <div class="product-detail pt-4">
+                                <div class="products-brand pb-2"><span>Brand name</span></div>
+                                <div class="products-title mb-2">
+                                    <h1 class="h4">Product Title Here</h1>
+                                </div>
+                                <div class="rating-star text small pb-4"><i class="bi bi-star-fill active"></i> <i class="bi bi-star-fill active"></i> <i class="bi bi-star-fill active"></i> <i class="bi bi-star-fill active"></i> <i class="bi bi-star"></i> <small>(4 Reviews )</small></div>
+                                <div
+                                    class="product-description">
+                                    <p>Lorem ipsum dolor sit amet, consectetur adipisic elit eiusm tempor incidid ut labore et dolore magna aliqua. Ut enim ad minim venialo quis nostrud exercitation ullamco</p>
+                            </div>
+                            <div class="product-attribute"><label class="fs-6 text-mode pb-2 fw-500">Size</label>
+                                <div class="nav-thumbs nav mb-3">
+                                    <div class="form-check radio-text form-check-inline me-2"><input class="form-check-input" type="radio" name="size3" id="xs2" checked=""> <label class="radio-text-label" for="xs2">XS</label></div>
+                                    <div class="form-check radio-text form-check-inline me-2"><input class="form-check-input" type="radio" name="size3" id="s2"> <label class="radio-text-label" for="s2">S</label></div>
+                                    <div class="form-check radio-text form-check-inline me-2"><input class="form-check-input" type="radio" name="size3" id="m2"> <label class="radio-text-label" for="m2">M</label></div>
+                                    <div class="form-check radio-text form-check-inline me-2"><input class="form-check-input" type="radio" name="size3" id="l2"> <label class="radio-text-label" for="l2">L</label></div>
+                                </div><label class="fs-6 text-mode pb-2 fw-500">Color</label>
+                                <div class="nav-thumbs nav mb-3">
+                                    <div class="form-check radio-color large form-check-inline me-2"><input class="form-check-input" type="radio" name="color1" id="color1" checked=""> <label class="radio-color-label" for="color1"><span style="background-color: #126532;"></span></label></div>
+                                    <div class="form-check radio-color large form-check-inline me-2"><input class="form-check-input" type="radio" name="color1" id="color2"> <label class="radio-color-label" for="color2"><span style="background-color: #ff9922;"></span></label></div>
+                                    <div class="form-check radio-color large form-check-inline me-2"><input class="form-check-input" type="radio" name="color1" id="color3"> <label class="radio-color-label" for="color3"><span style="background-color: #326598;"></span></label></div>
+                                    <div class="form-check radio-color large form-check-inline me-2"><input class="form-check-input" type="radio" name="color1" id="color4"> <label class="radio-color-label" for="color4"><span style="background-color: #126578;"></span></label></div>
+                                </div>
+                            </div>
+                            <div class="product-price fs-3 fw-500 mb-2"><del class="text-muted fs-6">$38.<small>50</small></del> <span class="text-primary">$28.<small>50</small></span></div>
+                            <div class="product-detail-actions d-flex flex-wrap pt-3">
+                                <div class="cart-qty me-3 mb-3">
+                                    <div class="dec qty-btn">-</div><input class="cart-qty-input form-control" type="text" name="qtybutton" value="1">
+                                    <div class="inc qty-btn">+</div>
+                                </div>
+                                <div class="cart-button mb-3 d-flex"><button class="btn btn-mode me-3"><i class="fi-shopping-cart"></i> Add to cart</button> <button class="btn btn-outline-primary me-3"><i class="fi-heart"></i></button> <button class="btn btn-outline-primary"><i class="fi-repeat"></i></button></div>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- End Product Details -->
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+    <!-- End Quick View  -->
+    <!-- Sipping Popup  -->
+    <div class="modal-shipping-view modal fade" id="px_shipping_modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Shipping Information</h4><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body">
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <ul class="mb-3">
+                        <li>Comodous in tempor ullamcorper miaculis</li>
+                        <li>Pellentesque vitae neque mollis urna mattis laoreet.</li>
+                        <li>Divamus sit amet purus justo.</li>
+                        <li>Proin molestie egestas orci ac suscipit risus posuere loremous</li>
+                    </ul>
+                    <h4 class="pt-4">Privacy Policy</h4>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                        Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <ul class="mb-5">
+                        <li>Comodous in tempor ullamcorper miaculis</li>
+                        <li>Pellentesque vitae neque mollis urna mattis laoreet.</li>
+                        <li>Divamus sit amet purus justo.</li>
+                        <li>Proin molestie egestas orci ac suscipit risus posuere loremous</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Sipping Popup  -->
+    <!-- Size Chart  -->
+    <div class="modal-size-chart modal fade" id="px_size_chart_modal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered modal-xl">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Size Chart</h4><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
+                <div class="modal-body">
+                    <table class="table mb-0">
+                        <thead>
+                            <tr class="text-mode">
+                                <th class="border-0 bg-body">US Sizes</th>
+                                <th class="border-0 bg-body">Euro Sizes</th>
+                                <th class="border-0 bg-body">UK Sizes</th>
+                                <th class="border-0 bg-body">Inches</th>
+                                <th class="border-0 bg-body">CM</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td class="">6</td>
+                                <td>39</td>
+                                <td>5.5</td>
+                                <td>9.25"</td>
+                                <td>23.5</td>
+                            </tr>
+                            <tr>
+                                <td class="">6.5</td>
+                                <td>39</td>
+                                <td>6</td>
+                                <td>9.5"</td>
+                                <td>24.1</td>
+                            </tr>
+                            <tr>
+                                <td class="">7</td>
+                                <td>40</td>
+                                <td>6.5</td>
+                                <td>9.625"</td>
+                                <td>24.4</td>
+                            </tr>
+                            <tr>
+                                <td class="">7.5</td>
+                                <td>40-41</td>
+                                <td>7</td>
+                                <td>9.75"</td>
+                                <td>24.8</td>
+                            </tr>
+                            <tr>
+                                <td class="">8</td>
+                                <td>41</td>
+                                <td>7.5</td>
+                                <td>9.9375"</td>
+                                <td>25.4</td>
+                            </tr>
+                            <tr>
+                                <td class="">8.5</td>
+                                <td>41-42</td>
+                                <td>8</td>
+                                <td>10.125"</td>
+                                <td>25.7</td>
+                            </tr>
+                            <tr>
+                                <td class="">9</td>
+                                <td>42</td>
+                                <td>8.5</td>
+                                <td>10.25"</td>
+                                <td>26</td>
+                            </tr>
+                            <tr>
+                                <td class="">9.5</td>
+                                <td>42-43</td>
+                                <td>9</td>
+                                <td>10.4375"</td>
+                                <td>26.7</td>
+                            </tr>
+                            <tr>
+                                <td class="">10</td>
+                                <td>43</td>
+                                <td>9.5</td>
+                                <td>10.5625"</td>
+                                <td>27</td>
+                            </tr>
+                            <tr>
+                                <td class="">10.5</td>
+                                <td>43-44</td>
+                                <td>10</td>
+                                <td>10.75"</td>
+                                <td>27.3</td>
+                            </tr>
+                            <tr>
+                                <td class="">11</td>
+                                <td>44</td>
+                                <td>10.5</td>
+                                <td>10.9375"</td>
+                                <td>27.9</td>
+                            </tr>
+                            <tr>
+                                <td class="">11.5</td>
+                                <td>44-45</td>
+                                <td>11</td>
+                                <td>11.125"</td>
+                                <td>28.3</td>
+                            </tr>
+                            <tr>
+                                <td class="">12</td>
+                                <td>45</td>
+                                <td>11.5</td>
+                                <td>11.25"</td>
+                                <td>28.6</td>
+                            </tr>
+                            <tr>
+                                <td class="">13</td>
+                                <td>46</td>
+                                <td>12.5</td>
+                                <td>11.5625"</td>
+                                <td>29.4</td>
+                            </tr>
+                            <tr>
+                                <td class="">14</td>
+                                <td>47</td>
+                                <td>13.5</td>
+                                <td>11.875"</td>
+                                <td>30.2</td>
+                            </tr>
+                            <tr>
+                                <td class="">15</td>
+                                <td>48</td>
+                                <td>14.5</td>
+                                <td>12.1875"</td>
+                                <td>31</td>
+                            </tr>
+                            <tr>
+                                <td class="">16</td>
+                                <td>49</td>
+                                <td>15.5</td>
+                                <td>12.5"</td>
+                                <td>31.8</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Size Chart  -->
+    
+    <!-- Login Popup  -->
+    <div class="modal fade" id="topbarlogin">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary">
+                    <div class="modal-title p-3">
+                        <h5 class="m-0 text-white">Sign in to your account!</h5>
+                        <p class="m-0 text-white">Nice to see you! Please log in with your account.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="w-100 p-3">
+
+                        <!-- Form START -->
+                        <form id="loginForm">
+
+                            <div class="mb-3">
+                                <label class="form-label" for="loginPhone">Phone Number</label>
+                                <input type="text" class="form-control" id="loginPhone" placeholder="07XXXXXXXX" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="loginPassword">Password</label>
+                                <input type="password" class="form-control" id="loginPassword" placeholder="*********" required>
+                            </div>
+
+                            <div class="mb-3 form-check">
+                                <input type="checkbox" class="form-check-input" id="keepSignedIn">
+                                <label class="form-check-label" for="keepSignedIn">Keep me signed in</label>
+                            </div>
+
+                            <!-- STATUS BOX -->
+                            <div id="loginStatus" style="display:none;" class="alert"></div>
+
+                            <!-- LOADING SPINNER -->
+                            <div class="text-center mb-3">
+                                <div id="loginLoading" class="spinner-border" style="display:none; width:2rem; height:2rem;"></div>
+                            </div>
+
+                            <button id="loginSubmitBtn" type="submit" class="btn btn-primary w-100">Login</button>
+
+                            <div class="text-center mt-3">
+                                <span class="text-muted">
+                                    Don't have an account? 
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#topbarregister" data-bs-dismiss="modal">
+                                        Register here
+                                    </a>
+                                </span>
+                            </div>
+
+                        </form>
+
+                        <!-- Form END -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+    <!-- End Login Popup  -->
+
+     <!-- Registration Modal -->
+    <div class="modal fade" id="topbarregister">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+
+                <div class="modal-header bg-primary">
+                    <div class="modal-title p-3">
+                        <h5 class="m-0 text-white">Create your account!</h5>
+                        <p class="m-0 text-white">Please fill in the form below to sign up.</p>
+                    </div>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+
+                <div class="modal-body">
+                    <div class="w-100 p-3">
+                        <!-- Form START -->
+                        <form id="registerForm">
+
+                            <div class="mb-3">
+                                <label class="form-label" for="first_name">First Name</label>
+                                <input type="text" class="form-control" id="first_name" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="last_name">Last Name</label>
+                                <input type="text" class="form-control" id="last_name" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="email">Email</label>
+                                <input type="email" class="form-control" id="email" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="phone">Phone Number</label>
+                                <input type="text" class="form-control" id="phone" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="password">Password</label>
+                                <input type="password" class="form-control" id="password" required>
+                            </div>
+
+                            <div class="mb-3">
+                                <label class="form-label" for="password2">Confirm Password</label>
+                                <input type="password" class="form-control" id="password2" required>
+                                <div id="passwordError" class="text-danger mt-1"></div>
+                            </div>
+
+                            <!-- STATUS BOX -->
+                            <div id="regStatus" style="display:none;" class="alert"></div>
+
+                            <!-- LOADING SPINNER -->
+                            <div class="text-center mb-3">
+                                <div id="regLoading" class="spinner-border"
+                                    style="display:none; width: 2rem; height: 2rem;">
+                                </div>
+                            </div>
+
+
+                            <button id="regSubmitBtn" type="submit" class="btn btn-primary w-100">
+                                Create Account
+                            </button>
+
+                            <div class="text-center mt-3">
+                                <span class="text-muted">
+                                    Already have an account?
+                                    <a href="#" data-bs-toggle="modal" data-bs-target="#topbarlogin"
+                                    data-bs-dismiss="modal">Login here</a>
+                                </span>
+                            </div>
+
+                        </form>
+                        <!-- Form END -->
+
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- 
+    ========================
+        Wrapper 
+    ========================
+    -->
+    <div class="wrapper">
+        <!-- heder height -->
+        <div class="header-height-bar"></div>
+        <!-- Header -->
+        <header class="header-main header-light header-fluid bg-mode-re header-option-5">
+            <!-- Top Header -->
+            <div class="header-top bg-primary text-white">
+                <div class="container">
+                    <p class="m-0 text-center py-2 small">online fraud is on the rise <b>DON'T BE THE NEXT VICTIM</b>. <br/>protect your online payment with <b>GARANTII</b><br/> call 0706420043</p>
+                </div>
+            </div>
+            <!-- End Top Header -->
+            <!-- Top Header -->
+            <div class="header-middle d-none d-lg-block">
+                <div class="container">
+                    <div class="row justify-content-around align-items-center">
+                        <div class="col-md-8 order-md-1 d-flex align-items-center justify-content-start">
+                            <!-- Logo --><a class="navbar-brand" href="#"><b>GARANTII</b> </a>
+                            <!-- Logo -->
+                        </div>
+                       
+                        <div class="col-md-4 order-md-1">
+                            <div class="nav flex-nowrap align-items-center justify-content-md-end header-right">
+                                <!-- Nav User-->
+                                <div class="nav-item dropdown"><a class="nav-link" href="#" role="button" id="dropdown_myaccount" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fi-user"></i></a>
+                                    <div class="dropdown-menu dropdown-menu-end mt-2 shadow"
+                                        aria-labelledby="dropdown_myaccount">
+
+                                        <a  class="login-btn dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#topbarlogin">
+                                            Login
+                                        </a>
+
+                                        <a  class="register-btn dropdown-item" href="#" data-bs-toggle="modal" data-bs-target="#topbarregister">
+                                            Register
+                                        </a>
+
+                                        <a class="logout-btn dropdown-item" style="display:none;">
+                                            <i class="fi-user"></i> Logout
+                                        </a>
+
+                                    </div>
+
+                                </div>
+                                <!-- Wishlistpayment list -->
+                                <div class="nav-item d-none d-xl-block"><a class="nav-link" href="#"  onclick="openPaymentModal()"><i class="bi bi-cash-stack"></i></a></div>
+                                <!-- escrow list -->
+                                <div class="nav-item"><a class="nav-link"  href="#" onclick="openEscrowModal()" role="button" ><i class="bi bi-shield-lock"></i></a></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Top Header -->
+            <nav class="navbar navbar-expand-lg navbar-light d-none d-lg-flex">
+                <div class="container">
+                    <!-- Menu -->
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav mx-auto">
+                            <li class="nav-item">
+                                <a href="https://jiranimall.shop/wholesale/" class="nav-link">
+                                    jirani mall
+                                </a>
+                            </li>
+                            
+                            <li class="dropdown nav-item"><a href="#" class="nav-link">My Wallets</a> <label class="px-dropdown-toggle mob-menu"></label>
+                                <ul class="walletMenu dropdown-menu left shadow-lg">
+
+                                    <!-- Wallet list will be dynamically added here -->
+                                </ul>
+                            </li>
+                        </ul>
+                    </div>
+                    <!-- End Menu -->
+                </div>
+            </nav>
+            <!-- Mobile Menu -->
+            <div class="mobile-header-01 d-lg-none">
+                <div class="mob-head-in">
+                    <div class="mob-toggle"><button class="hm-toggle-mob" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_mobile_header_01" aria-controls="offcanvas_mobile_header_01"><span></span></button></div>
+                    <div class="mob-logo text-center w-100 d-flex justify-content-center"><a href="#"><b>GARANTII</b></a></div>
+                    <div class="mob-end">
+                        <!-- Cart -->
+                        <div class="nav-item"><a class="nav-link"  href="#" onclick="openEscrowModal()" role="button" ><i class="bi bi-shield-lock"></i></a></div>
+                    </div>
+                </div>
+            </div>
+            <!-- End Mobile Menu -->
+        </header>
+        <!-- Header End -->
+        <!-- Mobile Bottom -->
+        <!-- Header Bottom -->
+        <div class="mob-header-btn-fixed-01 d-lg-none">
+            <div class="mob-hb-in">
+                <div class="mob-hb-item"><a class="mob-hb-link" href="#"  data-bs-toggle="offcanvas" data-bs-target="#modalTestimonial"><i class="bi bi-chat-left-quote"></i><span>Testimonials</span></a></div>
+                <div class="login-btn mob-hb-item"><a href="#" class="mob-hb-link" data-bs-toggle="modal" data-bs-target="#topbarlogin"><i class="fi-user"></i> <span>Login</span></a></div>
+                <div class="logout-btn mob-hb-item" style="display:none;"><a href="#" class="mob-hb-link" data-bs-toggle="modal" data-bs-target="#topbarlogin"><i class="fi-user"></i> <span>Logout</span></a></div>
+                <div class="mob-hb-item"><a href="#" class="mob-hb-link" onclick="openPaymentModal()"><i class="bi bi-cash-stack"></i><span>payments</span></a></div>
+                <div class="mob-hb-item"><a class="mob-hb-link" href="#" onclick="openEscrowModal()" role="button" ><i class="bi bi-shield-lock"></i><span>Escrow</span></a></a></div>
+            </div>
+        </div>
+        <!-- End Header Bottom -->
+        <!-- Mobile  -->
+        <div class="offcanvas-lg mobile-nav-offcanvas offcanvas-start d-lg-none" tabindex="-1" id="offcanvas_mobile_header_01" aria-labelledby="offcanvas_mobile_header_01">
+            <div class="offcanvas-header">
+                <div class="offcanvas-header-overlay"></div><button type="button" class="btn-close" data-bs-dismiss="offcanvas" data-bs-target="#offcanvas_mobile_header_01" aria-label="Close"><i class="fi-x"></i></button>
+                <div class="mob-user">
+                    <a href="#"  class="login-btn btn btn-sm" href="#" data-bs-toggle="modal" data-bs-target="#topbarlogin">
+                        <i class="fi-user"></i> <span>Login</span>
+                    </a>
+                    <a href="#" class="logout-btn btn btn-sm" style="display:none;">
+                        <i class="fi-user"></i> <span>Logout</span>
+                    </a>
+                </div>
+
+        </div>
+        <div class="offcanvas-body">
+            <ul class="navbar-nav walletMenu ms-auto"></ul>
+
+
+        </div>
+    </div>
+    <!-- End Mobile Bottom -->
+    <!-- End Header -->
+    <!-- Main -->
+    <main>
+        <!-- SPINNER -->
+    <div id="walletSpinner" class="text-center my-3" style="display:none;">
+        <div class="spinner-border text-success" role="status"></div>
+    </div>
+        {% block content%}
+        
+        {% endblock %}
+        <!-- CTA -->
+        <section>
+            <div class="container mb-2">
+                <div class="row g-0 px-4 px-lg-5 py-5 rounded bg-cover bg-fiex bg-center border" style="background-image: url(../../assets/img/grocery/food-home-banner-3.jpg);">
+                    <div class="col-md-8 my-3 text-center text-md-start">
+                        <h3 class="h2 m-0 text-dark">buy confidently sell securelly courtersy of garantii</h3>
+                    </div>
+                    <div class="col-md-4 my-3 text-center text-md-end"><a class="btn btn-primary" href="#" tabindex="0" data-bs-toggle="modal" data-bs-target="#withdrawalModal">Withdraw</a></div>
+                </div>
+            </div>
+        </section>
+        <!-- End CTA -->
+    </main>
+    <!-- End Main -->
+    <!-- Footer -->
+    <footer class="bg-gray-100 footer border-top">
+        <div class="footer-top py-6">
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-6 col-lg-3 my-3">
+                        <div class="pb-3"><img class="logo-dark" src="../../assets/img/logo.svg" title="" alt=""> <img class="logo-light" src="../../assets/img/logo-light.svg" title="" alt=""></div><address class="dark-link mb-4"><p class="mb-2">4th floor Delta Corner Westland,<br>Nairobi Kenya</p><p class="mb-2"><a class="border-bottom border-secondary" href="mailto:garantii37@gmail.com">garantii37@gmail.com</a></p><p class="mb-2"><a class="border-bottom border-secondary" href="tel:0706420043">0706420043</a></p></address>
+                        <div
+                            class="nav dark-link fs-5"><a class="me-3" href="#"><i class="bi bi-facebook"></i> </a><a class="me-3" href="#"><i class="bi bi-twitter"></i> </a><a class="me-3" href="#"><i class="bi bi-instagram"></i> </a><a class="me-3" href="#"><i class="bi bi-linkedin"></i></a></div>
+                </div>
+                <div class="col-6 col-lg-3 my-3">
+                    <h6 class="text-uppercase mb-5">Support</h6>
+                    <ul class="list-unstyled dark-link footer-link-1 m-0">
+                        <li class="pb-2"><a href="tel:0706420043">Help</a></li>
+                        <li class="pb-2"><a href="#" data-bs-toggle="offcanvas" data-bs-target="#modalPolicies">View Policies & Terms</a></li>
+                        <li class="pb-2"><a href="#"  data-bs-toggle="modal" data-bs-target="#modalFeedbackAndComplaint">Feedback</a></li>
+                        <li class="pb-2"><a href="#" data-bs-toggle="offcanvas" data-bs-target="#modalTransactionFees">transaction fees</a></li>
+                    </ul>
+                </div>
+                <div class="col-6 col-lg-3 my-3">
+                    <h6 class="text-uppercase mb-5">Links</h6>
+                    <ul class="list-unstyled dark-link footer-link-1 m-0">
+                        <li class="pb-2"><a href="#" onclick="openPaymentModal()">payment transaction</a></li>
+                        <li class="pb-2"><a href="#" onclick="openEscrowModal()">Escrow Transactions</a></li>
+                        <li class="pb-2"><a href="#"  data-bs-toggle="offcanvas" data-bs-target="#modalTestimonial">Testimonials</a></li>
+                        <li class="pb-2"><a href="#"  data-bs-toggle="modal" data-bs-target="#modalFeedbackAndComplaint">report a complain</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        </div>
+        <div class="footer-bottom py-3 border-top small">
+            <div class="container">
+                <div class="row">
+                    <div class="col-md-6 text-center text-md-start py-1">
+                        <p class="m-0">© <span id="year"></span> copyright by <a href="https://jiranimall.shop/" target="_blank" class="text-reset">Garantii Technologies</a></p>
+                    </div>
+                    <div class="col-md-6 d-flex justify-content-center justify-content-md-end py-1 align-items-center gap-3">
+                        <div class="nav-item h-switch dropdown"><button class="theme-switch btn btn-sm btn-outline-mode dropdown-toggle rounded-pill" id="bd-theme" type="button" aria-expanded="false" data-bs-toggle="dropdown"><span class="bi theme-icon-active"><i class="bi-circle-half"></i> </span><span class="ps-1 d-none">Theme Mode</span></button>
+                            <ul
+                                class="dropdown-menu" aria-labelledby="bd-theme">
+                                <li><button type="button" class="dropdown-item" data-bs-theme-value="light"><span class="bi me-2 opacity-50 theme-icon"><i class="bi-sun-fill"></i> </span>Light <span class="bi ms-auto d-none"><i class="bi-check2"></i></span></button></li>
+                                <li><button type="button" class="dropdown-item" data-bs-theme-value="dark"><span class="bi me-2 opacity-50 theme-icon"><i class="bi-moon-stars-fill"></i> </span>Dark <span class="bi ms-auto d-none"><i class="bi-check2"></i></span></button></li>
+                                <li><button type="button" class="dropdown-item active" data-bs-theme-value="auto"><span class="bi me-2 opacity-50 theme-icon"><i class="bi-circle-half"></i> </span>Auto <span class="bi ms-auto d-none"><i class="bi-check2"></i></span></button></li>
+                                </ul>
+                        </div><img src="../../assets/img/payments.png" title="" alt=""></div>
+                </div>
+            </div>
+        </div>
+    </footer>
+    <!-- End Footer -->
+    </div>
+    <!-- 
+    ========================
+       End Wrapper 
+    ========================
+    -->
+    <!-- sscript for showing loggin modal if user is unaunthenticated -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const accessToken = localStorage.getItem("access_token");
+        const loginModalEl = document.getElementById('topbarlogin');
+        const registerModalEl = document.getElementById('topbarregister');
+
+        // If user is NOT logged in → force login modal
+        if (!accessToken) {
+            const loginModal = new bootstrap.Modal(loginModalEl, {
+                backdrop: 'static',
+                keyboard: false
+            });
+
+            loginModal.show();
+
+            // Prevent closing ONLY if user is not logged in
+            loginModalEl.addEventListener('hide.bs.modal', function (e) {
+
+                // If login completed → ALLOW CLOSE
+                if (localStorage.getItem("access_token")) return;
+
+                // If register modal is opening → ALLOW CLOSE
+                const registerIsOpening = registerModalEl.classList.contains("showing-register");
+                if (registerIsOpening) return;
+
+                // Otherwise → BLOCK closing
+                e.preventDefault();
+                loginModal.show();
+            });
+
+            // When Register opens → temporarily allow login to close
+            registerModalEl.addEventListener('show.bs.modal', function () {
+                registerModalEl.classList.add("showing-register");
+                loginModal.hide();
+            });
+
+            // When Register closes → return to Login IF still not logged in
+            registerModalEl.addEventListener('hidden.bs.modal', function () {
+                registerModalEl.classList.remove("showing-register");
+
+                if (!localStorage.getItem("access_token")) {
+                    loginModal.show();
+                }
+            });
+        }
+    });
+    </script>
+
+    <!-- script start for getting current year -->  
+    <script>
+    document.getElementById('year').textContent = new Date().getFullYear();
+    </script>
+
+    <!-- registration script -->
+    <script>
+    document.getElementById('registerForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const statusBox = document.getElementById("regStatus");     // Status UI box
+        const loadingSpinner = document.getElementById("regLoading"); // Spinner
+        const submitBtn = document.getElementById("regSubmitBtn");   // Submit button
+
+        const password = document.getElementById("password").value;
+        const password2 = document.getElementById("password2").value;
+        const passwordError = document.getElementById("passwordError");
+        passwordError.textContent = "";
+
+        // Validate passwords match
+        if (password !== password2) {
+            statusBox.className = "alert alert-danger";
+            statusBox.innerHTML = "❌ Passwords do not match!";
+            statusBox.style.display = "block";
+            return;
+        }
+
+        // Collect form data
+        const formData = {
+            first_name: document.getElementById("first_name").value,
+            last_name: document.getElementById("last_name").value,
+            email: document.getElementById("email").value,
+            phone_number: document.getElementById("phone").value,
+            password: password
+        };
+
+        // UI: Show loading and lock button
+        submitBtn.disabled = true;
+        loadingSpinner.style.display = "inline-block";
+        statusBox.className = "alert alert-info";
+        statusBox.innerHTML = "⏳ Processing your registration… <br> <b>Please do not refresh or close this page.</b>";
+        statusBox.style.display = "block";
+
+        try {
+            const response = await fetch("/account/api/register/", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "X-CSRFToken": getCookie("csrftoken")
+                },
+                body: JSON.stringify(formData)
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // Server returned validation errors
+                submitBtn.disabled = false;
+                loadingSpinner.style.display = "none";
+                statusBox.className = "alert alert-danger";
+                statusBox.innerHTML =
+                    "❌ Registration failed:<br>" + formatErrors(data);
+                return;
+            }
+
+            // SUCCESS
+            statusBox.className = "alert alert-success";
+            statusBox.innerHTML =
+                "🎉 Registration successful!<br>We are redirecting you to login…";
+
+            // Smooth delay before closing modal
+            setTimeout(() => {
+                let modalEl = document.getElementById("topbarregister");
+                let modal = bootstrap.Modal.getInstance(modalEl);
+                modal.hide();
+
+                // show login modal
+                const loginModal = new bootstrap.Modal(document.getElementById('topbarlogin'));
+                loginModal.show();
+
+                // Disable interactions with page until login
+                document.body.style.pointerEvents = "none";
+                loginModal._element.addEventListener('hidden.bs.modal', () => {
+                    document.body.style.pointerEvents = "auto";
+                });
+            }, 1200);
+
+        } catch (err) {
+            submitBtn.disabled = false;
+            loadingSpinner.style.display = "none";
+            statusBox.className = "alert alert-danger";
+            statusBox.innerHTML = "⚠️ A network error occurred. Please try again.";
+            console.error(err);
+        }
+    });
+
+    // Convert backend errors into readable messages
+    function formatErrors(errors) {
+        if (typeof errors === "string") return errors;
+
+        let html = "";
+        for (let key in errors) {
+            html += `<b>${key}:</b> ${errors[key]}<br>`;
+        }
+        return html;
+    }
+
+    // CSRF helper
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== "") {
+            const cookies = document.cookie.split(";");
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + "=")) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+
+    <!-- scripts for loggin in -->
+    <script>
+    /* -----------------------
+    FORMAT PHONE
+    -------------------------*/
+    async function formatPhone(phoneRaw) {
+        let phone = phoneRaw.replace(/\D/g, ''); // remove everything except digits
+
+        if (phone.startsWith('0')) {
+            phone = '+254' + phone.slice(1);
+        } else if (phone.startsWith('7') && phone.length === 9) {
+            phone = '+254' + phone;
+        } else if (phone.startsWith('254')) {
+            phone = '+' + phone;
+        } else if (phone.startsWith('00')) {
+            phone = '+' + phone.slice(2);
+        } else if (!phone.startsWith('+')) {
+            throw 'Invalid phone number';
+        }
+
+        // Remove + because your backend expects digits only
+        return phone.replace('+', '');
+    }
+
+    /* -----------------------
+    LOGIN HANDLER
+    -------------------------*/
+    document.getElementById('loginForm').addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        const statusBox = document.getElementById('loginStatus');
+        const loadingSpinner = document.getElementById('loginLoading');
+        const submitBtn = document.getElementById('loginSubmitBtn');
+
+        // Reset UI
+        statusBox.style.display = 'none';
+        statusBox.textContent = '';
+        loadingSpinner.style.display = 'inline-block';
+        submitBtn.disabled = true;
+
+        let phoneRaw = document.getElementById('loginPhone').value.trim();
+        let password = document.getElementById('loginPassword').value;
+
+        let username = '';
+
+        /* -----------------------
+        FORMAT PHONE
+        -------------------------*/
+        try {
+            username = await formatPhone(phoneRaw);
+        } catch (err) {
+            statusBox.style.display = 'block';
+            statusBox.className = 'alert alert-danger';
+            statusBox.textContent = 'Invalid phone number format.';
+            loadingSpinner.style.display = 'none';
+            submitBtn.disabled = false;
+            return;
+        }
+
+        /* -----------------------
+        API REQUEST
+        -------------------------*/
+        try {
+            const response = await fetch('/account/api/login/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'X-CSRFToken': getCookie('csrftoken'),
+                },
+                body: JSON.stringify({
+                    username: username,
+                    password: password
+                })
+            });
+
+            const data = await response.json();
+
+            if (!response.ok) {
+                // ERROR RESPONSE
+                statusBox.style.display = 'block';
+                statusBox.className = 'alert alert-danger';
+                statusBox.textContent = data.detail || 'Login failed.';
+            } else {
+                // SUCCESS
+                statusBox.style.display = 'block';
+                statusBox.className = 'alert alert-success';
+                statusBox.textContent = 'Login successful! Redirecting...';
+
+                // clear previous data from local storage
+                localStorage.clear();
+
+
+                // Store tokens
+                localStorage.setItem('access_token', data.access);
+                localStorage.setItem('refresh_token', data.refresh);
+
+                // Close modal after success
+                setTimeout(() => {
+                    const modalEl = document.getElementById('topbarlogin');
+                    const modal = bootstrap.Modal.getOrCreateInstance(modalEl);
+
+                    // Show custom blocker so user can't click anything
+                    document.getElementById("pageBlocker").style.display = "block";
+
+                    modal.hide();
+
+                    sessionStorage.setItem('active_tab', 'yes');
+
+                    loadUserWallet();
+
+                    // Optional: reload after wallet loads
+                    setTimeout(() => {
+                        window.location.reload();
+                    }, 500);
+
+                }, 800);
+            }
+
+        } catch (err) {
+            statusBox.style.display = 'block';
+            statusBox.className = 'alert alert-danger';
+            statusBox.textContent = 'Network error. Please try again.';
+            console.error(err);
+
+        } finally {
+            loadingSpinner.style.display = 'none';
+            submitBtn.disabled = false;
+        }
+    });
+
+    /* -----------------------
+    CSRF COOKIE
+    -------------------------*/
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let cookie of cookies) {
+                cookie = cookie.trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+    </script>
+
+    <!-- script for loggout -->
+    <script>
+    async function logoutUser() {
+        const refreshToken = localStorage.getItem("refresh_token");
+
+        if (refreshToken) {
+            try {
+                // Send logout request to backend
+                await fetch("/logout/", {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + localStorage.getItem("access_token"),
+                    },
+                    body: JSON.stringify({ refresh: refreshToken }),
+                });
+            } catch (err) {
+                console.error("Backend logout failed:", err);
+            }
+        }
+
+        // Clear tokens in browser
+        localStorage.removeItem("access_token");
+        localStorage.removeItem("refresh_token");
+        sessionStorage.clear(); // for your auto-logout logic
+
+        // Redirect to homepage (or reload)
+        window.location.href = "/";
+    }
+
+    document.addEventListener("click", function (e) {
+        if (e.target.closest(".logout-btn")) {
+            logoutUser();
+        }
+    });
+    </script>
+
+
+    <!-- script for log in and logout toggle -->
+    <script>
+    function updateAuthUI() {
+        const token = localStorage.getItem("access_token");
+
+        const loginBtns = document.querySelectorAll(".login-btn");
+        const registerBtns = document.querySelectorAll(".register-btn");
+        const logoutBtns = document.querySelectorAll(".logout-btn");
+
+        if (token) {
+            // User logged in → hide login/register, show logout
+            loginBtns.forEach(btn => btn.style.display = "none");
+            registerBtns.forEach(btn => btn.style.display = "none");
+            logoutBtns.forEach(btn => btn.style.display = "block");
+        } else {
+            // User logged out → show login/register, hide logout
+            loginBtns.forEach(btn => btn.style.display = "block");
+            registerBtns.forEach(btn => btn.style.display = "block");
+            logoutBtns.forEach(btn => btn.style.display = "none");
+        }
+    }
+
+
+    // Run on page load
+    document.addEventListener("DOMContentLoaded", updateAuthUI);
+    </script>
+
+    
+
+    <!-- ===========================
+        FULL JS SCRIPT for loading walet, and creating walet 
+    =========================== -->
+    <script>
+    /* Wallet UI helper script — robust version
+    - Works with two walletMenu containers (.walletMenu in dropdown and .walletMenu in navbar)
+    - Defensive guards for missing DOM elements
+    - Proper spinner lifecycle (never left visible after function returns)
+    - Handles 401/403 by showing login modal and clearing token
+    - Keeps a short cache in localStorage
+    */
+
+    // CONFIG
+    const WALLET_CACHE_KEY = "wallet_cache";
+    const WALLET_CACHE_TTL = 10 * 60 * 1000; // 10 minutes
+
+    // UTIL: safe DOM helpers
+    function el(id) { return document.getElementById(id); }
+    function qAll(selector){ return Array.from(document.querySelectorAll(selector)); }
+    function q(selector){ return document.querySelector(selector); }
+
+    // SPINNER (defensive)
+    function showWalletSpinner() {
+        const node = el("walletSpinner");
+        if (node && node.style) node.style.display = "block";
+    }
+    function hideWalletSpinner() {
+        const node = el("walletSpinner");
+        if (node && node.style) node.style.display = "none";
+    }
+
+    // LOGIN modal helper
+    function showLoginModal() {
+        const modalEl = el('topbarlogin');
+        if (!modalEl) {
+            console.warn("Login modal (#topbarlogin) not found.");
+            return;
+        }
+        try {
+            const modal = new bootstrap.Modal(modalEl, {backdrop:"static", keyboard:false});
+            modal.show();
+        } catch (e) {
+            console.warn("Bootstrap modal show failed:", e);
+        }
+    }
+
+    // READ cache safely
+    function getWalletCacheKey() {
+        const token = localStorage.getItem("access_token") || "";
+        // Simple hash-like key based on token (or user id if available)
+        return WALLET_CACHE_KEY + "_" + token;
+    }
+
+    function readWalletCache() {
+        try {
+            const key = getWalletCacheKey();
+            const raw = localStorage.getItem(key);
+            if (!raw) return null;
+            const parsed = JSON.parse(raw);
+            if (!parsed || !parsed.expiry) return null;
+            if (Date.now() > parsed.expiry) {
+                localStorage.removeItem(key);
+                return null;
+            }
+            return parsed;
+        } catch (e) {
+            console.warn("Wallet cache read error:", e);
+            localStorage.removeItem(getWalletCacheKey());
+            return null;
+        }
+    }
+
+    function writeWalletCache(selected_wallet, all_wallets) {
+        try {
+            const key = getWalletCacheKey();
+            localStorage.setItem(key, JSON.stringify({
+                selected_wallet,
+                all_wallets,
+                expiry: Date.now() + WALLET_CACHE_TTL
+            }));
+        } catch (e) {
+            console.warn("Wallet cache write error:", e);
+        }
+    }
+
+
+    // UPDATE UI text safely
+    function setText(id, value) {
+        const elNode = document.getElementById(id);
+        if (!elNode) return;
+        // Format numbers nicely if numeric
+        if (value === null || value === undefined) value = "";
+        elNode.innerText = (typeof value === "number" || (!isNaN(value) && value !== "")) ? String(value) : value;
+    }
+
+    function formatMoney(val) {
+        if (val === null || val === undefined || val === "") return "";
+        const n = Number(val);
+        if (isNaN(n)) return val;
+        return n.toLocaleString(); // default locale formatting
+    }
+
+    // Update wallet visual fields (guarded)
+    function updateWalletUI(wallet) {
+        if (!wallet) return;
+        setText("walletName", wallet.identifier || "");
+        setText("walletBalance", formatMoney(wallet.available_balance ?? wallet.balance ?? ""));
+        setText("walletSentLocked", formatMoney(wallet.send_locked_balance ?? ""));
+        setText("walletReceivedLocked", formatMoney(wallet.receive_locked_balance ?? ""));
+        setText("walletWithdrawable", formatMoney(wallet.withdrawable_balance ?? ""));
+    }
+
+    // Rebuild wallet menus in all places where .walletMenu exists
+    function rebuildWalletMenu(allWallets, currentWalletId) {
+        const menus = qAll(".walletMenu");
+        if (!menus.length) {
+            console.warn("No .walletMenu elements found on page.");
+            return;
+        }
+
+        menus.forEach(menu => {
+            // clear
+            menu.innerHTML = "";
+
+            // add wallets
+            (allWallets || []).forEach(wallet => {
+                const li = document.createElement("li");
+                li.className = "nav-item dynamic-wallet";
+                // use data attribute for id comparison (string)
+                const activeClass = (String(wallet.id) === String(currentWalletId)) ? " active" : "";
+                // create anchor
+                const a = document.createElement("a");
+                a.href = "#";
+                // Keep classes similar to both dropdown and navbar uses
+                a.className = "nav-link" + activeClass;
+                a.innerHTML = `<i class="bi bi-wallet2"></i> ${wallet.identifier || wallet.id}`;
+                a.addEventListener("click", (e) => {
+                    e.preventDefault();
+
+                    // Save clicked wallet
+                    localStorage.setItem("last_selected_wallet_id", wallet.id);
+
+                    // Close mobile offcanvas if open
+                    const mobileOffcanvasEl = document.getElementById("offcanvas_mobile_header_01");
+                    if (mobileOffcanvasEl) {
+                        const instance = bootstrap.Offcanvas.getInstance(mobileOffcanvasEl) 
+                                        || new bootstrap.Offcanvas(mobileOffcanvasEl);
+                        instance.hide();
+                    }
+
+                    // Load selected wallet
+                    loadUserWallet(wallet.id);
+                });
+
+                li.appendChild(a);
+                menu.appendChild(li);
+            });
+
+            // create wallet item
+            const createItem = document.createElement("li");
+            createItem.className = "nav-item dynamic-wallet";
+            const createA = document.createElement("a");
+            createA.href = "#";
+            createA.className = "nav-link text-success";
+            createA.innerHTML = `<i class="bi bi-plus-circle"></i> Create New Wallet`;
+            createA.addEventListener("click", (e) => {
+                e.preventDefault();
+                openCreateWalletModal();
+            });
+            createItem.appendChild(createA);
+            menu.appendChild(createItem);
+        });
+    }
+
+    // Open create wallet modal (guard)
+    function openCreateWalletModal() {
+        const modalEl = el("createWalletModal");
+        if (!modalEl) {
+            console.warn("#createWalletModal not found.");
+            return;
+        }
+        try {
+            new bootstrap.Modal(modalEl).show();
+        } catch (e) {
+            console.warn("Could not open createWalletModal:", e);
+        }
+    }
+
+    // MAIN: load wallet data
+    async function loadUserWallet(walletId = null) {
+        const accessToken = localStorage.getItem("access_token");
+        if (!accessToken) {
+            showLoginModal();
+            return;
+        }
+
+        
+        // 🔥 Always prefer the last selected wallet from localStorage
+        if (!walletId) {
+            const lastId = localStorage.getItem("last_selected_wallet_id");
+            if (lastId) {
+                walletId = lastId;
+            }
+        }
+
+        showWalletSpinner();
+
+        try {
+            // --- Try cache first ---
+            const cached = readWalletCache();
+            if (cached) {
+                // If specific walletId requested
+                if (walletId) {
+                    const w = (cached.all_wallets || []).find(
+                        w => String(w.id) === String(walletId)
+                    );
+                    if (w) {
+                        updateWalletUI(w);
+                        updatePaymentTitle(w);
+                        updateescrowTransactionTittle(w);
+                        rebuildWalletMenu(cached.all_wallets, w.id);
+
+                        // 🔥 Save last selected wallet
+                        localStorage.setItem("last_selected_wallet_id", w.id);
+
+                        return;
+                    }
+                }
+
+                // Otherwise use cached selected wallet
+                if (cached.selected_wallet) {
+                    updateWalletUI(cached.selected_wallet);
+                    updatePaymentTitle(cached.selected_wallet);
+                    updateescrowTransactionTittle(cached.selected_wallet);
+                    rebuildWalletMenu(
+                        cached.all_wallets || [],
+                        cached.selected_wallet.id
+                    );
+
+                    // 🔥 Save last selected wallet
+                    localStorage.setItem("last_selected_wallet_id", cached.selected_wallet.id);
+
+                    return;
+                }
+            }
+
+            // --- Fetch from backend ---
+            let url = "/wallets/api/";
+            if (walletId) {
+                url += `?wallet_id=${encodeURIComponent(walletId)}`;
+            }
+
+            const response = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Authorization": "Bearer " + accessToken,
+                    "Accept": "application/json"
+                }
+            });
+
+            if (response.status === 401 || response.status === 403) {
+                console.warn("Auth error loading wallets:", response.status);
+                localStorage.removeItem("access_token");
+                showLoginModal();
+                return;
+            }
+
+            let data = {};
+            try {
+                data = await response.json();
+            } catch (e) {
+                console.warn("Non-JSON response from /wallets/api/:", e);
+                data = {};
+            }
+
+            if (!response.ok) {
+                console.warn("Fetch error /wallets/api/:", response.status, data);
+                return;
+            }
+
+            if (data.requires_wallet) {
+                openCreateWalletModal();
+                return;
+            }
+
+            // Build wallet list
+            const allWallets = [
+                data.selected_wallet,
+                ...(data.other_wallets || [])
+            ].filter(Boolean);
+
+            // 🔥 Save selected wallet in cache
+            writeWalletCache(data.selected_wallet, allWallets);
+
+            // Update UI
+            updateWalletUI(data.selected_wallet);
+            rebuildWalletMenu(allWallets, data.selected_wallet.id);
+
+            // 🔥 SAVE last selected wallet ID for reloads
+            localStorage.setItem("last_selected_wallet_id", data.selected_wallet.id);
+
+        } catch (err) {
+            console.error("Wallet fetch error:", err);
+        } finally {
+            hideWalletSpinner();
+        }
+    }
+
+    // ====================================
+    // CREATE WALLET
+    // ====================================
+    async function attachCreateWalletHandler() {
+        const form = el("createWalletForm");
+        if (!form) return;
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            const accessToken = (localStorage.getItem("access_token") || "").trim();
+            if (!accessToken) {
+                showLoginModal();
+                return;
+            }
+
+            const walletTypeEl = document.querySelector("input[name='walletType']:checked");
+            if (!walletTypeEl) {
+                showWalletStatus("Select wallet type.", "danger");
+                return;
+            }
+
+            const walletType = walletTypeEl.value;
+            let identifier = "";
+            let isBusiness = false;
+
+            // PERSONAL WALLET
+            if (walletType === "personal") {
+                const phoneEl = el("walletPhone");
+                if (!phoneEl) {
+                    showWalletStatus("Phone input missing.", "danger");
+                    return;
+                }
+
+                identifier = phoneEl.value.trim();
+
+                // JS side validation (07XXXXXXXX)
+                if (!/^07\d{8}$/.test(identifier)) {
+                    showWalletStatus("Invalid phone number (07XXXXXXXX)", "danger");
+                    return;
+                }
+            }
+
+            // BUSINESS WALLET
+            else {
+                identifier = Math.floor(100000 + Math.random() * 900000).toString();
+                isBusiness = true;
+            }
+
+            const loader = el("createWalletLoading");
+            const btn = el("createWalletBtn");
+
+            if (loader) loader.style.display = "inline-block";
+            if (btn) btn.disabled = true;
+
+            try {
+                const response = await fetch("/wallets/create/api/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + accessToken,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({ identifier, is_business: isBusiness })
+                });
+
+                // AUTH ERROR → LOGOUT
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem("access_token");
+                    showLoginModal();
+                    return;
+                }
+
+                const data = await response.json().catch(() => ({}));
+
+                // BACKEND VALIDATION FAIL
+                if (!response.ok) {
+                    const detail = data.detail || "Wallet creation failed.";
+                    showWalletStatus(detail, "danger");
+                    return;
+                }
+
+                // SUCCESS
+                showWalletStatus("Wallet created successfully!", "success");
+
+                // Close modal
+                const modalInstance = bootstrap.Modal.getInstance(el("createWalletModal"));
+                if (modalInstance) modalInstance.hide();
+
+                // CLEAR WALLET CACHE
+                localStorage.removeItem(getWalletCacheKey());
+
+                // IMPORTANT FIX: backend returns `id`
+                await loadUserWallet(data.id);
+
+            } catch (err) {
+                console.error("Network error:", err);
+                showWalletStatus("Network error creating wallet.", "danger");
+            } finally {
+                if (loader) loader.style.display = "none";
+                if (btn) btn.disabled = false;
+            }
+        });
+    }
+
+    // show status message in create wallet modal (guard)
+    function showWalletStatus(msg, type) {
+        const box = el("createWalletStatus");
+        if (!box) {
+            console.warn("createWalletStatus element not found — message:", msg);
+            return;
+        }
+        box.className = "alert alert-" + type;
+        box.innerText = msg;
+        box.style.display = "block";
+    }
+
+    //   update escrow title
+    function  updateescrowTransactionTittle(wallet) {
+        if (!wallet) return;
+        setText("escrowTransactionTittle", wallet.identifier || "");
+    }
+
+    // DOM ready: attach handlers & init
+    document.addEventListener("DOMContentLoaded", function () {
+        // populate empty menus (in case) and attach create handler
+        rebuildWalletMenu([], null);
+        attachCreateWalletHandler();
+
+        // Try to load wallet
+        loadUserWallet();
+    });
+    </script>
+
+    <!-- script for payment transaction renedering and filtering -->
+    <script>
+    /* ============================================================
+    PAYMENT TRANSACTIONS MODULE — FINAL CLEAN VERSION
+    ============================================================ */
+
+    const paymentListEl = el("paymentList");
+    const paymentSearchInput = el("paymentSearchInput");
+    const paymentFilterType = el("paymentFilterType");
+    const paymentStatusFilter = el("paymentStatusFilter");
+    const paymentSortBy = el("paymentSortBy");
+    const paymentClearFilters = el("paymentClearFilters");
+    const paymentCount = el("paymentCount");
+    const paymentTotalValue = el("paymentTotalValue");
+
+    let RAW_TRANSACTIONS = [];
+    let FILTERED_TRANSACTIONS = [];
+
+
+    /* ------------------------------------------------------------
+    LOAD TRANSACTIONS FOR CURRENT WALLET
+    ------------------------------------------------------------ */
+    async function loadWalletPayments() {
+        const accessToken = localStorage.getItem("access_token")?.trim();
+        const walletId = localStorage.getItem("last_selected_wallet_id");
+
+        if (!accessToken) return showLoginModal();
+        if (!walletId) return;
+
+        const url = `/payments/wallet-transactions/?wallet_id=${walletId}`;
+
+        try {
+            const res = await fetch(url, {
+                method: "GET",
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Accept": "application/json",
+                },
+            });
+
+            if (res.status === 401 || res.status === 403) {
+                localStorage.removeItem("access_token");
+                return showLoginModal();
+            }
+
+            const data = await res.json();
+            RAW_TRANSACTIONS = Array.isArray(data.transactions) ? data.transactions : [];
+
+        } catch (err) {
+            console.error("Payment load failed:", err);
+            RAW_TRANSACTIONS = [];
+        }
+
+        // Always default to newest first
+        if (paymentSortBy) paymentSortBy.value = "created_desc";
+
+        applyPaymentFilters();
+
+        updatePaymentTitle();
+
+    }
+
+
+    /* ------------------------------------------------------------
+    FILTER → SEARCH → SORT PIPELINE
+    ------------------------------------------------------------ */
+    function applyPaymentFilters() {
+        const searchText = paymentSearchInput?.value.toLowerCase() || "";
+        const typeFilter = paymentFilterType?.value || "ALL";
+        const statusFilter = paymentStatusFilter?.value || "ALL";
+        const sortBy = paymentSortBy?.value || "created_desc";
+
+        FILTERED_TRANSACTIONS = RAW_TRANSACTIONS.filter(tx => {
+            if (!tx) return false;
+
+            if (typeFilter !== "ALL" && tx.transaction_type !== typeFilter) return false;
+            if (statusFilter !== "ALL" && tx.status !== statusFilter) return false;
+
+            const haystack = `
+                ${tx.trans_id || ""}
+                ${tx.sender_phone || ""}
+                ${tx.external_provider || ""}
+            `.toLowerCase();
+
+            if (!haystack.includes(searchText)) return false;
+
+            return true;
+        });
+
+        // sort logic
+        FILTERED_TRANSACTIONS.sort((a, b) => {
+            const dateA = a.received_at ? new Date(a.received_at) : 0;
+            const dateB = b.received_at ? new Date(b.received_at) : 0;
+
+            switch (sortBy) {
+                case "created_asc": return dateA - dateB;
+                case "created_desc": return dateB - dateA;
+                case "amount_asc": return Number(a.amount) - Number(b.amount);
+                case "amount_desc": return Number(b.amount) - Number(a.amount);
+                case "status": return (a.status || "").localeCompare(b.status || "");
+            }
+            return 0;
+        });
+
+        renderPaymentList();
+    }
+
+    /* -------------------------------------------
+    upadate tite 
+    -------------------------------------------------*/
+    function  updatePaymentTitle(wallet) {
+        if (!wallet) return;
+        setText("paymentTransactionTittle", wallet.identifier || "");
+    }
+
+
+    /* ------------------------------------------------------------
+    RENDER LIST
+    ------------------------------------------------------------ */
+    function renderPaymentList() {
+        paymentListEl.innerHTML = "";
+
+        // If no results
+        if (!FILTERED_TRANSACTIONS.length) {
+            paymentListEl.innerHTML = `
+                <li class="py-5 text-center text-muted">
+                    <i class="bi bi-receipt fs-1 d-block mb-2"></i>
+                    <span>No transactions available</span>
+                </li>
+            `;
+
+            paymentCount.innerText = "(0)";
+            paymentTotalValue.innerText = "KES 0.00";
+            return;
+        }
+
+        FILTERED_TRANSACTIONS.forEach(tx => {
+            if (!tx) return;
+
+            const txId = tx.trans_id || (tx.id ? tx.id.substring(0, 6) : "N/A");
+            const received = tx.received_at ? tx.received_at.substring(0, 10) : "--";
+
+            const li = document.createElement("li");
+            li.className = "py-2 payment-item";
+
+            li.innerHTML = `
+                <div class="row align-items-center">
+
+                    <div class="col-4">
+                        <div class="border d-flex align-items-center justify-content-center" style="height:56px;">
+                            <i class="bi bi-credit-card fs-4"></i>
+                        </div>
+                    </div>
+
+                    <div class="col-8">
+                        <p class="mb-1">
+                            <span class="text-mode fw-500">
+                                ${tx.transaction_type} – ${txId}
+                            </span>
+                            <span class="d-block text-muted small">
+                                ${tx.external_provider || "—"} — ${tx.sender_phone || ""}
+                            </span>
+                        </p>
+
+                        <div class="d-flex align-items-center">
+                            <small class="text-mode fw-bold">KES ${Number(tx.amount).toLocaleString()}</small>
+                            <small class="ms-auto text-muted small">${received}</small>
+                        </div>
+                    </div>
+
+                </div>
+            `;
+
+            paymentListEl.appendChild(li);
+        });
+
+        // update count
+        paymentCount.innerText = `(${FILTERED_TRANSACTIONS.length})`;
+
+        // total
+        const total = FILTERED_TRANSACTIONS.reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
+        paymentTotalValue.innerText = `KES ${total.toLocaleString()}`;
+    }
+
+
+    /* ------------------------------------------------------------
+    EVENT LISTENERS
+    ------------------------------------------------------------ */
+    paymentSearchInput?.addEventListener("input", applyPaymentFilters);
+    paymentFilterType?.addEventListener("change", applyPaymentFilters);
+    paymentStatusFilter?.addEventListener("change", applyPaymentFilters);
+    paymentSortBy?.addEventListener("change", applyPaymentFilters);
+
+    paymentClearFilters?.addEventListener("click", () => {
+        paymentSearchInput.value = "";
+        paymentFilterType.value = "ALL";
+        paymentStatusFilter.value = "ALL";
+        paymentSortBy.value = "created_desc";
+        applyPaymentFilters();
+    });
+
+
+    /* ------------------------------------------------------------
+    PUBLIC — OPEN MODAL + LOAD DATA
+    ------------------------------------------------------------ */
+    function openPaymentModal() {
+        loadWalletPayments().then(() => {
+            const modalEl = el("modalPaymentList");
+            const modal = new bootstrap.Offcanvas(modalEl);
+            modal.show();
+        });
+    }
+
+    </script>
+
+    <!-- ESCROW TRANSACTIONS FRONTEND — FIXED & PRODUCTION READY -->
+    <script>
+    /* =============================================================
+    ESCROW TRANSACTIONS FRONTEND — BUG FIXED (SAFE & CLEAN)
+    ============================================================= */
+
+    /* DOM ELEMENTS */
+    const escrowListEl = document.getElementById("escrowList");
+    const escrowSearchInput = document.getElementById("escrowSearchInput");
+    const escrowFilterType = document.getElementById("escrowFilterType");
+    const escrowStatusFilter = document.getElementById("escrowStatusFilter");
+    const escrowSortBy = document.getElementById("escrowSortBy");
+    const escrowClearFilters = document.getElementById("escrowClearFilters");
+    const escrowCount = document.getElementById("escrowCount");
+    const escrowTotalValue = document.getElementById("escrowTotalValue");
+    const escrowLoading = document.querySelector("#modalEscrowList .loading");
+
+    /* STATE */
+    let CURRENT_WALLET_ID = null;   // PK
+    let ESCROWS = [];
+    let ESCROW_ACTIVE_ID = null;
+
+    /* ================= Helpers ================= */
+    function safeText(v) {
+        return (v === null || v === undefined) ? "" : String(v).trim();
+    }
+
+    function txAmount(tx) {
+        return Number(tx.amount || 0);
+    }
+
+    function txStatus(tx) {
+        return safeText(tx.status);
+    }
+
+    function txDescription(tx) {
+        return safeText(tx.description);
+    }
+
+    /* ================= Open modal ================= */
+    function openEscrowModal() {
+        const walletId = localStorage.getItem("last_selected_wallet_id");
+
+        CURRENT_WALLET_ID = walletId; // PK
+        ESCROWS = [];
+        escrowListEl.innerHTML = "";
+        escrowCount.textContent = "(...)";
+        escrowTotalValue.textContent = "KES 0.00";
+
+        const offCanvas = document.getElementById("modalEscrowList");
+        bootstrap.Offcanvas.getOrCreateInstance(offCanvas).show();
+
+        loadWalletEscrows();
+    }
+
+    /* ================= Load escrows ================= */
+    async function loadWalletEscrows() {
+        
+        const accessToken = localStorage.getItem("access_token")?.trim();
+        const walletId = localStorage.getItem("last_selected_wallet_id");
+
+        if (!accessToken) return showLoginModal();
+        CURRENT_WALLET_ID = walletId; // PK
+        if (!CURRENT_WALLET_ID) return;
+        escrowLoading?.classList.remove("d-none");
+
+        try {
+            const token = localStorage.getItem("access_token")?.trim();
+            if (!token) return showLoginModal();
+
+            const res = await fetch(
+                `/api/escrow/wallet-transactions/?wallet_id=${encodeURIComponent(CURRENT_WALLET_ID)}`,
+                {
+                    headers: { Authorization: `Bearer ${token}` }
+                }
+            );
+            if (res.status === 401 || res.status === 403) {
+                localStorage.removeItem("access_token");
+                return showLoginModal();
+            }
+            const data = await res.json();
+            if (!res.ok) throw new Error(data?.detail || "Failed to load");
+
+            ESCROWS = Array.isArray(data.transactions) ? data.transactions : [];
+            renderEscrowItems();
+
+        } catch (e) {
+            escrowListEl.innerHTML =
+                `<div class="text-danger text-center p-3">${e.message}</div>`;
+            ESCROWS = [];
+        } finally {
+            escrowLoading?.classList.add("d-none");
+        }
+    }
+
+    /* ================= Render + FIXED LOGIC ================= */
+    function renderEscrowItems() {
+        const search = safeText(escrowSearchInput?.value).toLowerCase();
+        const typeFilter = escrowFilterType?.value || "ALL";
+        const statusFilter = escrowStatusFilter?.value || "ALL";
+        const sortBy = escrowSortBy?.value || "created_desc";
+        const currentWalletPk = String(CURRENT_WALLET_ID);
+
+        let list = ESCROWS.map(tx => {
+            const payerPk = String(tx.payer_wallet_id);
+            const receiverPk = String(tx.receiver_wallet_id);
+
+            const isPayer = payerPk === currentWalletPk;
+            const isReceiver = receiverPk === currentWalletPk;
+
+            return {
+                ...tx,
+                isPayer,
+                isReceiver,
+                itemType: isPayer ? "SENT" : isReceiver ? "RECEIVED" : "UNKNOWN"
+            };
+        });
+
+        if (search) {
+            list = list.filter(tx =>
+                [
+                    tx.order_id,
+                    tx.id,
+                    txDescription(tx),
+                    tx.receiver_phone,
+                    tx.payer_wallet_identifier,
+                    tx.receiver_wallet_identifier
+                ].join(" ").toLowerCase().includes(search)
+            );
+        }
+
+        if (typeFilter !== "ALL") {
+            list = list.filter(tx => tx.itemType === typeFilter);
+        }
+
+        if (statusFilter !== "ALL") {
+            list = list.filter(tx => txStatus(tx) === statusFilter);
+        }
+
+        list.sort((a, b) => {
+            if (sortBy === "amount_desc") return txAmount(b) - txAmount(a);
+            if (sortBy === "amount_asc") return txAmount(a) - txAmount(b);
+            return new Date(b.created_at) - new Date(a.created_at);
+        });
+
+        escrowCount.textContent = `(${list.length})`;
+        escrowTotalValue.textContent =
+            `KES ${list.reduce((s, t) => s + txAmount(t), 0).toLocaleString(undefined, { minimumFractionDigits: 2 })}`;
+
+        escrowListEl.innerHTML = list.length
+            ? list.map(renderEscrowCard).join("")
+            : `<div class="text-muted p-3 text-center">No transactions found</div>`;
+    }
+
+    /* ================= Card ================= */
+    function renderEscrowCard(tx) {
+        const isPayer = tx.isPayer;
+        const status = txStatus(tx).toUpperCase();
+
+        const direction = isPayer
+            ? `To: <strong>${tx.receiver_wallet_identifier}</strong>`
+            : `From: <strong>${tx.payer_wallet_identifier}</strong>`;
+
+        const showReverse = isPayer && status === "HELD";
+        const showAddInfo = isPayer && !txDescription(tx);
+
+        return `
+        <div class="escrow-item d-flex border-bottom py-2">
+            <div class="me-2" style="width:90px">
+                ${
+                    showReverse
+                        ? `<button class="btn btn-sm btn-warning w-100" onclick="reverseEscrow('${tx.id}')">Reverse</button>`
+                        : showAddInfo
+                            ? `<button class="btn btn-sm btn-info w-100" onclick="openAddInfo('${tx.id}')">Add Info</button>`
+                            : `<i class="bi bi-shield-check fs-4"></i>`
+                }
+            </div>
+            <div class="flex-grow-1">
+                <strong>KES ${txAmount(tx).toLocaleString(undefined,{minimumFractionDigits:2})}</strong>
+                <div class="small">${direction}</div>
+                <div class="small text-muted">${txDescription(tx) || "No description"}</div>
+            </div>
+            <div class="small text-muted text-end">${new Date(tx.created_at).toLocaleString()} <br/> <strong> ${status} </strong> </div>
+        </div>`;
+    }
+
+    /* ================= Reverse escrow ================= */
+    async function reverseEscrow(escrowId) {
+        if (!confirm("Are you sure you want to request a REVERSAL for this HELD escrow?")) return;
+        try {
+            const accessToken = localStorage.getItem("access_token")?.trim();
+            if (!accessToken) return showLoginModal();
+
+            const res = await fetch(`/api/escrow/request-reversal/${encodeURIComponent(escrowId)}/`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const data = await res.json().catch(() => null);
+            if (!res.ok) throw new Error(data?.detail || "Failed to reverse escrow.");
+
+            alert("Escrow reversal requested successfully.");
+            loadWalletEscrows();
+        } catch (e) {
+            alert(`Reverse failed: ${e.message || 'An unexpected error occurred.'}`);
+            console.error(e);
+        }
+    }
+
+    /* ================= Add extra info ================= */
+    function openAddInfo(id) {
+        ESCROW_ACTIVE_ID = id;
+        const infoTextarea = document.getElementById("modalAddEscrowInfoText");
+        if (infoTextarea) infoTextarea.value = "";
+        
+        const m = bootstrap.Modal.getOrCreateInstance(document.getElementById("modalAddEscrowInfo"));
+        m.show();
+    }
+
+    async function submitEscrowInfo() {
+        const infoTextarea = document.getElementById("modalAddEscrowInfoText");
+        const info = safeText(infoTextarea?.value);
+        
+        if (!info) return alert("Enter some text.");
+
+        try {
+            const accessToken = localStorage.getItem("access_token")?.trim();
+            if (!accessToken) throw new Error("Access token missing");
+            if (!accessToken) return showLoginModal();
+
+
+            const res = await fetch(`/api/escrow/add-extra/${encodeURIComponent(ESCROW_ACTIVE_ID)}/`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Content-Type": "application/json"
+                },
+                // The view accepts 'extra' OR 'extra_info'
+                body: JSON.stringify({ extra_info: info }) 
+            });
+
+            const data = await res.json().catch(() => null);
+            if (!res.ok) throw new Error(data?.detail || "Failed to save info.");
+
+            alert("Extra information added successfully.");
+            bootstrap.Modal.getInstance(document.getElementById("modalAddEscrowInfo"))?.hide();
+            loadWalletEscrows();
+
+        } catch (e) {
+            alert(`Failed to save info: ${e.message || 'An unexpected error occurred.'}`);
+            console.error(e);
+        }
+    }
+
+    /* ================= Event listeners ================= */
+    if (escrowSearchInput) escrowSearchInput.addEventListener("input", renderEscrowItems);
+    if (escrowFilterType) escrowFilterType.addEventListener("change", renderEscrowItems);
+    if (escrowStatusFilter) escrowStatusFilter.addEventListener("change", renderEscrowItems);
+    if (escrowSortBy) escrowSortBy.addEventListener("change", renderEscrowItems);
+
+    // Clear filters logic
+    if (escrowClearFilters) {
+        escrowClearFilters.addEventListener("click", () => {
+            if (escrowSearchInput) escrowSearchInput.value = "";
+            if (escrowFilterType) escrowFilterType.value = "ALL";
+            if (escrowStatusFilter) escrowStatusFilter.value = "ALL";
+            if (escrowSortBy) escrowSortBy.value = "created_desc";
+            renderEscrowItems();
+        });
+    }
+    </script>
+    
+    <!-- script for submiting testimonial -->
+    <script>
+    document.getElementById("testimonialForm").addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        const accessToken = localStorage.getItem("access_token")?.trim();
+        if (!accessToken) return showLoginModal();
+
+
+        const message = document.getElementById("testimonialMessage").value.trim();
+        const image = document.getElementById("testimonialImage").files[0];
+
+        if (!message) {
+            alert("Please enter your testimonial message.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append("message", message);
+        if (image) formData.append("image", image);
+
+        const loadingSpinner = document.getElementById("testimonialLoading");
+        loadingSpinner.style.display = "inline-block";
+
+        try {
+            const response = await fetch("/api/testimonials/add/", {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Accept": "application/json"
+                    // DO NOT set Content-Type when sending FormData
+                },
+                body: formData,
+            });
+
+            const data = await response.json().catch(() => null);
+
+            if (!response.ok) {
+                console.error("Error response:", data);
+                alert(data?.message || "Failed to submit testimonial. Try again.");
+                throw new Error("Request failed");
+            }
+
+            alert("Your testimonial has been submitted and is awaiting admin approval.");
+
+            // Reset the form
+            document.getElementById("testimonialForm").reset();
+
+            // Close modal
+            const modalEl = document.getElementById("modalAddTestimonial");
+            const modal = bootstrap.Modal.getInstance(modalEl);
+            modal.hide();
+
+        } catch (error) {
+            console.error(error);
+            alert("An error occurred while submitting. Please try again.");
+        }
+
+        loadingSpinner.style.display = "none";
+    });
+    </script>
+
+    <!-- script for submiting feedback or complaint -->
+    <script>
+    document.addEventListener("DOMContentLoaded", function () {
+
+        const form = document.getElementById("feedbackAndComplaintForm");
+        const loading = document.getElementById("feedbackAndComplaintLoading");
+        const status = document.getElementById("feedbackAndComplaintStatus");
+
+        form.addEventListener("submit", async function (e) {
+            e.preventDefault();
+
+            // Clear previous status
+            status.style.display = "none";
+            status.textContent = "";
+            status.className = "";
+
+            // Get access token
+            const accessToken = localStorage.getItem("access_token")?.trim();
+            if (!accessToken) {
+                status.style.display = "block";
+                status.className = "alert alert-warning";
+                status.textContent = "Please login first.";
+                return;
+            }
+            if (!accessToken) return showLoginModal();
+
+            // Get form values
+            const type = document.getElementById("feedbackAndComplaintType").value.trim();
+            const message = document.getElementById("feedbackAndComplaintMessage").value.trim();
+            const image = document.getElementById("feedbackAndComplaintImage").files[0];
+
+            // Validation
+            if (!type) {
+                status.style.display = "block";
+                status.className = "alert alert-warning";
+                status.textContent = "Please select a type.";
+                return;
+            }
+            if (!message) {
+                status.style.display = "block";
+                status.className = "alert alert-warning";
+                status.textContent = "Message is required.";
+                return;
+            }
+
+            // Prepare FormData
+            const formData = new FormData();
+            formData.append("feedback_type", type);
+            formData.append("message", message);
+            if (image) formData.append("image", image);
+
+            // Show spinner
+            loading.style.display = "inline-block";
+
+            try {
+                const response = await fetch("/api/feedback/add/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": `Bearer ${accessToken}`,
+                        "Accept": "application/json"
+                    },
+                    body: formData
+                });
+
+                const data = await response.json().catch(() => null);
+
+                if (!response.ok) {
+                    status.style.display = "block";
+                    status.className = "alert alert-danger";
+                    status.textContent = data?.message || "Failed to submit. Try again.";
+                    return;
+                }
+
+                // Show success message in modal
+                status.style.display = "block";
+                status.className = "alert alert-success";
+                status.textContent = "Your submission has been sent successfully.";
+
+                form.reset();
+
+            } catch (err) {
+                status.style.display = "block";
+                status.className = "alert alert-danger";
+                status.textContent = "An error occurred. Please try again.";
+                console.error(err);
+            } finally {
+                loading.style.display = "none";
+            }
+        });
+
+    });
+    </script>
+        
+    <!-- Image Preview Modal -->
+    <div class="modal fade" id="imagePreviewModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content bg-transparent border-0 shadow-none">
+        <img id="previewImage" src="" class="img-fluid rounded" />
+        </div>
+    </div>
+    </div>
+    <!-- script for loading testimonials -->
+    <script>
+        async function loadTestimonials() {
+            try {
+                const response = await fetch("/api/testimonials/");
+                const data = await response.json();
+
+                const carouselInner = document.querySelector("#testimonialCarousel .carousel-inner");
+                carouselInner.innerHTML = ""; // clear
+
+                if (!data.length) {
+                    carouselInner.innerHTML = `
+                        <div class="carousel-item active text-center">
+                            <p class="mb-2 fst-italic">No testimonials yet. Be the first to share!</p>
+                        </div>`;
+                    return;
+                }
+
+                data.forEach((t, index) => {
+                    const item = document.createElement("div");
+                    item.classList.add("carousel-item");
+                    if (index === 0) item.classList.add("active");
+
+                    item.innerHTML = `
+                        <div class="text-center">
+                            <img src="${t.image || 'https://via.placeholder.com/80'}"
+                                class="rounded-circle mb-3 testimonial-img"
+                                style="width:80px; height:80px; object-fit:cover; cursor:pointer;">
+                            <p class="mb-2 fst-italic">"${t.message}"</p>
+                            <h6 class="fw-bold mb-0">${t.user_name}</h6>
+                        </div>
+                    `;
+
+                    carouselInner.appendChild(item);
+                });
+
+                // -------- NEW FEATURE: CLICK IMAGE TO OPEN FULL SCREEN ----------
+                document.querySelectorAll(".testimonial-img").forEach(img => {
+                    img.addEventListener("click", () => {
+                        document.getElementById("previewImage").src = img.src;
+                        const modal = new bootstrap.Modal(document.getElementById("imagePreviewModal"));
+                        modal.show();
+                    });
+                });
+
+            } catch (error) {
+                console.error("Testimonial load error:", error);
+            }
+        }
+
+        // Load on open
+        document.getElementById("modalTestimonial").addEventListener("shown.bs.offcanvas", loadTestimonials);
+    </script>
+
+
+    <!-- jquery -->
+    <script src="{% static 'assets/js/jquery-3.5.1.min.js' %}"></script>
+    <!--bootstrap-->
+    <script src="{% static 'assets/vendor/bootstrap/dist/js/bootstrap.bundle.min.js' %}"></script>
+    <!-- swiper carousel -->
+    <script src="../../assets/vendor/swiper/swiper-bundle.min.js"></script>
+    <!-- magnific -->
+    <script src="{% static 'assets/vendor/magnific/jquery.magnific-popup.min.js' %}"></script>
+    <!-- isotope -->
+    <script src="{% static 'assets/vendor/isotope/isotope.pkgd.min.js' %}"></script>
+    <!-- count-down -->
+    <script src="{% static 'assets/vendor/count-down/jquery.countdown.min.js' %}"></script>
+    <!-- count-down -->
+    <script src="{% static 'assets/vendor/jarallax/jarallax-all.js' %}"></script>
+    <!-- Theme Js -->
+    <script src="{% static 'assets/js/custom.js' %}"></script>
+    <script src="{% static 'assets/js/theme.js' %}"></script>
+    <script src="{% static 'assets/js/color-modes.js' %}"></script>
+
+    
+    <!-- auto loggout user after 15 minute of in activity -->
+    <script>
+    (function () {
+        const LOGOUT_AFTER = 15 * 60 * 1000; // 15 mins inactivity
+        let lastActivity = Date.now();
+
+        function updateActivity() {
+            lastActivity = Date.now();
+        }
+
+        // Track activity
+        ["mousemove", "keydown", "click", "scroll"].forEach(e =>
+            document.addEventListener(e, updateActivity, true)
+        );
+
+        // Inactivity logout
+        setInterval(() => {
+            const token = localStorage.getItem("access_token");
+            if (!token) return;
+
+            if (Date.now() - lastActivity > LOGOUT_AFTER) {
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+                window.location.reload();
+            }
+        }, 10000);
+        
+        window.addEventListener("load", () => {
+            // If sessionStorage is empty → tab was closed → logout
+            if (!sessionStorage.getItem("active_tab")) {
+                // Tab was reopened fresh → logout
+                localStorage.removeItem("access_token");
+                localStorage.removeItem("refresh_token");
+            }
+        });
+    })();
+    </script>
+
+</body>
+
+</html>

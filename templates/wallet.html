@@ -1,0 +1,38 @@
+{% extends 'main.html' %}
+{% block content%}
+    <!-- Section -->
+    <div class="row justify-content-center section-heading">
+        <div class="col-lg-6 text-center">
+            <p class="fs-6 m-0">you are accessing  wallet account.</p>
+            <h3 class="h2 mt-2 mb-0" id="walletName">personal walet</h3>
+        </div>
+    </div>
+    <section class="section">
+        <div class="container">
+            <div class="row gy-4">
+                <!-- WALLET SUMMARY BOXES -->
+                <div class="col-lg-4">
+                    <div class="px-4 position-relative pt-5 text-center rounded  mb-2" style="background-color: #e6ffd6;">
+                        <h6 style="color: #2e6b1c;">Total Balance</h6>
+                        <h3 class="m-0 text-dark  p-2" id="walletBalance">Ksh 0</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="px-4 position-relative pt-5 text-center rounded  mb-2" style="background-color: #ffe1db;">
+                        <h6 style="color: #f62b22;">Received Locked Balance</h6>
+                        <h3 class="m-0 text-dark  p-2" id="walletReceivedLocked">Ksh 0</h3>
+                    </div>
+                </div>
+
+                <div class="col-lg-4">
+                    <div class="px-4 position-relative pt-5 text-center rounded  mb-2" style="background-color: #ffdee1;">
+                        <h6 style="color: #fe0d25;">Send Locked Balance</h6>
+                        <h3 class="m-0 text-dark p-2" id="walletSentLocked">Ksh 0</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Section -->
+{% endblock %}
