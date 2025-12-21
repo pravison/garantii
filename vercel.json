@@ -1,0 +1,16 @@
+{
+    "version": 2,
+    "builds": [
+        {
+            "src": "garantii/wsgi.py",
+            "use": "@vercel/python",
+            "config": { "maxLambdaSize": "15mb", "runtime": "python3.15" }
+        }
+    ],
+    "routes": [
+        {
+            "src": "/(.*)",
+            "dest": "garantii/wsgi.py"
+        }
+    ]
+}
