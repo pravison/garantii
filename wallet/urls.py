@@ -14,4 +14,7 @@ urlpatterns = [
     path("api/testimonials/add/", AddTestimonialView.as_view(), name="testimonial-add"),
     path("api/feedback/add/", AddCustomerFeedbackView.as_view(), name="customer-feedback-add"),
 
+    # mpesa call back url for c2b
+     path("api/c2b-callback-url/", MpesaC2BConfirmationView.as_view(), name="c2b-callback-url"),
+
 ]
