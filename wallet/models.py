@@ -5,13 +5,106 @@ from django.db import models, transaction
 from django.conf import settings
 from django.utils import timezone
 
-User = settings.AUTH_USER_MODEL
+from django.contrib.auth.models import User
+from django.contrib.auth.hashers import make_password, check_password
+from django.utils import timezone
+from datetime import timedelta
+
+from django.db import models
+from django.contrib.auth.models import User
+from django.utils import timezone
+from django.contrib.auth.hashers import make_password, check_password
+from datetime import timedelta
+import random
+
+class UserPin(models.Model):
+    user = models.OneToOneField(User, on_delete=models.CASCADE, related_name="pin")
+    pin_hash = models.CharField(max_length=128)
+
+    failed_attempts = models.PositiveSmallIntegerField(default=0)
+    locked_until = models.DateTimeField(null=True, blank=True)
+
+    # OTP fields
+    otp_code = models.CharField(max_length=6, null=True, blank=True)
+    otp_created_at = models.DateTimeField(null=True, blank=True)
+    OTP_EXPIRY_SECONDS = 30
+
+    created_at = models.DateTimeField(auto_now_add=True)
+    updated_at = models.DateTimeField(auto_now=True)
+    is_active = models.BooleanField(default=True)
+
+    MAX_ATTEMPTS = 3
+    LOCK_MINUTES = 15
+
+    def __str__(self):
+        return f"{self.user} -{self.is_active} - {self.locked_until}"
+    
+    def set_pin(self, raw_pin):
+        self.pin_hash = make_password(raw_pin)
+        self.failed_attempts = 0
+        self.locked_until = None
+        self.save()
+
+    def is_locked(self):
+        return self.locked_until and self.locked_until > timezone.now()
+
+    def check_pin(self, raw_pin):
+        if self.is_locked():
+            return False
+
+        if check_password(raw_pin, self.pin_hash):
+            self.failed_attempts = 0
+            self.save()
+            return True
+
+        self.failed_attempts += 1
+        if self.failed_attempts >= self.MAX_ATTEMPTS:
+            self.locked_until = timezone.now() + timedelta(minutes=self.LOCK_MINUTES)
+        self.save()
+        return False
+
+    # -------------------------
+    # OTP related methods
+    # -------------------------
+    def generate_otp(self):
+        """Generate a new 6-digit OTP and start the expiry timer."""
+        self.otp_code = f"{random.randint(100000, 999999)}"
+        self.otp_created_at = timezone.now()
+        self.save()
+        return self.otp_code
+
+    def otp_is_valid(self, otp_input):
+        """Check if the OTP is correct and not expired."""
+        if not self.otp_code or not self.otp_created_at:
+            return False
+
+        # Check expiry
+        if timezone.now() > self.otp_created_at + timedelta(seconds=self.OTP_EXPIRY_SECONDS):
+            return False
+
+        return self.otp_code == str(otp_input)
+
+    def resend_otp(self):
+        """Regenerate a new OTP and reset the timer."""
+        return self.generate_otp()
+
+    
+class WithdrawalAudit(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    action = models.CharField(max_length=50)  # PIN_SET, PIN_FAILED, WITHDRAW
+    ip_address = models.GenericIPAddressField(null=True, blank=True)
+    metadata = models.JSONField(default=dict, blank=True)
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.user} - {self.action}"
+
 
 class Wallet(models.Model):
     owner = models.ForeignKey(User,null=True, blank=True, on_delete=models.SET_NULL, related_name='wallets')
     is_business = models.BooleanField(default=False)
     identifier = models.CharField(max_length=64, unique=True)  # phone for personal, shortcode for business
-    available_balance = models.DecimalField(max_digits=14, decimal_places=2, default=Decimal('0.00'))
+    available_balance = models.DecimalField(max_digits=14, decimal_places=2, default=Decimal('0.00'))# total balance withdrwable balance / spendable balance
     send_locked_balance = models.DecimalField(max_digits=14, decimal_places=2, default=Decimal('0.00'))    # funds held awaiting release to others
     receive_locked_balance = models.DecimalField(max_digits=14, decimal_places=2, default=Decimal('0.00')) # optional other locked bucket
     created_at = models.DateTimeField(auto_now_add=True)
@@ -29,7 +122,14 @@ class Wallet(models.Model):
 
     # convenience operations (use services for production)
     def total_balance(self):
-        return self.balance
+        return (
+            self.available_balance +
+            self.send_locked_balance +
+            self.receive_locked_balance
+        )
+
+    def withdrawable_balance(self):
+        return self.available_balance
 
     def total_locked(self):
         return self.send_locked_balance + self.receive_locked_balance
@@ -53,6 +153,7 @@ class PaymentTransaction(models.Model):
 
     wallet = models.ForeignKey(Wallet, on_delete=models.PROTECT, related_name='payment_transactions', null=True, blank=True)
     amount = models.DecimalField(max_digits=14, decimal_places=2)
+    transaction_fees = models.DecimalField(max_digits=14, decimal_places=2, default=0.00)
     sender_phone = models.CharField(max_length=15, null=True, blank=True)
     account_number = models.CharField(max_length=64, null=True, blank=True)
     external_provider = models.CharField(max_length=32, null=True, blank=True)  # "MPESA", "BANK", etc.
@@ -110,6 +211,74 @@ class WalletLedger(models.Model):
 
     def __str__(self):
         return f"Ledger {self.entry_type} {self.amount} for {self.wallet.identifier}"
+
+# mpesa callback that were not found saved here for later recociliation
+class MpesaCallbackLog(models.Model):
+    conversation_id = models.CharField(max_length=64, db_index=True)
+    payload = models.JSONField()
+    received_at = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.conversation_id
+
+class WalletReconciliationLog(models.Model):
+    wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
+    wallet_balance = models.DecimalField(max_digits=14, decimal_places=2)
+    ledger_balance = models.DecimalField(max_digits=14, decimal_places=2)
+    difference = models.DecimalField(max_digits=14, decimal_places=2)
+    detected_at = models.DateTimeField(auto_now_add=True)
+    source = models.CharField(max_length=50, default="withdraw_check")
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["wallet"]),
+            models.Index(fields=["detected_at"]),
+        ]
+
+# transaction fees
+class FeeRule(models.Model):
+    FEE_TYPES = [
+        ("WITHDRAWAL", "Withdrawal"),
+        ("DEPOSIT", "Deposit"),
+    ]
+
+    PROVIDERS = [
+        ("MPESA", "M-PESA"),
+        ("BANK", "Bank"),
+    ]
+
+    fee_type = models.CharField(max_length=20, choices=FEE_TYPES)
+    provider = models.CharField(max_length=20, choices=PROVIDERS)
+
+    min_amount = models.DecimalField(max_digits=14, decimal_places=2)
+    max_amount = models.DecimalField(max_digits=14, decimal_places=2)
+
+    provider_fee = models.DecimalField(
+        max_digits=14,
+        decimal_places=2,
+        help_text="Fee charged by provider (e.g. MPESA)"
+    )
+    platform_fee = models.DecimalField(
+        max_digits=14,
+        decimal_places=2,
+        help_text="Fee charged by platform"
+    )
+
+    is_active = models.BooleanField(default=True)
+    effective_from = models.DateTimeField()
+    effective_to = models.DateTimeField(null=True, blank=True)
+
+    class Meta:
+        indexes = [
+            models.Index(fields=["fee_type", "provider", "is_active"]),
+        ]
+     
+    
+    def total_fee(self):
+        return self.provider_fee + self.platform_fee
+    def __str__(self):
+        return f"{self.min_amount} - {self.max_amount} {self.total_fee}"
 
 
 class EscrowAllocation(models.Model):

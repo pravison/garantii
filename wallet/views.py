@@ -1,28 +1,37 @@
-from django.shortcuts import render
-# escrow/api/views.py
-
-from decimal import Decimal
-from django.utils import timezone
-
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
-from rest_framework.views import APIView
-from rest_framework import status
-from rest_framework.permissions import IsAuthenticated
-from .models import Wallet, PaymentTransaction
-from .serializers import WalletSerializer, WalletCreateSerializer,  PaymentTransactionSerializer, TestimonialSerializer, CustomerFeedbackSerializer
+# Standard library
 import random
+from decimal import Decimal
 
-from .models import EscrowAllocation, WalletLedger
-from .serializers import EscrowAllocationSerializer
-
-
-
-from rest_framework import status as http_status
-from django.shortcuts import get_object_or_404
+# Django imports
+from django.shortcuts import render, get_object_or_404
+from django.utils import timezone
 from django.db import transaction
 
+# DRF imports
+from rest_framework import generics, permissions, status
+
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.response import Response
+from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
+
+# Local app imports
+from .models import (
+    Wallet, PaymentTransaction, EscrowAllocation, WalletLedger,
+    Testimonial, UserPin, WithdrawalAudit, MpesaCallbackLog
+)
+from .serializers import (
+    WalletSerializer, WalletCreateSerializer, PaymentTransactionSerializer,
+    TestimonialSerializer, CustomerFeedbackSerializer, EscrowAllocationSerializer
+)
+from .services.walet_balance import get_withdrawable_balance
+from wallet.services.fees import calculate_withdrawal_fees
+
+# Utilities
 from account.utils import format_kenyan_phone_number
+from payments.b2c import trigger_mpesa_b2c
+
+
 # Create your views here.
 def wallet(request):
     context ={}
@@ -70,31 +79,6 @@ class UserWalletsView(APIView):
         }, status=status.HTTP_200_OK)
 
 
-
-@api_view(['GET'])
-def escrow_transactions(request):
-    wallet_id = request.GET.get("wallet_id")
-
-#     if not wallet_id:
-#         return Response({"error": "wallet_id is required"}, status=400)
-
-#     sent = EscrowAllocation.objects.filter(payment__sender_phone=wallet_id)
-#     received = EscrowAllocation.objects.filter(receiver_phone=wallet_id)
-
-#     # Serialize
-#     sent_ser = EscrowAllocationSerializer(sent, many=True).data
-#     for t in sent_ser:
-#         t["direction"] = "SENT"
-
-#     received_ser = EscrowAllocationSerializer(received, many=True).data
-#     for t in received_ser:
-#         t["direction"] = "RECEIVED"
-
-#     combined = sent_ser + received_ser
-
-#     return Response({"transactions": combined})
-
-
 class WalletCreateView(APIView):
     permission_classes = [IsAuthenticated]
 
@@ -129,8 +113,6 @@ class WalletCreateView(APIView):
 
         serializer = WalletCreateSerializer(wallet)
         return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
 
 
 class WalletPaymentListView(APIView):
@@ -181,17 +163,17 @@ class WalletEscrowListView(APIView):
         """
         wallet_id = request.GET.get('wallet_id')
         if not wallet_id:
-            return Response({"detail": "wallet_id required"}, status=http_status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "wallet_id required"}, status=status.HTTP_400_BAD_REQUEST)
 
         wallet = get_wallet_for_user(wallet_id, request.user)
         if wallet is None:
-            return Response({"detail": "Wallet not found or access denied"}, status=http_status.HTTP_404_NOT_FOUND)
+            return Response({"detail": "Wallet not found or access denied"}, status=status.HTTP_404_NOT_FOUND)
 
         qs = EscrowAllocation.objects.filter(payer_wallet=wallet) | EscrowAllocation.objects.filter(receiver_wallet=wallet)
         qs = qs.order_by('-created_at')
 
         serializer = EscrowAllocationSerializer(qs, many=True)
-        return Response({"transactions": serializer.data}, status=http_status.HTTP_200_OK)
+        return Response({"transactions": serializer.data}, status=status.HTTP_200_OK)
 
 
 class EscrowRequestReversalView(APIView):
@@ -206,18 +188,18 @@ class EscrowRequestReversalView(APIView):
 
         # permission check
         if not escrow.can_be_reversed_by(request.user):
-            return Response({"detail": "Not allowed to reverse this escrow or invalid status"}, status=http_status.HTTP_403_FORBIDDEN)
+            return Response({"detail": "Not allowed to reverse this escrow or invalid status"}, status=status.HTTP_403_FORBIDDEN)
 
         try:
             with transaction.atomic():
                 updated = escrow.request_reversal(user=request.user)
         except ValueError as e:
-            return Response({"detail": str(e)}, status=http_status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception as e:
-            return Response({"detail": "Failed to request reversal"}, status=http_status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"detail": "Failed to request reversal"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         serializer = EscrowAllocationSerializer(updated)
-        return Response({"detail": "Reversal requested successfully", "transaction": serializer.data}, status=http_status.HTTP_200_OK)
+        return Response({"detail": "Reversal requested successfully", "transaction": serializer.data}, status=status.HTTP_200_OK)
 
 
 class EscrowAddExtraInfoView(APIView):
@@ -232,26 +214,25 @@ class EscrowAddExtraInfoView(APIView):
         payload_extra = request.data.get('extra') or request.data.get('extra_info') or ''
         extra_info = str(payload_extra).strip()
         if not extra_info:
-            return Response({"detail": "extra info required"}, status=http_status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": "extra info required"}, status=status.HTTP_400_BAD_REQUEST)
 
         escrow = get_object_or_404(EscrowAllocation, id=escrow_id)
 
         if not escrow.can_add_extra_by(request.user):
-            return Response({"detail": "Not allowed to add info (already exists or not owner)"}, status=http_status.HTTP_403_FORBIDDEN)
+            return Response({"detail": "Not allowed to add info (already exists or not owner)"}, status=status.HTTP_403_FORBIDDEN)
 
         try:
             with transaction.atomic():
                 updated = escrow.add_extra(extra_info, user=request.user)
         except ValueError as e:
-            return Response({"detail": str(e)}, status=http_status.HTTP_400_BAD_REQUEST)
+            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
         except Exception:
-            return Response({"detail": "Failed to save extra info"}, status=http_status.HTTP_500_INTERNAL_SERVER_ERROR)
+            return Response({"detail": "Failed to save extra info"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
 
         serializer = EscrowAllocationSerializer(updated)
-        return Response({"detail": "Extra information added successfully", "transaction": serializer.data}, status=http_status.HTTP_200_OK)
+        return Response({"detail": "Extra information added successfully", "transaction": serializer.data}, status=status.HTTP_200_OK)
 
-from rest_framework import generics, permissions
-from .models import Testimonial
+
 
 class ApprovedTestimonialListView(generics.ListAPIView):
     queryset = Testimonial.objects.filter(is_approved=True).order_by("-date_created")
@@ -274,246 +255,295 @@ class AddCustomerFeedbackView(generics.CreateAPIView):
         serializer.save(user=self.request.user)
 
 
-import re
-import requests
-from decimal import Decimal, InvalidOperation
+class SetPinView(APIView):
+    permission_classes = [IsAuthenticated]
 
-from django.conf import settings
-from django.db import transaction
-from django.utils import timezone
+    def post(self, request):
+        user = request.user
+        raw_pin = request.data.get("pin")
 
-from rest_framework.views import APIView
-from rest_framework.response import Response
+        if not raw_pin or len(raw_pin) < 4:
+            return Response({"detail": "PIN must be at least 4 digits."}, status=status.HTTP_400_BAD_REQUEST)
 
-PHONE_REGEX = re.compile(r"(?:254|0)(?:7|1)\d{8}")
+        # Get or create UserPin record
+        user_pin, created = UserPin.objects.get_or_create(user=user)
 
-def normalize_msisdn(msisdn: str) -> str:
-    msisdn = msisdn.strip()
-    if msisdn.startswith("0"):
-        return "254" + msisdn[1:]
-    return msisdn
+        # Set the PIN but mark it as inactive until OTP verified
+        user_pin.set_pin(raw_pin)
+        user_pin.is_active = False
+        user_pin.generate_otp()  # Generate OTP for verification
+        user_pin.save()
 
-
-def identify_account_number(value: str) -> str:
-    if not value:
-        return "UNKNOWN"
-
-    value = value.strip()
-
-    if PHONE_REGEX.fullmatch(value):
-        return "PHONE"
-
-    if value.isdigit() and len(value) == 6:
-        return "BUSINESS_TILL"
-
-    if value.upper().startswith("ORD"):
-        return "ORDER"
-
-    return "UNKNOWN"
-
-class OrderAllocationError(Exception):
-    pass
+        # Return OTP info (in production, you'd send it via SMS/Email instead)
+        return Response({
+            "detail": "PIN set successfully. Please verify OTP to activate.",
+            "otp": user_pin.otp_code,  # for testing only; remove in production
+            "otp_expires_in": user_pin.OTP_EXPIRY_SECONDS
+        }, status=status.HTTP_201_CREATED)
 
 
-def get_order_allocations(order_id):
-    try:
-        resp = requests.get(
-            f"{settings.ECOMMERCE_BASE_URL}/api/orders/{order_id}/escrow-allocations/",
-            headers={
-                "Authorization": f"Bearer {settings.ECOMMERCE_SERVICE_TOKEN}",
-            },
-            timeout=10,
-        )
-    except requests.RequestException:
-        raise OrderAllocationError("Ecommerce unreachable")
+class VerifyPinOTPView(APIView):
+    permission_classes = [IsAuthenticated]
 
-    if resp.status_code != 200:
-        raise OrderAllocationError("Order not found")
+    def post(self, request):
+        user = request.user
+        otp_input = request.data.get("otp")
 
-    data = resp.json()
-    items = data.get("items")
-
-    if not isinstance(items, list) or not items:
-        raise OrderAllocationError("Invalid order data")
-
-    allocations = []
-
-    for item in items:
         try:
-            amount = Decimal(item["amount"])
-        except (KeyError, InvalidOperation):
-            raise OrderAllocationError("Invalid amount")
+            user_pin = user.pin
+        except UserPin.DoesNotExist:
+            return Response({"detail": "PIN not set yet."}, status=status.HTTP_400_BAD_REQUEST)
 
-        allocations.append({
-            "order_id": order_id,
-            "seller_identifier": item["seller_identifier"],
-            "amount": amount,
-            "description": item.get("description", ""),
+        if user_pin.otp_is_valid(otp_input):
+            user_pin.is_active = True
+            user_pin.otp_code = None  # clear OTP
+            user_pin.otp_created_at = None
+            user_pin.save()
+            return Response({"detail": "PIN verified and activated successfully."}, status=status.HTTP_200_OK)
+        else:
+            return Response({"detail": "Invalid or expired OTP."}, status=status.HTTP_400_BAD_REQUEST)
+
+
+class ResendPinOTPView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        user = request.user
+        try:
+            user_pin = user.pin
+        except UserPin.DoesNotExist:
+            return Response({"detail": "PIN not set yet."}, status=status.HTTP_400_BAD_REQUEST)
+
+        otp = user_pin.resend_otp()
+        return Response({
+            "detail": "OTP resent successfully.",
+            "otp_expires_in": user_pin.OTP_EXPIRY_SECONDS
+        }, status=status.HTTP_200_OK)
+
+class VerifyPinView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request):
+        pin = request.data.get("pin")
+        user_pin = UserPin.objects.filter(user=request.user).first()  # fetch even if inactive
+
+        # No PIN set at all
+        if not user_pin:
+            return Response({"detail": "PIN not set"}, status=400)
+
+        # PIN exists but locked
+        if user_pin.is_locked():
+            return Response({"detail": "PIN locked. Try again later."}, status=status.HTTP_423_LOCKED)
+
+        # If frontend is only checking existence, skip actual pin validation
+        if pin == "__check_only__":
+            # If OTP verification pending
+            if not user_pin.is_active:
+                return Response({"detail": "PIN not verified"}, status=200)
+            return Response({"detail": "PIN exists"}, status=200)
+
+        # Real PIN validation
+        if not user_pin.check_pin(pin):
+            WithdrawalAudit.objects.create(
+                user=request.user,
+                action="PIN_FAILED",
+                ip_address=request.META.get("REMOTE_ADDR")
+            )
+            return Response({"detail": "Invalid PIN"}, status=400)
+
+        return Response({"detail": "PIN verified"}, status=200)
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def withdrawal_preview(request):
+    user = request.user
+    wallet_id = request.data.get("wallet_id")
+    amount = request.data.get("amount")
+
+    if not wallet_id or not amount:
+        return Response({"detail": "Missing fields"}, status=400)
+
+    try:
+        amount = Decimal(amount)
+        if amount <= 0:
+            raise ValueError
+    except Exception:
+        return Response({"detail": "Invalid amount"}, status=400)
+
+    try:
+        wallet = Wallet.objects.get(id=wallet_id, owner=user)
+    except Wallet.DoesNotExist:
+        return Response({"detail": "Wallet not found"}, status=404)
+
+    withdrawable = get_withdrawable_balance(wallet)
+    fees = calculate_withdrawal_fees(amount, provider="MPESA")
+    total =amount + fees["total_fee"]
+
+    if total > withdrawable:
+        return Response({
+            "detail": "Insufficient balance",
+            "withdrawable": str(withdrawable)
+        }, status=400)
+
+    return Response({
+        "amount": str(amount),
+        "fee": str(fees),
+        "phone": wallet.owner.username,
+        "wallet_id": wallet.id,
+        "pin_required": not hasattr(user, "pin"),
+    })
+
+def audit(user, action, request, metadata=None):
+    WithdrawalAudit.objects.create(
+        user=user,
+        action=action,
+        ip_address=request.META.get("REMOTE_ADDR"),
+        metadata=metadata or {}
+    )
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def withdrawal_confirm(request):
+    user = request.user
+    wallet_id = request.data.get("wallet_id")
+    amount = request.data.get("amount")
+    pin = request.data.get("pin")
+
+    if not pin:
+        return Response({"detail": "PIN required"}, status=400)
+
+    if not hasattr(user, "pin") or not user.pin.check_pin(pin):
+        audit(user, "PIN_FAILED", request)
+        return Response(
+            {"detail": "Invalid PIN. If you forgot your PIN, call customer support to reset."},
+            status=422
+        )
+
+    amount = Decimal(amount).quantize(Decimal("0.01"))
+
+    with transaction.atomic():
+        wallet = Wallet.objects.select_for_update().get(
+            id=wallet_id,
+            owner=user
+        )
+
+        fees = calculate_withdrawal_fees(amount, provider="MPESA")
+        total = (amount + fees).quantize(Decimal("0.01"))
+
+        withdrawable =  get_withdrawable_balance(wallet)
+        if total > withdrawable:
+            return Response({"detail": "Insufficient balance"}, status=400)
+
+        # ---- WALLET UPDATE ----
+        balance_before = wallet.available_balance
+        wallet.available_balance -= total
+        wallet.save(update_fields=["available_balance", "updated_at"])
+
+        # ---- PAYMENT RECORD ----
+        payment = PaymentTransaction.objects.create(
+            transaction_type="WITHDRAWAL",
+            wallet=wallet,
+            amount=amount,
+            transaction_fees=fees,
+            external_provider="MPESA",
+            sender_phone=wallet.identifier,
+            status="PENDING",
+            metadata={
+                "amount": str(amount),
+                "fee": str(fees),
+                "total_debited": str(total)
+            }
+        )
+
+        # ---- LEDGER ENTRY (DEBIT) ----
+        WalletLedger.objects.create(
+            wallet=wallet,
+            entry_type="WITHDRAWAL",
+            amount=-total,  # 🔥 debit
+            balance_before=balance_before,
+            balance_after=wallet.available_balance,
+            related_payment=payment,
+            meta={"channel": "MPESA_B2C"}
+        )
+
+        audit(user, "WITHDRAW", request, {
+            "amount": str(amount),
+            "fee": str(fees),
+            "payment_id": str(payment.id)
         })
 
-    return allocations
+    # trigger_mpesa_b2c(payment)
+
+    return Response({
+        "status": "PROCESSING",
+        "payment_id": str(payment.id)
+    })
 
 
-class MpesaC2BConfirmationView(APIView):
+class MpesaB2CResultCallbackView(APIView):
     authentication_classes = []
     permission_classes = []
 
     def post(self, request):
-        data = request.data
+        result = request.data.get("Result", {})
 
-        # -------- Parse --------
-        trans_id = data.get("TransID")
-        bill_ref = data.get("BillRefNumber")
-        sender_phone = data.get("MSISDN")
+        conversation_id = result.get("ConversationID")
+        result_code = result.get("ResultCode")
 
         try:
-            amount = Decimal(data.get("TransAmount"))
-        except (InvalidOperation, TypeError):
-            return Response({"ResultCode": 1, "ResultDesc": "Invalid amount"})
+            payment = PaymentTransaction.objects.select_for_update().get(
+                checkout_request_id=conversation_id,
+                transaction_type="WITHDRAWAL"
+            )
+        except PaymentTransaction.DoesNotExist:
+            MpesaCallbackLog.objects.create(
+                conversation_id=conversation_id,
+                payload=result
+            )
 
-        if not all([trans_id, bill_ref, sender_phone]):
-            return Response({"ResultCode": 1, "ResultDesc": "Invalid payload"})
+            return Response({"ResultCode": 0, "ResultDesc": "Ignored"})
 
-        sender_phone = normalize_msisdn(sender_phone)
-        acct_type = identify_account_number(bill_ref)
-
-        # -------- PRE-VALIDATION (NO DB WRITES) --------
-        try:
-            if acct_type == "BUSINESS_TILL":
-                Wallet.objects.get(identifier=bill_ref, is_business=True)
-
-            elif acct_type == "ORDER":
-                get_order_allocations(bill_ref)
-
-            elif acct_type == "PHONE":
-                pass  # always acceptable
-
-            else:
-                return Response({"ResultCode": 1, "ResultDesc": "Invalid account"})
-
-        except Exception:
-            return Response({"ResultCode": 1, "ResultDesc": "Invalid reference"})
-
-        # -------- IDEMPOTENCY --------
-        if PaymentTransaction.objects.filter(trans_id=trans_id).exists():
+        # 🔐 Idempotency guard
+        if payment.status in ("SUCCESS", "FAILED"):
             return Response({"ResultCode": 0, "ResultDesc": "Already processed"})
 
-        # -------- ACCEPT PAYMENT --------
         with transaction.atomic():
+            if result_code == 0:
+                payment.status = "SUCCESS"
+                payment.trans_id = result.get("TransactionID")
 
-            # Buyer wallet (auto-create)
-            buyer_wallet, _ = Wallet.objects.select_for_update().get_or_create(
-                identifier=sender_phone,
-                defaults={
-                    "is_business": False,
-                    "meta": {"auto_created": True},
-                },
+            else:
+                payment.status = "FAILED"
+                payment.transaction_fees = 0
+                wallet = payment.wallet
+                refund_amount = Decimal(payment.metadata["total_debited"])
+
+                balance_before = wallet.available_balance
+                wallet.available_balance += refund_amount
+                wallet.save(update_fields=["available_balance", "updated_at"])
+
+                # ---- LEDGER ENTRY (CREDIT) ----
+                WalletLedger.objects.create(
+                    wallet=wallet,
+                    entry_type="ADJUSTMENT",
+                    amount=refund_amount,  # credit
+                    balance_before=balance_before,
+                    balance_after=wallet.available_balance,
+                    related_payment=payment,
+                    meta={"reason": "MPESA B2C failed refund"}
+                )
+
+            payment.raw_payload = result
+            payment.processed_at = timezone.now()
+            payment.save(
+                update_fields=[
+                    "status",
+                    "transaction_fees",
+                    "trans_id",
+                    "raw_payload",
+                    "processed_at"
+                ]
             )
-
-            payment = PaymentTransaction.objects.create(
-                trans_id=trans_id,
-                transaction_type="DEPOSIT",
-                status="SUCCESS",
-                wallet=buyer_wallet,
-                amount=amount,
-                sender_phone=sender_phone,
-                account_number=bill_ref,
-                external_provider="MPESA",
-                received_at=timezone.now(),
-                processed_at=timezone.now(),
-                raw_payload=data,
-            )
-
-            # Credit buyer
-            before = buyer_wallet.available_balance
-            buyer_wallet.available_balance += amount
-            buyer_wallet.save(update_fields=["available_balance", "updated_at"])
-
-            WalletLedger.objects.create(
-                wallet=buyer_wallet,
-                entry_type="DEPOSIT",
-                amount=amount,
-                balance_before=before,
-                balance_after=buyer_wallet.available_balance,
-                related_payment=payment,
-            )
-
-            # Lock buyer funds
-            buyer_wallet.available_balance -= amount
-            buyer_wallet.send_locked_balance += amount
-            buyer_wallet.save(update_fields=[
-                "available_balance",
-                "send_locked_balance",
-                "updated_at",
-            ])
-
-            WalletLedger.objects.create(
-                wallet=buyer_wallet,
-                entry_type="ESCROW_HOLD",
-                amount=-amount,
-                balance_before=before + amount,
-                balance_after=buyer_wallet.available_balance,
-                related_payment=payment,
-            )
-
-            # -------- ALLOCATION --------
-            try:
-                allocations = []
-
-                if acct_type == "ORDER":
-                    order_items = get_order_allocations(bill_ref)
-                    for item in order_items:
-                        seller_wallet = Wallet.objects.select_for_update().get(
-                            identifier=item["seller_identifier"]
-                        )
-                        allocations.append({
-                            "order_id": bill_ref,
-                            "seller_wallet": seller_wallet,
-                            "amount": item["amount"],
-                            "description": item["description"],
-                        })
-
-                else:
-                    seller_wallet = Wallet.objects.select_for_update().get_or_create(
-                        identifier=bill_ref,
-                        defaults={"meta": {"auto_created": True}},
-                    )[0]
-
-                    allocations.append({
-                        "order_id": None,
-                        "seller_wallet": seller_wallet,
-                        "amount": amount,
-                        "description": "Direct escrow payment",
-                    })
-
-                total = sum(a["amount"] for a in allocations)
-                if total != amount:
-                    raise ValueError("Allocation mismatch")
-
-                for alloc in allocations:
-                    EscrowAllocation.objects.create(
-                        payment=payment,
-                        order_id=alloc["order_id"],
-                        description=alloc["description"],
-                        payer_wallet=buyer_wallet,
-                        receiver_wallet=alloc["seller_wallet"],
-                        receiver_phone=alloc["seller_wallet"].identifier,
-                        amount=alloc["amount"],
-                        status="HELD",
-                    )
-
-                    alloc["seller_wallet"].receive_locked_balance += alloc["amount"]
-                    alloc["seller_wallet"].save(update_fields=[
-                        "receive_locked_balance",
-                        "updated_at",
-                    ])
-
-                payment.reconciled = True
-                payment.save(update_fields=["reconciled"])
-
-            except Exception:
-                payment.status = "PENDING"
-                payment.metadata["allocation_failed"] = True
-                payment.save(update_fields=["status", "metadata"])
 
         return Response({"ResultCode": 0, "ResultDesc": "Accepted"})

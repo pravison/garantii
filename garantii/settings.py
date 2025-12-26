@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     # my internall app
     'account',
     'wallet',
+    'payments',
 ]
 
 MIDDLEWARE = [
@@ -88,22 +89,22 @@ WSGI_APPLICATION = 'garantii.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-import dj_database_url 
-
 DATABASES = {
-    'default': dj_database_url.parse(
-        env('psql'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# import dj_database_url 
+
+# DATABASES = {
+#     'default': dj_database_url.parse(
+#         env('psql'),
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -199,7 +200,7 @@ REST_FRAMEWORK = {
 # Simple JWT settings
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(seconds=180),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=2),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -221,6 +222,18 @@ DARJA_CONSUMER_KEY = env('DARJA_CONSUMER_KEY', default='')
 DARJA_CONSUMER_SECRET = env('DARJA_CONSUMER_SECRET', default='')
 DARJA_SHORTCODE = env('DARJA_SHORTCODE', default='')
 DARJA_PASSKEY = env('DARJA_PASSKEY', default='')
+
+# Mpesa Daraja Settings
+MPESA_CONSUMER_KEY = "<your_consumer_key>"
+MPESA_CONSUMER_SECRET = "<your_consumer_secret>"
+MPESA_AUTH_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
+MPESA_B2C_URL = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest"
+MPESA_B2C_RESULT_URL = "https://yourdomain.com/api/payments/mpesa/b2c/result/"
+MPESA_B2C_TIMEOUT_URL = "https://yourdomain.com/api/payments/mpesa/b2c/timeout/"
+MPESA_SHORTCODE = "<your_shortcode>"
+MPESA_INITIATOR_NAME = "<initiator_name>"
+MPESA_SECURITY_CREDENTIAL = "<security_credential>"
+
 
 # email setup 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

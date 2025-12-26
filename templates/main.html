@@ -16,7 +16,7 @@
     <link rel="shortcut icon" type="image/png" sizes="16x16" href="{% static 'assets/img/favicon-16x16.png' %}">
     <link rel="shortcut icon" type="image/png" sizes="32x32" href="{% static 'assets/img/favicon-32x32.png' %}">
     <link rel="apple-touch-icon" href="{% static 'assets/img/apple-touch-icon.' %}">
-    <link rel="manifest" href="{% static 'assets/img/site.webmanifest' %}">
+    <!-- <link rel="manifest" href="{% static 'assets/img/site.webmanifest' %}"> -->
 
     <!-- CSS Template -->
     <link href="{% static 'assets/css/style.css' %}" rel="stylesheet">
@@ -48,82 +48,6 @@
 
     
     <!-- End Preload -->
-    <!-- Edn Skippy & Prload -->
-    <!-- Size Chart  -->
-    <!-- Ask Form -->
-    <div class="modal-askform-view modal fade" id="px_ask_modal" tabindex="-1">
-        <div class="modal-dialog modal-dialog-centered">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h4 class="modal-title">Ask about product</h4><button class="btn-close" type="button" data-bs-dismiss="modal" aria-label="Close"></button></div>
-                <div class="modal-body">
-                    <form>
-                        <div class="row">
-                            <div class="col-md-6">
-                                <div class="mb-3"><label class="form-label">Your Name</label> <input type="text" class="form-control" placeholder="Name"></div>
-                            </div>
-                            <div class="col-md-6">
-                                <div class="mb-3"><label class="form-label">Email address</label> <input type="email" class="form-control" placeholder="E-mail"></div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-3"><label class="form-label" for="exampleInputEmail1">Subject</label> <input type="text" class="form-control" placeholder="Subject"></div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="mb-3"><label class="form-label" for="exampleInputEmail1">Your Message</label> <textarea class="form-control" rows="5" placeholder="Your Message"></textarea></div>
-                            </div>
-                        </div>
-                        <div class=""><button type="submit" class="btn btn-primary">Send Message</button></div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- End Ask Form -->
-    <!-- Header Search -->
-    <div class="px-search-full collapse bg-body p-3 position-fixed w-100 top-0" id="search-open">
-        <div class="container position-relative">
-            <div class="row vh-100 justify-content-center">
-                <div class="col-lg-8 pt-12">
-                    <h2 class="h1 mb-4"><span class="d-block">Search</span></h2>
-                    <form class="position-relative w-100">
-                        <div class="mb-3 input-group">
-                            <!-- Search input --><input class="form-control shadow-none" type="text" name="search" placeholder="What are you looking for?">
-                            <!-- Search button --><button type="button" class="btn btn-primary shadow-none"><i class="fi-search"></i></button></div>
-                    </form>
-                    <div class="row pt-3">
-                        <div class="col-6 col-lg-4"><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Search Results List </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Search Results Grid </a><a class="nav-link px-0 py-1"
-                                href="#"><i class="bi-chevron-right me-1"></i> About </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Services </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Invoice</a></div>
-                        <div
-                            class="col-6 col-lg-4"><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Profile </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> User Contacts </a><a class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Reviews </a>
-                            <a
-                                class="nav-link px-0 py-1" href="#"><i class="bi-chevron-right me-1"></i> Settings</a>
-                    </div>
-                </div>
-            </div>
-            <!-- Search button close START --><a class="search-close" data-bs-toggle="collapse" href="javascript:void(0)" data-bs-target="#search-open" aria-expanded="true"><i class="bi bi-x p-0 lh-1"></i> </a>
-            <!-- Search button close END -->
-        </div>
-    </div>
-    </div>
-    <!-- End Header Search -->
-    <!-- Header Side Search -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="header_search_popup" aria-labelledby="header_search_popupLabel">
-        <div class="offcanvas-header border-bottom">
-            <h5 class="offcanvas-title" id="header_search_popupLabel">Search</h5><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
-        <div class="offcanvas-body">
-            <form class="position-relative w-100">
-                <div class="input-group">
-                    <!-- Search input --><input class="form-control shadow-none" type="text" name="search" placeholder="What are you looking for?">
-                    <!-- Search button --><button type="button" class="btn btn-primary shadow-none"><i class="fi-search"></i></button></div>
-            </form>
-            <div class="pt-3">
-                <div class="nav tag-cloud"><a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Design</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Development</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode"
-                        href="#">Travel</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Web Design</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Marketing</a>                    <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Research</a> <a class="rounded-pill px-3 small font-w-500 py-1 bg-gray-200 me-1 mb-1 text-mode" href="#">Managment</a></div>
-            </div>
-        </div>
-    </div>
-    <!-- End Header Side Search -->
-
     <!-- Feedback / Complaint Modal -->
     <div class="modal fade" id="feedbackModal" tabindex="-1" aria-labelledby="feedbackModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
@@ -171,78 +95,6 @@
     </div>
     </div>
 
-    <!-- Mini Cart  -->
-    <div class="offcanvas offcanvas-end" tabindex="-1" id="modalMiniCart" aria-labelledby="modalMiniCartLabel">
-        <div class="offcanvas-header border-bottom">
-            <h6 class="offcanvas-title" id="modalMiniCartLabel">Your Cart (2)</h6><button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button></div>
-        <div class="offcanvas-body">
-            <ul class="list-unstyled m-0 p-0">
-                <li class="py-2">
-                    <div class="row align-items-center">
-                        <div class="col-4">
-                            <!-- Image --><a href="#"><img class="img-fluid border" src="../../assets/img/fashion/product-x-1.jpg" alt="..."></a></div>
-                        <div class="col-8">
-                            <!-- Title -->
-                            <p class="mb-2"><a class="text-mode fw-500" href="#">Cotton floral print Dress</a> <span class="m-0 text-muted w-100 d-block">$40.00</span></p>
-                            <!--Footer -->
-                            <div class="d-flex align-items-center">
-                                <!-- Select --><select class="form-select form-select-sm w-auto"><option value="1">1</option><option value="1">2</option><option value="1">3</option></select>
-                                <!-- Remove --><a class="small text-mode ms-auto" href="#!"><i class="bi bi-x"></i> Remove</a></div>
-                        </div>
-                    </div>
-                </li>
-                <li class="py-2">
-                    <div class="row align-items-center">
-                        <div class="col-4">
-                            <!-- Image --><a href="#"><img class="img-fluid border" src="../../assets/img/fashion/product-x-1.jpg" alt="..."></a></div>
-                        <div class="col-8">
-                            <!-- Title -->
-                            <p class="mb-2"><a class="text-mode fw-500" href="#">Cotton floral print Dress</a> <span class="m-0 text-muted w-100 d-block">$40.00</span></p>
-                            <!--Footer -->
-                            <div class="d-flex align-items-center">
-                                <!-- Select --><select class="form-select form-select-sm w-auto"><option value="1">1</option><option value="1">2</option><option value="1">3</option></select>
-                                <!-- Remove --><a class="small text-mode ms-auto" href="#!"><i class="bi bi-x"></i> Remove</a></div>
-                        </div>
-                    </div>
-                </li>
-                <li class="py-2">
-                    <div class="row align-items-center">
-                        <div class="col-4">
-                            <!-- Image --><a href="#"><img class="img-fluid border" src="../../assets/img/fashion/product-x-1.jpg" alt="..."></a></div>
-                        <div class="col-8">
-                            <!-- Title -->
-                            <p class="mb-2"><a class="text-mode fw-500" href="#">Cotton floral print Dress</a> <span class="m-0 text-muted w-100 d-block">$40.00</span></p>
-                            <!--Footer -->
-                            <div class="d-flex align-items-center">
-                                <!-- Select --><select class="form-select form-select-sm w-auto"><option value="1">1</option><option value="1">2</option><option value="1">3</option></select>
-                                <!-- Remove --><a class="small text-mode ms-auto" href="#!"><i class="bi bi-x"></i> Remove</a></div>
-                        </div>
-                    </div>
-                </li>
-                <li class="py-2">
-                    <div class="row align-items-center">
-                        <div class="col-4">
-                            <!-- Image --><a href="#"><img class="img-fluid border" src="../../assets/img/fashion/product-x-1.jpg" alt="..."></a></div>
-                        <div class="col-8">
-                            <!-- Title -->
-                            <p class="mb-2"><a class="text-mode fw-500" href="#">Cotton floral print Dress</a> <span class="m-0 text-muted w-100 d-block">$40.00</span></p>
-                            <!--Footer -->
-                            <div class="d-flex align-items-center">
-                                <!-- Select --><select class="form-select form-select-sm w-auto"><option value="1">1</option><option value="1">2</option><option value="1">3</option></select>
-                                <!-- Remove --><a class="small text-mode ms-auto" href="#!"><i class="bi bi-x"></i> Remove</a></div>
-                        </div>
-                    </div>
-                </li>
-            </ul>
-        </div>
-        <div class="offcanvas-footer border-top p-3">
-            <div class="row g-0 pt-2 mt-2 border-top fw-bold text-mode">
-                <div class="col-8"><span class="text-mode">Subtotal</span></div>
-                <div class="col-4 text-end"><span class="ml-auto">$89.00</span></div>
-            </div>
-        </div>
-    </div>
-    <!-- End Mini Cart  -->
     <!-- Escrow Transactions Offcanvas (matches Mini Cart style, unique id to avoid clash) -->
     
     <div class="offcanvas offcanvas-end" tabindex="-1" id="modalEscrowList" aria-labelledby="modalEscrowListLabel">
@@ -378,7 +230,11 @@
                     <button id="paymentClearFilters" type="button" class="btn btn-sm ms-auto">Clear</button>
                 </div>
             </div>
-
+            <div class="loading text-center p-3 d-none">
+                <div class="spinner-border spinner-border-sm text-primary" role="status">
+                    <span class="visually-hidden">Loading...</span>
+                </div>
+            </div>
             <!-- Payment transactions list -->
             <ul class="list-unstyled m-0 p-0" id="paymentList">
 
@@ -792,45 +648,138 @@
         </div>
     </div>
 
-    <!-- Withdrawal Modal -->
-    <div class="modal fade" id="withdrawalModal" tabindex="-1" aria-labelledby="withdrawalModalLabel" aria-hidden="true">
+
+    <!-- WITHDRAWAL MODAL -->
+    <div class="modal fade" id="withdrawalModal" tabindex="-1">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-
+        
+        <!-- Modal Header -->
         <div class="modal-header bg-primary text-white">
-            <h5 class="modal-title" id="withdrawalModalLabel">Withdraw Funds</h5>
+            <h5 class="modal-title">Withdraw Funds</h5>
             <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
-
+        
+        <!-- Modal Body -->
         <div class="modal-body">
-
-            <!-- Customer Balance Display -->
-            <div class="mb-3 text-center">
-            <p class="mb-1 fw-bold">Withdrawable Balance</p>
-            <h4 class="text-success" id="withdrawableBalance">KES 0.00</h4>
+            <div class="text-center mb-3">
+            <p class="fw-bold mb-1">Withdrawable Balance</p>
+            <h4 class="text-success" id="waletBalance">KES 0.00</h4>
             </div>
 
-            <!-- Withdrawal Form -->
             <form id="withdrawalForm">
-            <!-- Hidden Customer ID -->
-            <input type="hidden" name="user_id" id="withdrawalUserId" value="">
-
             <div class="mb-3">
-                <label for="withdrawalAmount" class="form-label">Amount to Withdraw</label>
-                <input type="number" class="form-control" id="withdrawalAmount" name="amount" placeholder="Enter amount" min="1" required>
+                <label for="withdrawAmount" class="form-label">Amount</label>
+                <input type="number" class="form-control" id="withdrawAmount" min="1" required>
             </div>
 
-            <!-- Info / Alerts -->
-            <div id="withdrawalInfo" class="mb-3 text-center text-muted small">
-                Enter amount and click "Withdraw" to proceed.
-            </div>
-
-            <!-- Submit Button -->
             <div class="d-grid">
-                <button type="submit" class="btn btn-primary" id="withdrawButton">Withdraw</button>
+                <button type="submit" id="withdrawBtn" class="btn btn-primary">withdraw</button>
             </div>
             </form>
+        </div>
 
+        </div>
+    </div>
+    </div>
+
+
+    <!-- CONFIRM MODAL -->
+    <div class="modal fade" id="confirmWithdrawalModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header bg-danger">
+            <h5 class="modal-title">Confirm Withdrawal</h5>
+            <button class="btn-close" data-bs-dismiss="modal"></button>
+        </div>
+        <div class="modal-body">
+            <ul class="list-group mb-3">
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Amount</span>
+                <strong id="confirmAmount"></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Fees</span>
+                <strong id="confirmFee"></strong>
+            </li>
+            <li class="list-group-item d-flex justify-content-between">
+                <span>Send To</span>
+                <strong id="confirmPhone"></strong>
+            </li>
+            </ul>
+
+            <div class="d-grid">
+            <button class="btn btn-danger" id="confirmWithdrawBtn">
+                Confirm & Enter PIN
+            </button>
+            </div>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- PIN MODAL -->
+    <div class="modal fade" id="pinModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header bg-danger">
+            <h5 class="modal-title text-center">Enter PIN</h5>
+        </div>
+        <div class="modal-body">
+            <input type="password" class="form-control mb-3" id="userPin" placeholder="Enter PIN">
+            <button class="btn btn-primary w-100" id="submitPinBtn">Submit</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- SET PIN MODAL -->
+    <div class="modal fade" id="setPinModal" tabindex="-1">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header bg-success text-white">
+            <h5 class="modal-title">Set Withdrawal PIN</h5>
+        </div>
+        <div class="modal-body">
+            <p class="small text-muted">
+            <strong>this is the pin you will use to authorize withdrawal </strong>.
+            </p>
+            <input type="password" class="form-control mb-2" id="newPin" placeholder="New PIN">
+            <input type="password" class="form-control mb-3" id="confirmNewPin" placeholder="Confirm PIN">
+            <button class="btn btn-success w-100" id="setPinBtn">Set PIN</button>
+        </div>
+        </div>
+    </div>
+    </div>
+
+
+    <!-- PIN OTP VERIFY MODAL -->
+    <div class="modal fade" id="otpVerifyModal" tabindex="-1" data-bs-backdrop="static">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+        <div class="modal-header bg-primary text-white">
+            <h5 class="modal-title">Verify PIN</h5>
+        </div>
+        <div class="modal-body">
+            <p class="small text-muted">
+            Enter the OTP sent to your phone to activate your PIN.
+            </p>
+            <input
+            type="text"
+            class="form-control mb-2"
+            id="otpCode"
+            placeholder="Enter OTP"
+            />
+            <strong class="small mt-2 text-muted" id="otpStatus"></strong>
+            <button class="btn btn-primary w-100 mb-2" id="verifyOtpBtn">
+            Verify OTP
+            </button>
+            <button class="btn btn-outline-secondary w-100" id="resendOtpBtn">
+            Resend OTP
+            </button>
+            
         </div>
         </div>
     </div>
@@ -1135,7 +1084,7 @@
                 <div class="modal-header bg-primary">
                     <div class="modal-title p-3">
                         <h5 class="m-0 text-white">Sign in to your account!</h5>
-                        <p class="m-0 text-white">Nice to see you! Please log in with your account.</p>
+                        <p class="m-0 text-white">your session expired! Please log in your account again to refresh session.</p>
                     </div>
                     <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
                 </div>
@@ -1418,7 +1367,10 @@
                     <div class="col-md-8 my-3 text-center text-md-start">
                         <h3 class="h2 m-0 text-dark">buy confidently sell securelly courtersy of garantii</h3>
                     </div>
-                    <div class="col-md-4 my-3 text-center text-md-end"><a class="btn btn-primary" href="#" tabindex="0" data-bs-toggle="modal" data-bs-target="#withdrawalModal">Withdraw</a></div>
+                    <div class="col-md-4 my-3 text-center text-md-end">
+                        <button type="button" id="openWithdrawLink" class="btn btn-outline-primary ms-2 mb-1">Withdraw</button>
+                        <button type="button" id="openInitiateTransaction" class="btn btn-outline-primary ms-2 mb-1">Initiate Transaction</button>
+                    </div>
                 </div>
             </div>
         </section>
@@ -1743,9 +1695,20 @@
                 statusBox.className = 'alert alert-success';
                 statusBox.textContent = 'Login successful! Redirecting...';
 
-                // clear previous data from local storage
-                localStorage.clear();
+                // clear previous data from local storage excepts last_selected_wallet_id
+                function clearWalletCacheOnly() {
+                    const keepKeys = [
+                        "last_selected_wallet_id",
+                        "pin_otp_pending"   // 🔥 keep PIN / OTP state
+                    ];
 
+                    Object.keys(localStorage).forEach(key => {
+                        if (!keepKeys.includes(key)) {
+                            localStorage.removeItem(key);
+                        }
+                    });
+                }
+                clearWalletCacheOnly()
 
                 // Store tokens
                 localStorage.setItem('access_token', data.access);
@@ -2314,219 +2277,217 @@
     </script>
 
     <!-- script for payment transaction renedering and filtering -->
-    <script>
-    /* ============================================================
-    PAYMENT TRANSACTIONS MODULE — FINAL CLEAN VERSION
-    ============================================================ */
+<script>
+/* ============================================================
+PAYMENT TRANSACTIONS MODULE — OFFCANVAS SAFE LOADING
+============================================================ */
 
-    const paymentListEl = el("paymentList");
-    const paymentSearchInput = el("paymentSearchInput");
-    const paymentFilterType = el("paymentFilterType");
-    const paymentStatusFilter = el("paymentStatusFilter");
-    const paymentSortBy = el("paymentSortBy");
-    const paymentClearFilters = el("paymentClearFilters");
-    const paymentCount = el("paymentCount");
-    const paymentTotalValue = el("paymentTotalValue");
+/* DOM */
+const paymentListEl = el("paymentList");
+const paymentSearchInput = el("paymentSearchInput");
+const paymentFilterType = el("paymentFilterType");
+const paymentStatusFilter = el("paymentStatusFilter");
+const paymentSortBy = el("paymentSortBy");
+const paymentClearFilters = el("paymentClearFilters");
+const paymentCount = el("paymentCount");
+const paymentTotalValue = el("paymentTotalValue");
+const paymentLoading = document.querySelector("#modalPaymentList .loading");
 
-    let RAW_TRANSACTIONS = [];
-    let FILTERED_TRANSACTIONS = [];
+/* STATE */
+let WALLET_ID = null;
+let RAW_TRANSACTIONS = [];
+let FILTERED_TRANSACTIONS = [];
 
+/* ============================================================
+OPEN OFFCANVAS (IMMEDIATE UI)
+============================================================ */
+function openPaymentModal() {
+    const walletId = localStorage.getItem("last_selected_wallet_id");
+    if (!walletId) return;
 
-    /* ------------------------------------------------------------
-    LOAD TRANSACTIONS FOR CURRENT WALLET
-    ------------------------------------------------------------ */
-    async function loadWalletPayments() {
-        const accessToken = localStorage.getItem("access_token")?.trim();
-        const walletId = localStorage.getItem("last_selected_wallet_id");
+    WALLET_ID = walletId;
+    RAW_TRANSACTIONS = [];
+    FILTERED_TRANSACTIONS = [];
 
-        if (!accessToken) return showLoginModal();
-        if (!walletId) return;
+    // reset UI
+    paymentListEl.innerHTML = "";
+    paymentCount.textContent = "(...)";
+    paymentTotalValue.textContent = "KES 0.00";
 
-        const url = `/payments/wallet-transactions/?wallet_id=${walletId}`;
+    // show offcanvas instantly
+    const offcanvasEl = el("modalPaymentList");
+    bootstrap.Offcanvas.getOrCreateInstance(offcanvasEl).show();
 
-        try {
-            const res = await fetch(url, {
-                method: "GET",
+    // load in background
+    loadWalletPayments();
+}
+
+/* ============================================================
+LOAD PAYMENTS (BACKGROUND)
+============================================================ */
+async function loadWalletPayments() {
+    const accessToken = localStorage.getItem("access_token")?.trim();
+    if (!accessToken) return showLoginModal();
+    if (!WALLET_ID) return;
+
+    // show spinner
+    paymentLoading?.classList.remove("d-none");
+
+    try {
+        const res = await fetch(
+            `/payments/wallet-transactions/?wallet_id=${encodeURIComponent(WALLET_ID)}`,
+            {
                 headers: {
                     "Authorization": `Bearer ${accessToken}`,
-                    "Accept": "application/json",
-                },
-            });
-
-            if (res.status === 401 || res.status === 403) {
-                localStorage.removeItem("access_token");
-                return showLoginModal();
+                    "Accept": "application/json"
+                }
             }
+        );
 
-            const data = await res.json();
-            RAW_TRANSACTIONS = Array.isArray(data.transactions) ? data.transactions : [];
-
-        } catch (err) {
-            console.error("Payment load failed:", err);
-            RAW_TRANSACTIONS = [];
+        if (res.status === 401 || res.status === 403) {
+            localStorage.removeItem("access_token");
+            return showLoginModal();
         }
 
-        // Always default to newest first
+        const data = await res.json();
+        if (!res.ok) throw new Error(data?.detail || "Failed to load payments");
+
+        RAW_TRANSACTIONS = Array.isArray(data.transactions)
+            ? data.transactions
+            : [];
+
+        // default sort
         if (paymentSortBy) paymentSortBy.value = "created_desc";
 
         applyPaymentFilters();
 
-        updatePaymentTitle();
+    } catch (err) {
+        console.error("Payment load failed:", err);
+        RAW_TRANSACTIONS = [];
+        paymentListEl.innerHTML = `
+            <li class="py-4 text-center text-danger">
+                ${err.message || "Failed to load transactions"}
+            </li>
+        `;
+        paymentCount.textContent = "(0)";
+        paymentTotalValue.textContent = "KES 0.00";
 
+    } finally {
+        // always hide spinner
+        paymentLoading?.classList.add("d-none");
     }
+}
 
+/* ============================================================
+FILTER → SEARCH → SORT
+============================================================ */
+function applyPaymentFilters() {
+    const searchText = paymentSearchInput?.value.toLowerCase() || "";
+    const typeFilter = paymentFilterType?.value || "ALL";
+    const statusFilter = paymentStatusFilter?.value || "ALL";
+    const sortBy = paymentSortBy?.value || "created_desc";
 
-    /* ------------------------------------------------------------
-    FILTER → SEARCH → SORT PIPELINE
-    ------------------------------------------------------------ */
-    function applyPaymentFilters() {
-        const searchText = paymentSearchInput?.value.toLowerCase() || "";
-        const typeFilter = paymentFilterType?.value || "ALL";
-        const statusFilter = paymentStatusFilter?.value || "ALL";
-        const sortBy = paymentSortBy?.value || "created_desc";
+    FILTERED_TRANSACTIONS = RAW_TRANSACTIONS.filter(tx => {
+        if (!tx) return false;
+        if (typeFilter !== "ALL" && tx.transaction_type !== typeFilter) return false;
+        if (statusFilter !== "ALL" && tx.status !== statusFilter) return false;
 
-        FILTERED_TRANSACTIONS = RAW_TRANSACTIONS.filter(tx => {
-            if (!tx) return false;
+        const haystack = `
+            ${tx.trans_id || ""}
+            ${tx.sender_phone || ""}
+            ${tx.external_provider || ""}
+        `.toLowerCase();
 
-            if (typeFilter !== "ALL" && tx.transaction_type !== typeFilter) return false;
-            if (statusFilter !== "ALL" && tx.status !== statusFilter) return false;
-
-            const haystack = `
-                ${tx.trans_id || ""}
-                ${tx.sender_phone || ""}
-                ${tx.external_provider || ""}
-            `.toLowerCase();
-
-            if (!haystack.includes(searchText)) return false;
-
-            return true;
-        });
-
-        // sort logic
-        FILTERED_TRANSACTIONS.sort((a, b) => {
-            const dateA = a.received_at ? new Date(a.received_at) : 0;
-            const dateB = b.received_at ? new Date(b.received_at) : 0;
-
-            switch (sortBy) {
-                case "created_asc": return dateA - dateB;
-                case "created_desc": return dateB - dateA;
-                case "amount_asc": return Number(a.amount) - Number(b.amount);
-                case "amount_desc": return Number(b.amount) - Number(a.amount);
-                case "status": return (a.status || "").localeCompare(b.status || "");
-            }
-            return 0;
-        });
-
-        renderPaymentList();
-    }
-
-    /* -------------------------------------------
-    upadate tite 
-    -------------------------------------------------*/
-    function  updatePaymentTitle(wallet) {
-        if (!wallet) return;
-        setText("paymentTransactionTittle", wallet.identifier || "");
-    }
-
-
-    /* ------------------------------------------------------------
-    RENDER LIST
-    ------------------------------------------------------------ */
-    function renderPaymentList() {
-        paymentListEl.innerHTML = "";
-
-        // If no results
-        if (!FILTERED_TRANSACTIONS.length) {
-            paymentListEl.innerHTML = `
-                <li class="py-5 text-center text-muted">
-                    <i class="bi bi-receipt fs-1 d-block mb-2"></i>
-                    <span>No transactions available</span>
-                </li>
-            `;
-
-            paymentCount.innerText = "(0)";
-            paymentTotalValue.innerText = "KES 0.00";
-            return;
-        }
-
-        FILTERED_TRANSACTIONS.forEach(tx => {
-            if (!tx) return;
-
-            const txId = tx.trans_id || (tx.id ? tx.id.substring(0, 6) : "N/A");
-            const received = tx.received_at ? tx.received_at.substring(0, 10) : "--";
-
-            const li = document.createElement("li");
-            li.className = "py-2 payment-item";
-
-            li.innerHTML = `
-                <div class="row align-items-center">
-
-                    <div class="col-4">
-                        <div class="border d-flex align-items-center justify-content-center" style="height:56px;">
-                            <i class="bi bi-credit-card fs-4"></i>
-                        </div>
-                    </div>
-
-                    <div class="col-8">
-                        <p class="mb-1">
-                            <span class="text-mode fw-500">
-                                ${tx.transaction_type} – ${txId}
-                            </span>
-                            <span class="d-block text-muted small">
-                                ${tx.external_provider || "—"} — ${tx.sender_phone || ""}
-                            </span>
-                        </p>
-
-                        <div class="d-flex align-items-center">
-                            <small class="text-mode fw-bold">KES ${Number(tx.amount).toLocaleString()}</small>
-                            <small class="ms-auto text-muted small">${received}</small>
-                        </div>
-                    </div>
-
-                </div>
-            `;
-
-            paymentListEl.appendChild(li);
-        });
-
-        // update count
-        paymentCount.innerText = `(${FILTERED_TRANSACTIONS.length})`;
-
-        // total
-        const total = FILTERED_TRANSACTIONS.reduce((sum, tx) => sum + Number(tx.amount || 0), 0);
-        paymentTotalValue.innerText = `KES ${total.toLocaleString()}`;
-    }
-
-
-    /* ------------------------------------------------------------
-    EVENT LISTENERS
-    ------------------------------------------------------------ */
-    paymentSearchInput?.addEventListener("input", applyPaymentFilters);
-    paymentFilterType?.addEventListener("change", applyPaymentFilters);
-    paymentStatusFilter?.addEventListener("change", applyPaymentFilters);
-    paymentSortBy?.addEventListener("change", applyPaymentFilters);
-
-    paymentClearFilters?.addEventListener("click", () => {
-        paymentSearchInput.value = "";
-        paymentFilterType.value = "ALL";
-        paymentStatusFilter.value = "ALL";
-        paymentSortBy.value = "created_desc";
-        applyPaymentFilters();
+        return haystack.includes(searchText);
     });
 
+    FILTERED_TRANSACTIONS.sort((a, b) => {
+        const dateA = a.received_at ? new Date(a.received_at) : 0;
+        const dateB = b.received_at ? new Date(b.received_at) : 0;
 
-    /* ------------------------------------------------------------
-    PUBLIC — OPEN MODAL + LOAD DATA
-    ------------------------------------------------------------ */
-    function openPaymentModal() {
-        loadWalletPayments().then(() => {
-            const modalEl = el("modalPaymentList");
-            const modal = new bootstrap.Offcanvas(modalEl);
-            modal.show();
-        });
+        switch (sortBy) {
+            case "created_asc": return dateA - dateB;
+            case "created_desc": return dateB - dateA;
+            case "amount_asc": return Number(a.amount) - Number(b.amount);
+            case "amount_desc": return Number(b.amount) - Number(a.amount);
+            case "status": return (a.status || "").localeCompare(b.status || "");
+        }
+        return 0;
+    });
+
+    renderPaymentList();
+}
+
+/* ============================================================
+RENDER
+============================================================ */
+function renderPaymentList() {
+    paymentListEl.innerHTML = "";
+
+    if (!FILTERED_TRANSACTIONS.length) {
+        paymentListEl.innerHTML = `
+            <li class="py-5 text-center text-muted">
+                <i class="bi bi-receipt fs-1 d-block mb-2"></i>
+                No transactions available
+            </li>
+        `;
+        paymentCount.textContent = "(0)";
+        paymentTotalValue.textContent = "KES 0.00";
+        return;
     }
 
-    </script>
+    FILTERED_TRANSACTIONS.forEach(tx => {
+        const txId = tx.trans_id || tx.id?.slice(0, 6) || "N/A";
+        const received = tx.received_at?.slice(0, 10) || "--";
+
+        const li = document.createElement("li");
+        li.className = "py-2 payment-item";
+
+        li.innerHTML = `
+            <div class="row align-items-center">
+                <div class="col-4">
+                    <div class="border d-flex align-items-center justify-content-center" style="height:56px;">
+                        <i class="bi bi-credit-card fs-4"></i>
+                    </div>
+                </div>
+                <div class="col-8">
+                    <p class="mb-1 fw-500">
+                        ${tx.transaction_type} – ${txId}
+                        <span class="d-block text-muted small">
+                            ${tx.external_provider || "—"} ${tx.sender_phone || ""}
+                        </span>
+                    </p>
+                    <div class="d-flex">
+                        <small class="fw-bold">KES ${Number(tx.amount).toLocaleString()}</small>
+                        <small class="ms-auto text-muted">${received}</small>
+                    </div>
+                </div>
+            </div>
+        `;
+        paymentListEl.appendChild(li);
+    });
+
+    paymentCount.textContent = `(${FILTERED_TRANSACTIONS.length})`;
+    const total = FILTERED_TRANSACTIONS.reduce((s, t) => s + Number(t.amount || 0), 0);
+    paymentTotalValue.textContent = `KES ${total.toLocaleString()}`;
+}
+
+/* ============================================================
+EVENTS
+============================================================ */
+paymentSearchInput?.addEventListener("input", applyPaymentFilters);
+paymentFilterType?.addEventListener("change", applyPaymentFilters);
+paymentStatusFilter?.addEventListener("change", applyPaymentFilters);
+paymentSortBy?.addEventListener("change", applyPaymentFilters);
+
+paymentClearFilters?.addEventListener("click", () => {
+    paymentSearchInput.value = "";
+    paymentFilterType.value = "ALL";
+    paymentStatusFilter.value = "ALL";
+    paymentSortBy.value = "created_desc";
+    applyPaymentFilters();
+});
+</script>
 
     <!-- ESCROW TRANSACTIONS FRONTEND — FIXED & PRODUCTION READY -->
     <script>
@@ -2807,7 +2768,7 @@
     <script>
     document.getElementById("testimonialForm").addEventListener("submit", async function (e) {
         e.preventDefault();
-
+        const status = document.getElementById("testimonialStatus");
         const accessToken = localStorage.getItem("access_token")?.trim();
         if (!accessToken) return showLoginModal();
 
@@ -2838,15 +2799,26 @@
                 body: formData,
             });
 
+            if (response.status === 401 || response.status === 403) {
+                localStorage.removeItem("access_token");
+                return showLoginModal();
+            }
+
             const data = await response.json().catch(() => null);
 
             if (!response.ok) {
-                console.error("Error response:", data);
-                alert(data?.message || "Failed to submit testimonial. Try again.");
-                throw new Error("Request failed");
+                status.style.display = "block";
+                status.className = "alert alert-danger";
+                status.textContent = data?.message || "Failed to submit. Try logging in again.";
+                loadingSpinner.style.display = "none";
+                return;
             }
 
-            alert("Your testimonial has been submitted and is awaiting admin approval.");
+            status.style.display = "block";
+            status.className = "alert alert-success";
+            status.textContent = "Your testimonial has been sent successfully. awaiting approval";
+            loadingSpinner.style.display = "none";
+            return;
 
             // Reset the form
             document.getElementById("testimonialForm").reset();
@@ -2857,11 +2829,14 @@
             modal.hide();
 
         } catch (error) {
-            console.error(error);
-            alert("An error occurred while submitting. Please try again.");
+            status.style.display = "block";
+            status.className = "alert alert-danger";
+            status.textContent = data?.message || "An error occurred while submitting. Please try again.";
+            loadingSpinner.style.display = "none";
+            return;
         }
 
-        loadingSpinner.style.display = "none";
+        
     });
     </script>
 
@@ -3020,6 +2995,891 @@
         document.getElementById("modalTestimonial").addEventListener("shown.bs.offcanvas", loadTestimonials);
     </script>
 
+
+<!-- 
+MONEY WITHDRAWAL
+ -->
+<script>
+document.addEventListener("DOMContentLoaded", async () => {
+
+    let currentWallet = null;
+
+    /* -----------------------------
+       Helpers
+    ----------------------------- */
+    function getSelectedWallet() {
+        const cached = readWalletCache();
+        if (!cached || !cached.selected_wallet) return null;
+
+        const lastId = localStorage.getItem("last_selected_wallet_id");
+        if (lastId && cached.all_wallets) {
+            const match = cached.all_wallets.find(
+                w => String(w.id) === String(lastId)
+            );
+            if (match) return match;
+        }
+
+        return cached.selected_wallet;
+    }
+
+    /* -----------------------------
+       Open Withdrawal Modal
+    ----------------------------- */
+    async function openWithdrawalModal() {
+        const accessToken = localStorage.getItem("access_token");
+        if (!accessToken) {
+            showLoginModal();
+            return;
+        }
+
+        // Ensure wallet is loaded
+        currentWallet = getSelectedWallet();
+        if (!currentWallet) {
+            await loadUserWallet();
+            currentWallet = getSelectedWallet();
+        }
+
+        if (!currentWallet) {
+            alert("Wallet not loaded");
+            return;
+        }
+
+        const balanceEl = document.getElementById("waletBalance");
+        if (!balanceEl) {
+            console.error("waletBalance element not found");
+            return;
+        }
+        balanceEl.textContent = formatMoney(currentWallet.withdrawable_balance ?? 0);
+
+        const amountEl = document.getElementById("withdrawAmount");
+        if (!amountEl) return;
+        amountEl.value = "";
+
+        const modalEl = document.getElementById("withdrawalModal");
+        if (!modalEl) return;
+        bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
+
+    /* -----------------------------
+       Bind Withdraw Button (with PIN check)
+    ----------------------------- */
+    const withdrawBtn = document.getElementById("openWithdrawLink");
+    if (withdrawBtn) {
+        withdrawBtn.addEventListener("click", async e => {
+            e.preventDefault();
+            const accessToken = localStorage.getItem("access_token");
+            if (!accessToken) {
+                showLoginModal();
+                return;
+            }
+
+            // ✅ Ensure user has set PIN before opening modal
+            const hasPin = await ensureUserHasPin();
+            if (!hasPin) return;
+
+            await openWithdrawalModal();
+        });
+    } else {
+        console.error("Withdraw button not found: #openWithdrawLink");
+    }
+
+    /* -----------------------------
+       Submit Withdrawal Form
+    ----------------------------- */
+    const form = document.getElementById("withdrawalForm");
+    if (form) {
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+
+            const accessToken = localStorage.getItem("access_token");
+            if (!accessToken) {
+                showLoginModal();
+                return;
+            }
+
+            if (!currentWallet) {
+                alert("Wallet not selected");
+                return;
+            }
+
+            const amount = Number(document.getElementById("withdrawAmount").value);
+            if (!amount || amount <= 0) {
+                alert("Enter a valid amount");
+                return;
+            }
+
+            const withdrawable = Number(currentWallet.withdrawable_balance ?? 0);
+            if (amount > withdrawable) {
+                alert("Amount exceeds withdrawable balance");
+                return;
+            }
+
+            try {
+                const response = await fetch("/withdrawals/preview/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + accessToken,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        wallet_id: currentWallet.id,
+                        amount: amount
+                    })
+                });
+
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem("access_token");
+                    showLoginModal();
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.detail || "Withdrawal failed");
+                    return;
+                }
+
+                // Show confirm modal
+                showConfirmWithdrawalModal(data);
+
+            } catch (err) {
+                console.error("Withdrawal error:", err);
+                alert("Network error");
+            }
+        });
+    }
+
+});
+</script>
+
+<!-- <script>
+document.getElementById("openWithdrawLink").addEventListener("click", async function () {
+    const hasPin = await ensureUserHasPin();
+
+    if (!hasPin) {
+        // PIN not set or OTP verification pending → modals shown inside ensureUserHasPin
+        return;
+    }
+
+    // ✅ PIN exists and active → show withdrawal modal
+    openWithdrawalModal();
+});
+
+document.addEventListener("DOMContentLoaded", async () => {
+
+    let currentWallet = null;
+
+    /* -----------------------------
+       Helpers
+    ----------------------------- */
+    function getSelectedWallet() {
+        const cached = readWalletCache();
+        if (!cached || !cached.selected_wallet) return null;
+
+        const lastId = localStorage.getItem("last_selected_wallet_id");
+        if (lastId && cached.all_wallets) {
+            const match = cached.all_wallets.find(
+                w => String(w.id) === String(lastId)
+            );
+            if (match) return match;
+        }
+
+        return cached.selected_wallet;
+    }
+
+    /* -----------------------------
+       Check if user has set PIN
+    ----------------------------- */
+    /* -----------------------------
+       Open Withdrawal Modal
+    ----------------------------- */
+    async function openWithdrawalModal() {
+        const accessToken = localStorage.getItem("access_token");
+        if (!accessToken) {
+            showLoginModal();
+            return;
+        }
+
+        currentWallet = getSelectedWallet();
+        if (!currentWallet) {
+            await loadUserWallet();
+            currentWallet = getSelectedWallet();
+        }
+
+        if (!currentWallet) {
+            alert("Wallet not loaded");
+            return;
+        }
+
+        const balanceEl = document.getElementById("waletBalance");
+        if (!balanceEl) {
+            console.error("waletBalance element not found");
+            return;
+        }
+
+        balanceEl.textContent = formatMoney(currentWallet.withdrawable_balance ?? 0);
+
+        const amountEl = document.getElementById("withdrawAmount");
+        if (!amountEl) return;
+        amountEl.value = "";
+
+        const modalEl = document.getElementById("withdrawalModal");
+        if (!modalEl) return;
+        bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
+
+    /* -----------------------------
+       Bind Withdraw Button
+    ----------------------------- */
+    const withdrawBtn = document.getElementById("openWithdrawLink");
+    if (withdrawBtn) {
+        withdrawBtn.addEventListener("click", e => {
+            e.preventDefault();
+            openWithdrawalModal();
+        });
+    } else {
+        console.error("Withdraw button not found: #openWithdrawLink");
+    }
+
+    /* -----------------------------
+       Submit Withdrawal Form
+    ----------------------------- */
+    const form = document.getElementById("withdrawalForm");
+    if (form) {
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+
+            const accessToken = localStorage.getItem("access_token");
+            if (!accessToken) {
+                showLoginModal();
+                return;
+            }
+
+            if (!currentWallet) {
+                alert("Wallet not selected");
+                return;
+            }
+
+            const amount = Number(document.getElementById("withdrawAmount").value);
+            if (!amount || amount <= 0) {
+                alert("Enter a valid amount");
+                return;
+            }
+
+            const withdrawable = Number(currentWallet.withdrawable_balance ?? 0);
+            if (amount > withdrawable) {
+                alert("Amount exceeds withdrawable balance");
+                return;
+            }
+
+            try {
+                const response = await fetch("/withdrawals/preview/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + accessToken,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        wallet_id: currentWallet.id,
+                        amount: amount
+                    })
+                });
+
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem("access_token");
+                    showLoginModal();
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.detail || "Withdrawal failed");
+                    return;
+                }
+
+                // Show confirm modal
+                showConfirmWithdrawalModal(data);
+
+            } catch (err) {
+                console.error("Withdrawal error:", err);
+                alert("Network error");
+            }
+        });
+    }
+
+});
+</script>
+ -->
+
+<!-- 
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+    
+
+    let currentWallet = null;
+
+    /* -----------------------------
+       Helpers
+    ----------------------------- */
+    function getSelectedWallet() {
+        const cached = readWalletCache();
+        if (!cached || !cached.selected_wallet) return null;
+
+        const lastId = localStorage.getItem("last_selected_wallet_id");
+        if (lastId && cached.all_wallets) {
+            const match = cached.all_wallets.find(
+                w => String(w.id) === String(lastId)
+            );
+            if (match) return match;
+        }
+
+        return cached.selected_wallet;
+    }
+
+    /* -----------------------------
+       check if user has set pin
+    ----------------------------- */
+    const hasPin =  ensureUserHasPin();
+
+    if (!hasPin) {
+        // PIN not set or OTP verification pending → modals shown inside ensureUserHasPin
+        return;
+    }
+
+
+    /* -----------------------------
+       Open Withdrawal Modal
+    ----------------------------- */
+    async function openWithdrawalModal() {
+        const accessToken = localStorage.getItem("access_token");
+        if (!accessToken) {
+            showLoginModal();
+            return;
+        }
+
+        // 🔥 ensure wallet is loaded
+        currentWallet = getSelectedWallet();
+        if (!currentWallet) {
+            await loadUserWallet();
+            currentWallet = getSelectedWallet();
+        }
+
+        if (!currentWallet) {
+            alert("Wallet not loaded");
+            return;
+        }
+
+        // Use existing updateWalletUI logic to format balances
+        const balanceEl = document.getElementById("waletBalance");
+        if (!balanceEl) {
+            console.error("waletBalance element not found");
+            return;
+        }
+
+        // Use your existing format from updateWalletUI
+        balanceEl.textContent = formatMoney(currentWallet.withdrawable_balance ?? "");
+
+        // Clear input field
+        const amountEl = document.getElementById("withdrawAmount");
+        if (!amountEl) return;
+        amountEl.value = "";
+
+        // Show modal
+        const modalEl = document.getElementById("withdrawalModal");
+        if (!modalEl) return;
+        bootstrap.Modal.getOrCreateInstance(modalEl).show();
+    }
+
+    /* -----------------------------
+       Bind Withdraw Button
+    ----------------------------- */
+    const withdrawBtn = document.getElementById("openWithdrawLink");
+    if (withdrawBtn) {
+        withdrawBtn.addEventListener("click", e => {
+            e.preventDefault();
+            openWithdrawalModal();
+        });
+    } else {
+        console.error("Withdraw button not found: #openWithdrawLink");
+    }
+
+    /* -----------------------------
+       Submit Withdrawal Form
+    ----------------------------- */
+    const form = document.getElementById("withdrawalForm");
+    if (form) {
+        form.addEventListener("submit", async e => {
+            e.preventDefault();
+
+            const accessToken = localStorage.getItem("access_token");
+            if (!accessToken) {
+                showLoginModal();
+                return;
+            }
+
+            if (!currentWallet) {
+                alert("Wallet not selected");
+                return;
+            }
+
+            const amount = parseFloat(document.getElementById("withdrawAmount").value);
+            if (!amount || amount <= 0) {
+                alert("Enter a valid amount");
+                return;
+            }
+
+            const withdrawable = Number(currentWallet.withdrawable_balance ?? 0);
+            if (amount > withdrawable) {
+                alert("Amount exceeds withdrawable balance");
+                return;
+            }
+
+            try {
+                const response = await fetch("/withdrawals/preview/", {
+                    method: "POST",
+                    headers: {
+                        "Authorization": "Bearer " + accessToken,
+                        "Content-Type": "application/json",
+                        "Accept": "application/json"
+                    },
+                    body: JSON.stringify({
+                        wallet_id: currentWallet.id,
+                        amount: amount
+                    })
+                });
+
+                if (response.status === 401 || response.status === 403) {
+                    localStorage.removeItem("access_token");
+                    showLoginModal();
+                    return;
+                }
+
+                const data = await response.json();
+
+                if (!response.ok) {
+                    alert(data.detail || "Withdrawal failed");
+                    return;
+                }
+
+                // Show preview using backend-calculated fee and total
+                showConfirmWithdrawalModal(data);
+
+
+            } catch (err) {
+                console.error("Withdrawal error:", err);
+                alert("Network error");
+            }
+        });
+    }
+
+});
+</script> -->
+
+<!-- 
+|--------------------------------------------------------------------------
+| CONFIRM MONEY WITHDRAWAL AND ENTER PIN
+|--------------------------------------------------------------------------
+ -->
+<script>
+let withdrawalPreview = null;
+
+/*
+|--------------------------------------------------------------------------
+| CALL THIS AFTER PREVIEW API SUCCESS
+| You ALREADY have `data` from preview API
+|--------------------------------------------------------------------------
+*/
+function showConfirmWithdrawalModal(data) {
+    const walletId = localStorage.getItem("last_selected_wallet_id");
+
+    if (!walletId) {
+        alert("No wallet selected");
+        return;
+    }
+
+    if (!data) {
+        console.error("Missing preview data");
+        return;
+    }
+
+    // Hide confirm modal
+    bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("withdrawalModal")
+    ).hide();
+
+    // Store preview data
+    withdrawalPreview = data;
+
+    // Fill confirm modal fields
+    document.getElementById("confirmAmount").textContent =
+        formatMoney(data.amount);
+
+    document.getElementById("confirmFee").textContent =
+        formatMoney(data.fee);
+
+    document.getElementById("confirmPhone").textContent =
+        data.phone || "";
+
+    // Show confirm modal
+    bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("confirmWithdrawalModal")
+    ).show();
+}
+
+/*
+|--------------------------------------------------------------------------
+| CONFIRM BUTTON → OPEN PIN MODAL
+|--------------------------------------------------------------------------
+*/
+document.getElementById("confirmWithdrawBtn").addEventListener("click", function () {
+    if (!withdrawalPreview) {
+        alert("Withdrawal data missing");
+        return;
+    }
+
+    // Hide confirm modal
+    bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("confirmWithdrawalModal")
+    ).hide();
+
+    // Reset PIN field
+    document.getElementById("userPin").value = "";
+
+    // Show PIN modal
+    bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("pinModal")
+    ).show();
+});
+
+/*
+|--------------------------------------------------------------------------
+| SUBMIT PIN → SEND TO BACKEND
+|--------------------------------------------------------------------------
+*/
+document.getElementById("submitPinBtn").addEventListener("click", async function () {
+    const pin = document.getElementById("userPin").value.trim();
+    const accessToken = localStorage.getItem("access_token");
+    const walletId = localStorage.getItem("last_selected_wallet_id");
+
+    if (!accessToken) {
+        showLoginModal();
+        return;
+    }
+
+    if (!walletId) {
+        alert("No wallet selected");
+        return;
+    }
+
+    if (!pin) {
+        alert("PIN required");
+        return;
+    }
+
+    if (!withdrawalPreview) {
+        alert("Invalid withdrawal state");
+        return;
+    }
+
+    try {
+        const response = await fetch("/withdrawals/confirm/", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + accessToken,
+                "Content-Type": "application/json",
+                "Accept": "application/json"
+            },
+            body: JSON.stringify({
+                wallet_id: walletId,
+                amount: withdrawalPreview.amount,
+                pin: pin
+            })
+        });
+
+        // Auth expired
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem("access_token");
+            showLoginModal();
+            return;
+        }
+
+        const data = await response.json();
+
+        if (!response.ok) {
+            alert(data.detail || "Withdrawal failed");
+            return;
+        }
+
+        // Success
+        bootstrap.Modal.getOrCreateInstance(
+            document.getElementById("pinModal")
+        ).hide();
+
+        alert("Withdrawal sucessfull expect mpesa message shortly");
+
+        // Reload wallet balances
+        function clearWalletCacheOnly() {
+            const keepKeys = [
+                "last_selected_wallet_id",
+                "pin_otp_pending",  // 🔥 keep PIN / OTP state
+                "access_token",
+                "refresh_token"
+            ];
+
+            Object.keys(localStorage).forEach(key => {
+                if (!keepKeys.includes(key)) {
+                    localStorage.removeItem(key);
+                }
+            });
+        }
+        clearWalletCacheOnly()
+        loadUserWallet();
+
+    } catch (err) {
+        console.error(err);
+        alert("Network error");
+    }
+});
+</script>
+
+
+    <!-- SCRIPT FOR CHECKIN IF USER HAS SET PIN -->
+    <script>
+// check if user has pin set
+async function ensureUserHasPin() {
+    const accessToken = localStorage.getItem("access_token");
+    if (!accessToken) {
+        showLoginModal();
+        return false;
+    }
+
+    try {
+        const response = await fetch("/verify-pin/", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + accessToken,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ pin: "__check_only__" })
+        });
+
+        const data = await response.json();
+
+        if (response.status === 401 || response.status === 403) {
+            console.warn("Auth error:", response.status);
+            localStorage.removeItem("access_token");
+            showLoginModal();
+            return false;
+        }
+
+        if (response.status === 400 && data.detail === "PIN not set") {
+            bootstrap.Modal.getOrCreateInstance(
+                document.getElementById("setPinModal")
+            ).show();
+            return false;
+        }
+
+        if (response.status === 423) {
+            alert(data.detail || "PIN locked. Try again later.");
+            return false;
+        }
+
+        // PIN exists but OTP verification pending
+        if (data.detail === "PIN not verified") {
+            localStorage.setItem("pin_otp_pending", "true");
+            showOtpModal();
+            return false;
+        }
+
+        // PIN exists and verified
+        if (data.detail === "PIN exists" || data.detail === "PIN verified") {
+            return true;
+        }
+
+        // fallback for unexpected response
+        console.warn("Unexpected response:", data);
+        return false;
+
+    } catch (err) {
+        console.error(err);
+        alert("Network error");
+        return false;
+    }
+}
+
+// set pin show otp 
+document.getElementById("setPinBtn").addEventListener("click", async function () {
+    const pin1 = document.getElementById("newPin").value;
+    const pin2 = document.getElementById("confirmNewPin").value;
+    const accessToken = localStorage.getItem("access_token");
+
+    if (!pin1 || pin1 !== pin2) {
+        alert("PINs do not match");
+        return;
+    }
+
+    const response = await fetch("/pin/set/", {
+        method: "POST",
+        headers: {
+            "Authorization": "Bearer " + accessToken,
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            pin: pin1
+        })
+    });
+
+    if (response.status === 401 || response.status === 403) {
+        console.warn("Auth error loading wallets:", response.status);
+        localStorage.removeItem("access_token");
+        showLoginModal();
+        return;
+    }
+
+    if (!response.ok) {
+        alert("Failed to set PIN");
+        return;
+    }
+
+    // 🔥 OTP now required
+    localStorage.setItem("pin_otp_pending", "true");
+
+    bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("setPinModal")
+    ).hide();
+
+    bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("otpVerifyModal")
+    ).show();
+});
+
+// show otp modal
+function showOtpModal() {
+    bootstrap.Modal.getOrCreateInstance(
+        document.getElementById("otpVerifyModal")
+    ).show();
+}
+
+// ------------------------
+// Verify OTP
+// ------------------------
+document.getElementById("verifyOtpBtn").addEventListener("click", async function () {
+    const otp = document.getElementById("otpCode").value.trim();
+    const accessToken = localStorage.getItem("access_token");
+    const statusEl = document.getElementById("otpStatus");
+
+    if (!accessToken) {
+        alert("Please login first.");
+        showLoginModal();
+        return;
+    }
+
+    if (!otp) {
+        statusEl.textContent = "OTP is required.";
+        return;
+    }
+
+    try {
+        const response = await fetch("/pin/verify-otp/", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + accessToken,
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify({ otp })
+        });
+
+        const data = await response.json();
+
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem("access_token");
+            showLoginModal();
+            return;
+        }
+
+        if (!response.ok) {
+            // Wrong or expired OTP
+            if (data.detail && data.detail.toLowerCase().includes("otp")) {
+                statusEl.textContent = "Your OTP is wrong or expired. Request a new OTP.";
+            } else {
+                statusEl.textContent = data.detail || "OTP verification failed";
+            }
+            return;
+        }
+
+        // Success
+        localStorage.removeItem("pin_otp_pending");
+        bootstrap.Modal.getOrCreateInstance(
+            document.getElementById("otpVerifyModal")
+        ).hide();
+        alert("PIN verified successfully");
+
+    } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Network error, try again";
+    }
+});
+
+// ------------------------
+// Resend OTP
+// ------------------------
+document.getElementById("resendOtpBtn").addEventListener("click", async function () {
+    const accessToken = localStorage.getItem("access_token");
+    const statusEl = document.getElementById("otpStatus");
+
+    if (!accessToken) {
+        alert("Please login first.");
+        showLoginModal();
+        return;
+    }
+
+    statusEl.textContent = "Sending OTP...";
+
+    try {
+        const response = await fetch("/pin/resend-otp/", {
+            method: "POST",
+            headers: {
+                "Authorization": "Bearer " + accessToken,
+                "Content-Type": "application/json"
+            }
+        });
+
+        const data = await response.json();
+
+        if (response.status === 401 || response.status === 403) {
+            localStorage.removeItem("access_token");
+            showLoginModal();
+            return;
+        }
+
+        if (!response.ok) {
+            statusEl.textContent = data.detail || "Failed to resend OTP";
+            return;
+        }
+
+        statusEl.textContent = `OTP sent successfully and expires in ${data.otp_expires_in} seconds.`;
+
+    } catch (err) {
+        console.error(err);
+        statusEl.textContent = "Network error, try again";
+    }
+});
+
+    </script>
+
+<!-- SCRIPT FOR MAKING SURE OTP VERIFICATION MODAL SHOW UP IF PENDING -->
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    if (localStorage.getItem("pin_otp_pending") === "true") {
+        showOtpModal();
+    }
+});
+</script>
 
     <!-- jquery -->
     <script src="{% static 'assets/js/jquery-3.5.1.min.js' %}"></script>

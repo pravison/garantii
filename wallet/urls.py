@@ -3,7 +3,6 @@ from .views import *
 
 urlpatterns = [
     path('', wallet, name='wallet'),
-    path("transactions/", escrow_transactions, name="escrow_transactions"),
     path('wallets/api/', UserWalletsView.as_view(), name='user-wallets'),
     path('wallets/create/api/', WalletCreateView.as_view(), name='wallet-create'),
     path("payments/wallet-transactions/", WalletPaymentListView.as_view(), name="wallet-transactions"),
@@ -14,7 +13,12 @@ urlpatterns = [
     path("api/testimonials/add/", AddTestimonialView.as_view(), name="testimonial-add"),
     path("api/feedback/add/", AddCustomerFeedbackView.as_view(), name="customer-feedback-add"),
 
-    # mpesa call back url for c2b
-     path("api/c2b-callback-url/", MpesaC2BConfirmationView.as_view(), name="c2b-callback-url"),
+    path("verify-pin/", VerifyPinView.as_view()),
+    path('pin/set/', SetPinView.as_view(), name='set-pin'),
+    path('pin/verify-otp/', VerifyPinOTPView.as_view(), name='verify-pin-otp'),
+    path('pin/resend-otp/', ResendPinOTPView.as_view(), name='resend-pin-otp'),
+    
+    path("withdrawals/preview/", withdrawal_preview, name="withdrawal-preview"),
+    path("withdrawals/confirm/", withdrawal_confirm, name="withdrawal-confirm"),
 
 ]

@@ -52,8 +52,7 @@ class WalletSerializer(serializers.ModelSerializer):
         return obj.send_locked_balance + obj.receive_locked_balance
 
     def get_withdrawable_balance(self, obj):
-        total_locked = obj.send_locked_balance + obj.receive_locked_balance
-        return obj.available_balance - total_locked
+        return obj.available_balance 
 
 
 class WalletCreateSerializer(serializers.ModelSerializer):
