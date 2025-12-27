@@ -1880,7 +1880,7 @@
                         w => String(w.id) === String(walletId)
                     );
                     if (!selectedWallet) {
-                        console.warn("Wallet ID not found in cache:", walletId);
+                        localStorage.removeItem("last_selected_wallet_id");
                     }
                 }
 
