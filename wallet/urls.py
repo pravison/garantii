@@ -21,4 +21,10 @@ urlpatterns = [
     path("withdrawals/preview/", withdrawal_preview, name="withdrawal-preview"),
     path("withdrawals/confirm/", withdrawal_confirm, name="withdrawal-confirm"),
 
+    #stk push 
+    path("stk_push/initiate/", initiate_stk_push, name="initiate_stk_push"),
+
+    # Callback URL that Safaricom calls when STK Push is completed
+    path("stk_push/callback/", STKPushCallbackView.as_view(), name="stk_push_callback"),
+    path("stk_push/status/", stk_push_status, name="stk_push_status"),
 ]

@@ -21,19 +21,23 @@ class EscrowProcessor:
             defaults={"meta": {"auto_created": True}},
         )
 
-        payment = PaymentTransaction.objects.create(
-            trans_id=txn["trans_id"],
-            transaction_type="DEPOSIT",
-            status="SUCCESS",
-            wallet=buyer_wallet,
-            amount=txn["amount"],
-            sender_phone=txn["sender_phone"],
-            account_number=txn["bill_ref"],
-            external_provider="MPESA",
-            received_at=timezone.now(),
-            processed_at=timezone.now(),
-            raw_payload=txn["raw"],
+        # Get or create PaymentTransaction
+        payment, created = PaymentTransaction.objects.update_or_create(
+            trans_id=txn["trans_id"],  # unique identifier for the transaction
+            defaults={
+                "transaction_type": "DEPOSIT",
+                "status": "SUCCESS",
+                "wallet_id": buyer_wallet.id,
+                "amount": txn["amount"],
+                "sender_phone": txn["sender_phone"],
+                "account_number": txn["bill_ref"],
+                "external_provider": "MPESA",
+                "received_at": timezone.now(),
+                "processed_at": timezone.now(),
+                "raw_payload": txn["raw"],
+            }
         )
+
 
         # Credit buyer
         before = buyer_wallet.available_balance

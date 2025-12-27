@@ -1,38 +1,53 @@
 import requests
 from requests.auth import HTTPBasicAuth
 
-from access_token import generate_access_token
-from encode import generate_password
-from utils import get_timestamp
-import keys
+from .access_token import generate_access_token
+from .encode import generate_password
+from .utils import get_timestamp
+
+from django.conf import settings
 
 
-def lipa_na_mpesa():
+def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, callback_url):
+    """
+    Initiates an STK Push (Lipa na M-Pesa) transaction.
+    
+    Parameters:
+        amount (str|int): The amount to charge the customer.
+        phone_number (str): The customer's phone number in format 2547XXXXXXXX.
+        account_reference (str): Account reference for tracking, e.g., Wallet ID.
+        transaction_desc (str): Description of the transaction.
+        callback_url (str): URL for receiving payment confirmation.
+        
+    Returns:
+        dict: Response from M-Pesa API.
+    """
     formatted_time = get_timestamp()
     decoded_password = generate_password(formatted_time)
     access_token = generate_access_token()
 
     api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
+    headers = {"Authorization": f"Bearer {access_token}"}
 
-    headers = {"Authorization": "Bearer %s" % access_token}
-
-    request = {
-        "BusinessShortCode": keys.business_shortCode,
+    payload = {
+        "BusinessShortCode": settings.MPESA_SHORTCODE,
         "Password": decoded_password,
         "Timestamp": formatted_time,
         "TransactionType": "CustomerPayBillOnline",
-        "Amount": "3",
-        "PartyA": keys.phone_number,
-        "PartyB": keys.business_shortCode,
-        "PhoneNumber": keys.phone_number,
-        "CallBackURL": "https://mysterious-oasis-16355.herokuapp.com/api/payments/lnm/",
-        "AccountReference": "test aware",
-        "TransactionDesc": "Pay School Fees",
+        "Amount": str(amount),
+        "PartyA": phone_number,
+        "PartyB": settings.MPESA_SHORTCODE,
+        "PhoneNumber": phone_number,
+        "CallBackURL": callback_url,
+        "AccountReference": account_reference,
+        "TransactionDesc": transaction_desc,
     }
 
-    response = requests.post(api_url, json=request, headers=headers)
+    response = requests.post(api_url, json=payload, headers=headers)
+    
+    try:
+        return response.json()
+    except ValueError:
+        # In case the response isn't JSON
+        return {"error": "Invalid response from M-Pesa", "response_text": response.text}
 
-    print(response.text)
-
-
-lipa_na_mpesa()

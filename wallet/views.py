@@ -547,3 +547,183 @@ class MpesaB2CResultCallbackView(APIView):
             )
 
         return Response({"ResultCode": 0, "ResultDesc": "Accepted"})
+
+from decimal import Decimal
+from rest_framework.decorators import api_view, permission_classes
+from rest_framework.permissions import IsAuthenticated
+from rest_framework.response import Response
+from django.db import transaction
+from django.utils import timezone
+from wallet.models import Wallet, WalletLedger, PaymentTransaction, EscrowAllocation
+from payments.lipanampesa import lipa_na_mpesa
+from rest_framework.decorators import api_view, permission_classes
+from wallet.escrow_processor import EscrowProcessor
+
+
+@api_view(["POST"])
+@permission_classes([IsAuthenticated])
+def initiate_stk_push(request):
+    """
+    Initiate an STK Push payment from a user to another phone/till.
+    Workflow:
+    1. Create a pending PaymentTransaction for the sender.
+    2. Trigger STK Push to phone.
+    3. On success (callback), deposit money to sender's wallet and create escrow.
+    """
+    user = request.user
+    wallet_id = request.data.get("wallet_id")
+    amount = request.data.get("amount")
+    receiver_phone = request.data.get("receiver")
+    description = request.data.get("description", "")
+
+    if not wallet_id or not amount or not receiver_phone:
+        return Response({"detail": "wallet_id, amount, and receiver required"}, status=400)
+
+    try:
+        amount = Decimal(amount).quantize(Decimal("0.01"))
+    except:
+        return Response({"detail": "Invalid amount"}, status=400)
+
+    try:
+        wallet = Wallet.objects.select_for_update().get(id=wallet_id, owner=user)
+    except Wallet.DoesNotExist:
+        return Response({"detail": "Wallet not found"}, status=404)
+
+    with transaction.atomic():
+        # --- Create pending payment transaction ---
+        payment = PaymentTransaction.objects.create(
+            transaction_type="STK_PUSH",
+            wallet=wallet,
+            amount=amount,
+            status="PENDING",
+            sender_phone=wallet.identifier,
+            account_number=receiver_phone,
+            metadata={
+                "receiver": receiver_phone,
+                "description": description,
+            }
+        )
+        # --- Trigger STK Push ---
+        # You should modify lipa_na_mpesa() to accept amount, phone, description, callback
+        try:
+            response = lipa_na_mpesa(
+                amount=amount,
+                phone_number=receiver_phone,
+                account_reference=f"Wallet:{wallet.id}",
+                transaction_desc=description,
+                callback_url=f"{request.build_absolute_uri('/stk_push/callback//')}"
+            )
+            # response should contain CheckoutRequestID or error
+            checkout_request_id = response.get("CheckoutRequestID")
+            payment.checkout_request_id = checkout_request_id
+            payment.save(update_fields=["checkout_request_id"])
+        except Exception as e:
+            return Response({"detail": "Failed to initiate STK Push", "error": str(e)}, status=500)
+
+    return Response({
+        "status": "PENDING",
+        "payment_id": payment.id,
+        "checkout_request_id": payment.checkout_request_id
+    })
+
+
+
+class STKPushCallbackView(APIView):
+    authentication_classes = []  # MPESA does not send auth
+    permission_classes = []
+
+    def post(self, request):
+        """
+        Handles MPESA STK Push callback.
+        Updates sender wallet, creates escrow, and moves money to locked balances.
+        """
+
+        result = request.data.get("Body", {}).get("stkCallback", {})
+        checkout_request_id = result.get("CheckoutRequestID")
+        result_code = result.get("ResultCode")
+        result_desc = result.get("ResultDesc", "")
+        conversation_id = result.get("ConversationID")
+
+        try:
+            payment = PaymentTransaction.objects.select_for_update().get(
+                checkout_request_id=checkout_request_id,
+                transaction_type="STK_PUSH"
+            )
+        except PaymentTransaction.DoesNotExist:
+            # Log unknown callbacks
+            MpesaCallbackLog.objects.create(
+                conversation_id=conversation_id,
+                payload=result
+            )
+            return Response({"ResultCode": 0, "ResultDesc": "Ignored"})
+
+        # Idempotency check
+        if payment.status in ("SUCCESS", "FAILED"):
+            return Response({"ResultCode": 0, "ResultDesc": "Already processed"})
+
+        # Only process successful payments
+        if result_code != 0:
+            payment.status = "FAILED"
+            payment.raw_payload = result
+            payment.processed_at = timezone.now()
+            payment.save(update_fields=["status", "raw_payload", "processed_at"])
+            return Response({"ResultCode": 0, "ResultDesc": "Failed payment"})
+
+        # Build txn dictionary like C2B
+        #so as to reuse the c2b logic
+        txn = {
+            "trans_id": payment.checkout_request_id,
+            "sender_phone": payment.wallet.identifier,
+            "amount": payment.amount,
+            "bill_ref": payment.account_number or payment.metadata.get("receiver"),
+            "account_type": payment.metadata.get("account_type", "DIRECT"),  # ORDER or DIRECT
+            "raw": result,
+        }
+
+        try:
+            with transaction.atomic():
+                EscrowProcessor.process_c2b_payment(txn)#we have reused the c2b logic 
+                # Mark payment as success
+                payment.status = "SUCCESS"
+                payment.processed_at = timezone.now()
+                payment.raw_payload = result
+                payment.save(update_fields=["status", "processed_at", "raw_payload"])
+        except Exception as e:
+            # Log error but do not crash MPESA
+            MpesaCallbackLog.objects.create(
+                conversation_id=conversation_id,
+                payload=result,
+                error=str(e)
+            )
+            return Response({"ResultCode": 1, "ResultDesc": "Failed processing"})
+
+        return Response({"ResultCode": 0, "ResultDesc": "Accepted"})
+    
+
+
+@api_view(["GET"])
+@permission_classes([IsAuthenticated])
+def stk_push_status(request):
+    """
+    Return the current status of a STK Push transaction.
+    Frontend polls this endpoint until SUCCESS or FAILED.
+    """
+    transaction_id = request.GET.get("transaction_id")
+    if not transaction_id:
+        return Response({"detail": "transaction_id is required"}, status=400)
+
+    try:
+        payment = PaymentTransaction.objects.get(trans_id=transaction_id, transaction_type="STK_PUSH")
+    except PaymentTransaction.DoesNotExist:
+        return Response({"status": "UNKNOWN", "reason": "Transaction not found"}, status=404)
+
+    # Map backend status to frontend
+    status_map = {
+        "PENDING": "PENDING",
+        "SUCCESS": "SUCCESS",
+        "FAILED": "FAILED",
+    }
+    status = status_map.get(payment.status, "UNKNOWN")
+    reason = getattr(payment, "failure_reason", None)  # optional field if you store failure reasons
+
+    return Response({"status": status, "reason": reason})
