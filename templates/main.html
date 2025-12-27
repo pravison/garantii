@@ -1870,38 +1870,32 @@
         try {
             // --- Try cache first ---
             const cached = readWalletCache();
+            
             if (cached) {
-                // If specific walletId requested
+                let selectedWallet = null;
+
+                // Try to find requested wallet
                 if (walletId) {
-                    const w = (cached.all_wallets || []).find(
+                    selectedWallet = (cached.all_wallets || []).find(
                         w => String(w.id) === String(walletId)
                     );
-                    if (w) {
-                        updateWalletUI(w);
-                        updatePaymentTitle(w);
-                        updateescrowTransactionTittle(w);
-                        rebuildWalletMenu(cached.all_wallets, w.id);
-
-                        // 🔥 Save last selected wallet
-                        localStorage.setItem("last_selected_wallet_id", w.id);
-
-                        return;
+                    if (!selectedWallet) {
+                        console.warn("Wallet ID not found in cache:", walletId);
                     }
                 }
 
-                // Otherwise use cached selected wallet
-                if (cached.selected_wallet) {
-                    updateWalletUI(cached.selected_wallet);
-                    updatePaymentTitle(cached.selected_wallet);
-                    updateescrowTransactionTittle(cached.selected_wallet);
-                    rebuildWalletMenu(
-                        cached.all_wallets || [],
-                        cached.selected_wallet.id
-                    );
+                // Fallback to cached selected wallet
+                if (!selectedWallet && cached.selected_wallet) {
+                    selectedWallet = cached.selected_wallet;
+                    walletId = selectedWallet.id; // update walletId
+                }
 
-                    // 🔥 Save last selected wallet
-                    localStorage.setItem("last_selected_wallet_id", cached.selected_wallet.id);
-
+                if (selectedWallet) {
+                    updateWalletUI(selectedWallet);
+                    updatePaymentTitle(selectedWallet);
+                    updateescrowTransactionTittle(selectedWallet);
+                    rebuildWalletMenu(cached.all_wallets || [], selectedWallet.id);
+                    localStorage.setItem("last_selected_wallet_id", selectedWallet.id);
                     return;
                 }
             }
