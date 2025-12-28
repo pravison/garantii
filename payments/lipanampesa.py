@@ -29,19 +29,21 @@ def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, cal
     api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     headers = {"Authorization": f"Bearer {access_token}"}
 
+    
+
     payload = {
-        "BusinessShortCode": settings.MPESA_SHORTCODE,
-        "Password": decoded_password,
-        "Timestamp": formatted_time,
+        "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjI4MDkwODM0",
+        "BusinessShortCode": "174379",
+        "Timestamp": "20251228090834",
+        "Amount": "1",
+        "PartyA": "254706420043",
+        "PartyB": "174379",
         "TransactionType": "CustomerPayBillOnline",
-        "Amount": str(amount),
-        "PartyA": 254706420043,
-        "PartyB": 600000,
-        "PhoneNumber": 254706420043,
-        "CallBackURL": callback_url,
-        "AccountReference": account_reference,
-        "TransactionDesc": transaction_desc,
-    }
+        "PhoneNumber": "254706420043",
+        "TransactionDesc": "Test",
+        "AccountReference": "Test",
+        "CallBackURL": callback_url
+        }
 
     response = requests.post(api_url, json=payload, headers=headers)
     
