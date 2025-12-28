@@ -53,3 +53,28 @@ def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, cal
         # In case the response isn't JSON
         return {"error": "Invalid response from M-Pesa", "response_text": response.text}
 
+
+# import requests
+
+# url = "https://api.safaricom.co.ke/YOUR_ENDPOINT"
+# payload = {
+#   "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjI4MDkzMjI5",
+#   "BusinessShortCode": "174379",
+#   "Timestamp": "20251228093229",
+#   "Amount": "1",
+#   "PartyA": "254708374149",
+#   "PartyB": "174379",
+#   "TransactionType": "CustomerPayBillOnline",
+#   "PhoneNumber": "254708374149",
+#   "TransactionDesc": "Test",
+#   "AccountReference": "Test",
+#   "CallBackURL": "https://mydomain.com/mpesa-express-simulate/"
+# }
+
+# headers = {
+#     "Content-Type": "application/json",
+#     "Authorization": "Bearer <ACCESS_TOKEN>"
+# }
+
+# response = requests.post(url, json=payload, headers=headers)
+# print(response.json())
