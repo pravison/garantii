@@ -3507,7 +3507,7 @@
         statusEl.classList.add("text-success");
 
         // Poll backend for status (optional)
-        pollStkStatus(data.transaction_id, statusText);
+        pollStkStatus(data.checkout_request_id, statusText);
 
         } catch (err) {
         console.error("STK Push error:", err);
@@ -3528,7 +3528,7 @@
         }
 
         try {
-            const resp = await fetch(`/stk_push/status//?transaction_id=${transactionId}`, {
+            const resp = await fetch(`/stk_push/status//?checkout_request_id=${transactionId}`, {
             headers: { "Authorization": "Bearer " + accessToken }
             });
             const data = await resp.json();
