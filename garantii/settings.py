@@ -218,17 +218,11 @@ CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 
 
 # Mpesa Daraja Settings
-MPESA_CONSUMER_KEY = "<your_consumer_key>"
-MPESA_CONSUMER_SECRET = "<your_consumer_secret>"
-MPESA_AUTH_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
-MPESA_B2C_URL = "https://sandbox.safaricom.co.ke/mpesa/b2c/v1/paymentrequest"
-MPESA_B2C_RESULT_URL = "https://yourdomain.com/api/payments/mpesa/b2c/result/"
-MPESA_B2C_TIMEOUT_URL = "https://yourdomain.com/api/payments/mpesa/b2c/timeout/"
-MPESA_SHORTCODE = "<your_shortcode>"
-MPESA_INITIATOR_NAME = "<initiator_name>"
-MPESA_SECURITY_CREDENTIAL = "<security_credential>"
-MPESA_PASSKEY = "<your_consumer_key>"
-
+MPESA_CONSUMER_KEY=env('MPESA_CONSUMER_KEY')
+MPESA_CONSUMER_SECRET=env('MPESA_CONSUMER_SECRET')
+MPESA_SHORTCODE=env('MPESA_SHORTCODE')
+MPESA_INITIATOR_NAME=env('MPESA_SHORTCODE')
+MPESA_PASSKEY=env('MPESA_PASSKEY')
 
 # email setup 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"

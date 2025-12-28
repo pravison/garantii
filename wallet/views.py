@@ -573,7 +573,7 @@ def initiate_stk_push(request):
     user = request.user
     wallet_id = request.data.get("wallet_id")
     amount = request.data.get("amount")
-    receiver_phone = request.data.get("receiver")
+    receiver_phone = format_kenyan_phone_number(request.data.get("receiver"))
     description = request.data.get("description", "")
 
     if not wallet_id or not amount or not receiver_phone:
