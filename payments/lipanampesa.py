@@ -29,12 +29,12 @@ def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, cal
     api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
     headers = {"Authorization": f"Bearer {access_token}"}
 
-    
+
 
     payload ={
-        "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjI4MTgzMDI5",
+        "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjI4MTkyNTIz",
         "BusinessShortCode": "174379",
-        "Timestamp": "20251228183029",
+        "Timestamp": "20251228192523",
         "Amount": "1",
         "PartyA": "254706420043",
         "PartyB": "174379",
@@ -42,7 +42,7 @@ def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, cal
         "PhoneNumber": "254706420043",
         "TransactionDesc": "Test",
         "AccountReference": "Test",
-        "CallBackURL": "https://garantiipay.vercel.app/stk_push/callback/"
+        "CallBackURL": callback_url
         }
 
     response = requests.post(api_url, json=payload, headers=headers)

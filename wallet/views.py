@@ -607,7 +607,7 @@ def initiate_stk_push(request):
                 phone_number=receiver_phone,
                 account_reference=f"Wallet:{wallet.id}",
                 transaction_desc=description,
-                callback_url=request.build_absolute_uri("/stk_push/callback/")
+                callback_url=request.build_absolute_uri("/stk_push/callback/").strip()
             )
 
             checkout_request_id = response.get("CheckoutRequestID")
