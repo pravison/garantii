@@ -31,10 +31,10 @@ def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, cal
 
     
 
-    payload = {
-        "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjI4MDkwODM0",
+    payload ={
+        "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjI4MTgzMDI5",
         "BusinessShortCode": "174379",
-        "Timestamp": "20251228090834",
+        "Timestamp": "20251228183029",
         "Amount": "1",
         "PartyA": "254706420043",
         "PartyB": "174379",
