@@ -635,7 +635,6 @@ class STKPushCallbackView(APIView):
 
         checkout_request_id = stk.get("CheckoutRequestID")
         result_code = stk.get("ResultCode")
-        result_desc = stk.get("ResultDesc")
         merchant_request_id = stk.get("MerchantRequestID")
 
         # Parse metadata
@@ -667,17 +666,19 @@ class STKPushCallbackView(APIView):
             return Response({"ResultCode": 0, "ResultDesc": "Failed"})
 
         txn = {
-            "trans_id": metadata.get("MpesaReceiptNumber"),
-            "sender_phone": metadata.get("PhoneNumber"),
+            "checkout_request_id": checkout_request_id,
+            "sender_phone": payment.sender_phone,
             "amount": payment.amount,  # trust your DB, validate against metadata
             "bill_ref": payment.account_number,
             "account_type": payment.metadata.get("account_type", "DIRECT"),
             "raw": stk,
         }
 
+        
+
         try:
             with transaction.atomic():
-                EscrowProcessor.process_c2b_payment(txn)
+                EscrowProcessor.process_lipa_na_mpesa_payment(txn)
 
                 payment.status = "SUCCESS"
                 payment.merchant_request_id = merchant_request_id
@@ -693,79 +694,6 @@ class STKPushCallbackView(APIView):
             return Response({"ResultCode": 1, "ResultDesc": "Processing error"})
 
         return Response({"ResultCode": 0, "ResultDesc": "Accepted"})
-
-
-# class STKPushCallbackView(APIView):
-#     authentication_classes = []  # MPESA does not send auth
-#     permission_classes = []
-
-#     def post(self, request):
-#         """
-#         Handles MPESA STK Push callback.
-#         Updates sender wallet, creates escrow, and moves money to locked balances.
-#         """
-
-#         result = request.data.get("Body", {}).get("stkCallback", {})
-#         checkout_request_id = result.get("CheckoutRequestID")
-#         result_code = result.get("ResultCode")
-#         result_desc = result.get("ResultDesc", "")
-#         conversation_id = result.get("ConversationID")
-
-#         try:
-#             payment = PaymentTransaction.objects.select_for_update().get(
-#                 checkout_request_id=checkout_request_id,
-#                 transaction_type="STK_PUSH"
-#             )
-#         except PaymentTransaction.DoesNotExist:
-#             # Log unknown callbacks
-#             MpesaCallbackLog.objects.create(
-#                 conversation_id=conversation_id,
-#                 payload=result
-#             )
-#             return Response({"ResultCode": 0, "ResultDesc": "Ignored"})
-
-#         # Idempotency check
-#         if payment.status in ("SUCCESS", "FAILED"):
-#             return Response({"ResultCode": 0, "ResultDesc": "Already processed"})
-
-#         # Only process successful payments
-#         if result_code != 0:
-#             payment.status = "FAILED"
-#             payment.raw_payload = result
-#             payment.processed_at = timezone.now()
-#             payment.save(update_fields=["status", "raw_payload", "processed_at"])
-#             return Response({"ResultCode": 0, "ResultDesc": "Failed payment"})
-
-#         # Build txn dictionary like C2B
-#         #so as to reuse the c2b logic
-#         txn = {
-#             "trans_id": payment.checkout_request_id,
-#             "sender_phone": payment.wallet.identifier,
-#             "amount": payment.amount,
-#             "bill_ref": payment.account_number or payment.metadata.get("receiver"),
-#             "account_type": payment.metadata.get("account_type", "DIRECT"),  # ORDER or DIRECT
-#             "raw": result,
-#         }
-
-#         try:
-#             with transaction.atomic():
-#                 EscrowProcessor.process_c2b_payment(txn)#we have reused the c2b logic 
-#                 # Mark payment as success
-#                 payment.status = "SUCCESS"
-#                 payment.processed_at = timezone.now()
-#                 payment.raw_payload = result
-#                 payment.save(update_fields=["status", "processed_at", "raw_payload"])
-#         except Exception as e:
-#             # Log error but do not crash MPESA
-#             MpesaCallbackLog.objects.create(
-#                 conversation_id=conversation_id,
-#                 payload=result,
-#                 error=str(e)
-#             )
-#             return Response({"ResultCode": 1, "ResultDesc": "Failed processing"})
-
-#         return Response({"ResultCode": 0, "ResultDesc": "Accepted"})
-    
 
 
 @api_view(["GET"])

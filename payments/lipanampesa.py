@@ -42,7 +42,7 @@ def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, cal
         "PhoneNumber": "254706420043",
         "TransactionDesc": "Test",
         "AccountReference": "Test",
-        "CallBackURL": callback_url
+        "CallBackURL": "https://garantiipay.vercel.app/stk_push/callback/"
         }
 
     response = requests.post(api_url, json=payload, headers=headers)
