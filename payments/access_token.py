@@ -5,8 +5,8 @@ from django.conf import settings
 
 def generate_access_token():
 
-    consumer_key = settings.DARJA_CONSUMER_KEY
-    consumer_secret = settings.DARJA_CONSUMER_SECRET
+    consumer_key = settings.MPESA_CONSUMER_KEY
+    consumer_secret = settings.MPESA_CONSUMER_SECRET
     api_URL = "https://sandbox.safaricom.co.ke/oauth/v1/generate?grant_type=client_credentials"
 
     try:
