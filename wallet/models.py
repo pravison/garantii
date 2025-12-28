@@ -174,6 +174,8 @@ class PaymentTransaction(models.Model):
             models.Index(fields=['trans_id']),
             models.Index(fields=['transaction_type']),
         ]
+        ordering = ['-created_at'] 
+    
 
     def __str__(self):
         return f"{self.transaction_type} {self.trans_id or self.pk} - {self.amount}"
@@ -221,6 +223,8 @@ class MpesaCallbackLog(models.Model):
 
     def __str__(self):
         return self.conversation_id
+    class Meta:
+        ordering = ['-received_at'] 
 
 class WalletReconciliationLog(models.Model):
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
@@ -235,6 +239,7 @@ class WalletReconciliationLog(models.Model):
             models.Index(fields=["wallet"]),
             models.Index(fields=["detected_at"]),
         ]
+        ordering = ['-detected_at'] 
 
 # transaction fees
 class FeeRule(models.Model):
@@ -413,6 +418,8 @@ class Testimonial(models.Model):
 
     def __str__(self):
         return f"Testimonial by {self.user} ({self.id})"
+    class Meta:
+        ordering = ['-date_created'] 
 
 class CustomerFeedback(models.Model):
     FEEDBACK_TYPES = [
@@ -449,3 +456,5 @@ class CustomerFeedback(models.Model):
 
     def __str__(self):
         return f"{self.feedback_type} by {self.user} ({self.id})"
+    class Meta:
+        ordering = ['-date_created'] 
