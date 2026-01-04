@@ -17,7 +17,7 @@ def trigger_mpesa_b2c(payment):
         "CommandID": "BusinessPayment",
         "Amount": int(payment.amount),
         "PartyA": settings.MPESA_SHORTCODE,
-        "PartyB": payment.wallet.identifier,  # customer phone
+        "PartyB": payment.sender_phone,  # customer phone
         "Remarks": "Wallet Withdrawal",
         "QueueTimeOutURL": settings.MPESA_B2C_TIMEOUT_URL,
         "ResultURL": settings.MPESA_B2C_RESULT_URL,

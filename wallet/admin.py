@@ -137,3 +137,6 @@ class FeeRuleAdmin(admin.ModelAdmin):
 
     total_fee_display.short_description = "Total Fee"
 
+from .models import FailedMpesaTransaction
+admin.site.register(FailedMpesaTransaction)
+

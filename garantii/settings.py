@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
 
     # Third-party
+    'django_daraja',
+
     'rest_framework',
     'rest_framework_simplejwt',
     'corsheaders',
@@ -89,22 +91,22 @@ WSGI_APPLICATION = 'garantii.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
-
-import dj_database_url 
-
 DATABASES = {
-    'default': dj_database_url.parse(
-        env('psql'),
-        conn_max_age=600,
-        conn_health_checks=True,
-    )
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
 }
+
+# import dj_database_url 
+
+# DATABASES = {
+#     'default': dj_database_url.parse(
+#         env('psql'),
+#         conn_max_age=600,
+#         conn_health_checks=True,
+#     )
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/5.2/ref/settings/#auth-password-validators
@@ -200,7 +202,7 @@ REST_FRAMEWORK = {
 # Simple JWT settings
 
 SIMPLE_JWT = {
-    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=2),
+    "ACCESS_TOKEN_LIFETIME": timedelta(minutes=20),
     "REFRESH_TOKEN_LIFETIME": timedelta(days=1),
     "ROTATE_REFRESH_TOKENS": False,
     "BLACKLIST_AFTER_ROTATION": True,
@@ -217,12 +219,7 @@ CELERY_BROKER_URL = env('CELERY_BROKER_URL', default='redis://localhost:6379/0')
 CELERY_RESULT_BACKEND = CELERY_BROKER_URL
 
 
-# Mpesa Daraja Settings
-MPESA_CONSUMER_KEY=env('MPESA_CONSUMER_KEY')
-MPESA_CONSUMER_SECRET=env('MPESA_CONSUMER_SECRET')
-MPESA_SHORTCODE=env('MPESA_SHORTCODE')
-MPESA_INITIATOR_NAME=env('MPESA_SHORTCODE')
-MPESA_PASSKEY=env('MPESA_PASSKEY')
+
 
 # email setup 
 EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
@@ -233,3 +230,52 @@ EMAIL_USE_TLS = True
 EMAIL_HOST_USER = env('EMAIL_HOST_USER')
 EMAIL_HOST_PASSWORD = env('EMAIL_HOST_PASSWORD')
 DEFAULT_FROM_EMAIL = env('EMAIL_HOST_USER')
+
+# all logins to expire after 20 minute of in activity
+SESSION_COOKIE_AGE = 30 * 60
+SESSION_SAVE_EVERY_REQUEST = True
+SESSION_COOKIE_HTTPONLY = True
+# SESSION_COOKIE_SECURE = True  # production only
+SESSION_COOKIE_SAMESITE = 'Lax'
+
+# The Mpesa environment to use
+# Possible values: sandbox, production
+
+MPESA_ENVIRONMENT = 'sandbox'
+
+# Credentials for the daraja app
+
+
+MPESA_CONSUMER_KEY=env('MPESA_CONSUMER_KEY')
+MPESA_CONSUMER_SECRET=env('MPESA_CONSUMER_SECRET')
+
+#Shortcode to use for transactions. For sandbox  use the Shortcode 1 provided on test credentials page
+
+MPESA_SHORTCODE=env('MPESA_SHORTCODE')
+
+# Shortcode to use for Lipa na MPESA Online (MPESA Express) transactions
+# This is only used on sandbox, do not set this variable in production
+# For sandbox use the Lipa na MPESA Online Shorcode provided on test credentials page
+
+MPESA_EXPRESS_SHORTCODE = 'mpesa_express_shortcode'
+
+# Type of shortcode
+# Possible values:
+# - paybill (For Paybill)
+# - till_number (For Buy Goods Till Number)
+
+MPESA_SHORTCODE_TYPE = 'paybill'
+
+# Lipa na MPESA Online passkey
+# Sandbox passkey is available on test credentials page
+# Production passkey is sent via email once you go live
+
+MPESA_PASSKEY=env('MPESA_PASSKEY')
+
+# Username for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
+
+MPESA_INITIATOR_USERNAME=env('MPESA_SHORTCODE')
+
+# Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
+
+MPESA_INITIATOR_SECURITY_CREDENTIAL = 'initiator_security_credential'

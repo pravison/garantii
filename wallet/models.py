@@ -218,6 +218,7 @@ class WalletLedger(models.Model):
 class MpesaCallbackLog(models.Model):
     conversation_id = models.CharField(max_length=64, db_index=True)
     payload = models.JSONField()
+    error = models.CharField(max_length=364, null=True, blank=True)
     received_at = models.DateTimeField(auto_now_add=True)
     resolved = models.BooleanField(default=False)
 
@@ -225,6 +226,18 @@ class MpesaCallbackLog(models.Model):
         return self.conversation_id
     class Meta:
         ordering = ['-received_at'] 
+
+# for failed c2b but failed to be saved on our database
+class FailedMpesaTransaction(models.Model):
+    trans_id = models.CharField(max_length=64, unique=True)
+    amount = models.DecimalField(max_digits=12, decimal_places=2)
+    sender_phone = models.CharField(max_length=20)
+    bill_ref = models.CharField(max_length=64)
+    error = models.TextField()
+    raw_payload = models.JSONField()
+    created_at = models.DateTimeField(auto_now_add=True)
+    resolved = models.BooleanField(default=False)
+
 
 class WalletReconciliationLog(models.Model):
     wallet = models.ForeignKey(Wallet, on_delete=models.CASCADE)
@@ -295,6 +308,13 @@ class EscrowAllocation(models.Model):
         ('REVERSE_REQUESTED', 'Reverse Requested'),
         ('REVERSED', 'Reversed'),
     ]
+    PRODUCT_FLOW_STATUS = [
+        ('CUSTOMER_PAYED', 'Customer Paid'),
+        ('SENT_TO_COURIER', 'Seller Sent to Parcel Company'),
+        ('RECEIVED_BY_COURIER', 'Parcel Company Received Parcel'),
+        ('DELIVERED_BY_COURIER', 'Parcel Delivered by Parcel Company'),
+        ('CUSTOMER_RECEIVED', 'Customer Received Parcel'),
+    ]
 
     id = models.UUIDField(primary_key=True, default=uuid.uuid4, editable=False)
     payment = models.ForeignKey('PaymentTransaction', on_delete=models.PROTECT, related_name='allocations', null=True, blank=True)
@@ -306,6 +326,7 @@ class EscrowAllocation(models.Model):
     amount = models.DecimalField(max_digits=14, decimal_places=2)
     commission = models.DecimalField(max_digits=14, decimal_places=2, default=Decimal('0.00'))
     status = models.CharField(max_length=20, choices=ALLOC_STATUS, default='HELD')
+    product_flow_status = models.CharField(max_length=30, choices=PRODUCT_FLOW_STATUS, default='CUSTOMER_PAYED')
     created_at = models.DateTimeField(auto_now_add=True)
     released_at = models.DateTimeField(null=True, blank=True)
     extra = models.JSONField(default=dict, blank=True)  # store reasons, dispute ids, notes

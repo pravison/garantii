@@ -3,6 +3,11 @@ from .views import *
 
 urlpatterns = [
     path('', wallet, name='wallet'),
+    path('escrow-product-flow/', escrowProductFlow, name='escrow-product-flow'),
+    path('escrow/update-flow/', update_product_flow, name='update_product_flow'),
+    
+    path('escrow-reversal-requests/', escrowReversalRequests, name='escrow-reversal-requests'),
+    path('escrow-reversal-action/', escrow_reversal_action, name='escrow-reversal-action'),
     path('wallets/api/', UserWalletsView.as_view(), name='user-wallets'),
     path('wallets/create/api/', WalletCreateView.as_view(), name='wallet-create'),
     path("payments/wallet-transactions/", WalletPaymentListView.as_view(), name="wallet-transactions"),

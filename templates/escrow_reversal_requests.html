@@ -1,0 +1,123 @@
+{% extends 'main.html' %}
+{% block content%}
+
+
+<div class="pagetitle">
+    <h1>Customer Escrow Reversal Requests</h1>
+    
+</div><!-- End Page Title -->
+
+<section class="section">
+    <div class="row">
+    <div class="col-lg-12">
+        {% if messages %}
+            {% for message in messages %}
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+                {{ message }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+
+
+            {% endfor %}
+        {% endif %}
+        <div class="card">
+        <div class="card-body overflow-auto">
+            <h5 class="card-title">Customer Escrow Reversal Requests</h5>
+            <div class="alert alert-warning alert-dismissible fade show" role="alert">
+            search anything 
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+            <!-- Table with stripped rows -->
+            <table class="table datatable">
+            <thead>
+            <tr>
+                
+                <th>Sender</th>
+                <th>Receiver</th>
+                <th>Amount</th>
+                <th>Description</th>
+                <th>Actions</th>
+            </tr>
+            </thead>
+            <tbody>
+            {% for reversal_request in escrows %}
+            <tr>
+                <td>{{ reversal_request.payer_wallet }}</td>
+                <td>{{ reversal_request.receiver_wallet }}</td>
+                <td>{{ reversal_request.amount }}</td>
+                <td>{{ reversal_request.description }}</td>
+                <td>
+                    <button
+                        class="btn btn-sm btn-success ms-1 mb-1"
+                        onclick="handleReversal('{{ reversal_request.id }}', 'ACCEPT')">
+                        Accept Reversal
+                    </button>
+                    <button
+                        class="btn btn-sm btn-danger ms-1 mb-1"
+                        onclick="handleReversal('{{ reversal_request.id }}', 'DENY')">
+                        Deny Reversal
+                    </button>
+                </td>
+
+            </tr>
+            {% empty %}
+                <p>No orders found.</p>
+            {% endfor %}
+            </tbody>
+        </table>
+
+            <!-- End Table with stripped rows -->
+
+        </div>
+        </div>
+
+    </div>
+    </div>
+</section>
+
+<!-- script for updating escrow reversal accepted or denied -->
+<script>
+function handleReversal(escrowId, action) {
+    const warning = `
+⚠ IMPORTANT NOTICE ⚠
+
+Only proceed if:
+• You have followed up
+• You have verified all facts
+• You fully understand you are personally responsible for this action
+
+Any misuse may lead to disciplinary action.
+`;
+
+    const reason = prompt(
+        `${warning}\n\nEnter reason for ${action === 'ACCEPT' ? 'ACCEPTING' : 'DENYING'} reversal:`
+    );
+
+    if (!reason || reason.trim().length < 10) {
+        alert("A detailed reason (min 10 characters) is required.");
+        return;
+    }
+
+    fetch("{% url 'escrow-reversal-action' %}", {
+        method: "POST",
+        headers: {
+            "X-CSRFToken": "{{ csrf_token }}",
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            escrow_id: escrowId,
+            action: action,
+            reason: reason
+        })
+    })
+    .then(res => res.json())
+    .then(data => {
+        alert(data.message);
+        window.location.reload();
+    })
+    .catch(() => alert("Something went wrong. Try again."));
+}
+</script>
+
+{% endblock %}
+

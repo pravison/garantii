@@ -45,18 +45,39 @@ class MpesaC2BValidationView(APIView):
 
 from payments.services.mpesa_parser import MpesaC2BParser
 from wallet.escrow_processor import EscrowProcessor
+from wallet.models import FailedMpesaTransaction
+import logging
 
+logger = logging.getLogger(__name__)
 
 class MpesaC2BConfirmationView(APIView):
     authentication_classes = []
     permission_classes = []
 
     def post(self, request):
+        txn = None  # 👈 IMPORTANT
+
         try:
             txn = MpesaC2BParser.parse_confirmation(request.data)
-            EscrowProcessor.process_c2b_payment(txn)
-        except Exception:
-            return Response({"ResultCode": 1, "ResultDesc": "Failed"})
 
+            EscrowProcessor.process_c2b_payment(txn)
+
+        except Exception as exc:
+            FailedMpesaTransaction.objects.create(
+                trans_id=txn["trans_id"],
+                amount=txn["amount"],
+                sender_phone=txn["sender_phone"],
+                bill_ref=txn["bill_ref"],
+                raw_payload=txn["raw"],
+                error=str(exc),
+            )
+
+            logger.exception("C2B processing failed", extra={"txn": txn})
+
+            # ALWAYS accept MPESA
+            return Response({
+                "ResultCode": 0,
+                "ResultDesc": "Accepted"
+            })
         return Response({"ResultCode": 0, "ResultDesc": "Accepted"})
 

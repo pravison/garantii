@@ -1,8 +1,6 @@
 from datetime import datetime
 
-import re
-
-PHONE_REGEX = re.compile(r"(?:254|0)(?:7|1)\d{8}")
+from account.utils import format_kenyan_phone_number
 
 def normalize_msisdn(msisdn: str) -> str:
     msisdn = msisdn.strip()
@@ -17,7 +15,7 @@ def identify_account_number(value: str) -> str:
 
     value = value.strip()
 
-    if PHONE_REGEX.fullmatch(value):
+    if format_kenyan_phone_number(value):
         return "PHONE"
 
     if value.isdigit() and len(value) == 6:

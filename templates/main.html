@@ -1051,7 +1051,7 @@
                 <div class="container">
                     <div class="row justify-content-around align-items-center">
                         <div class="col-md-8 order-md-1 d-flex align-items-center justify-content-start">
-                            <!-- Logo --><a class="navbar-brand" href="#"><b>GARANTII</b> </a>
+                            <!-- Logo --><a class="navbar-brand" href="{% url 'wallet' %}"><b>GARANTII</b> </a>
                             <!-- Logo -->
                         </div>
                        
@@ -1104,6 +1104,16 @@
                                     <!-- Wallet list will be dynamically added here -->
                                 </ul>
                             </li>
+                            <li class="nav-item staff-menu" style="display:none;">
+                                <a href="{% url 'escrow-reversal-requests' %}" class="nav-link">
+                                    Reversal Requests
+                                </a>
+                            </li>
+                            <li class="nav-item staff-menu" style="display:none;">
+                                <a href="{% url 'escrow-product-flow' %}" class="nav-link">
+                                    Transaction Update
+                                </a>
+                            </li>
                         </ul>
                     </div>
                     <!-- End Menu -->
@@ -1113,7 +1123,7 @@
             <div class="mobile-header-01 d-lg-none">
                 <div class="mob-head-in">
                     <div class="mob-toggle"><button class="hm-toggle-mob" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvas_mobile_header_01" aria-controls="offcanvas_mobile_header_01"><span></span></button></div>
-                    <div class="mob-logo text-center w-100 d-flex justify-content-center"><a href="#"><b>GARANTII</b></a></div>
+                    <div class="mob-logo text-center w-100 d-flex justify-content-center"><a href="{% url 'wallet' %}"><b>GARANTII</b></a></div>
                     <div class="mob-end">
                         <!-- Cart -->
                         <div class="nav-item"><a class="nav-link"  href="#" onclick="openEscrowModal()" role="button" ><i class="bi bi-shield-lock"></i></a></div>
@@ -1151,7 +1161,18 @@
         </div>
         <div class="offcanvas-body">
             <ul class="navbar-nav walletMenu ms-auto"></ul>
-
+            <ul class="navbar-nav  ms-auto">
+            <li class="navbar-nav staff-menu" style="display:none;">
+                <a href="{% url 'escrow-reversal-requests' %}" class="nav-link">
+                    Reversal Requests
+                </a>
+            </li>
+            <li class="navbar-nav staff-menu" style="display:none;">
+                <a href="{% url 'escrow-product-flow' %}" class="nav-link">
+                    Transaction Update
+                </a>
+            </li>
+            </ul>
 
         </div>
     </div>
@@ -1519,6 +1540,7 @@
                 // Store tokens
                 localStorage.setItem('access_token', data.access);
                 localStorage.setItem('refresh_token', data.refresh);
+                localStorage.setItem('is_staff', data.is_staff);
 
                 // Close modal after success
                 setTimeout(() => {
@@ -1762,7 +1784,7 @@
 
         menus.forEach(menu => {
             const isDropdown = menu.classList.contains("dropdown-menu");
-
+            
             // Clear existing items
             menu.innerHTML = "";
 
@@ -1828,7 +1850,7 @@
                 e.preventDefault();
                 openCreateWalletModal();
             });
-
+            
             createLi.appendChild(createA);
             menu.appendChild(createLi);
         });
@@ -2502,17 +2524,21 @@
             : `From: <strong>${tx.payer_wallet_identifier}</strong>`;
 
         const showReverse = isPayer && status === "HELD";
+        const confirmReceived = isPayer && status != "REVERSED" && status != "RELEASED" && status != "REFUNDED";
         const showAddInfo = isPayer && !txDescription(tx);
 
         return `
         <div class="escrow-item d-flex border-bottom py-2">
-            <div class="me-2" style="width:90px">
+            <div class="me-2 text-center" style="width:90px">
                 ${
                     showReverse
-                        ? `<button class="btn btn-sm btn-warning w-100" onclick="reverseEscrow('${tx.id}')">Reverse</button>`
-                        : showAddInfo
-                            ? `<button class="btn btn-sm btn-info w-100" onclick="openAddInfo('${tx.id}')">Add Info</button>`
-                            : `<i class="bi bi-shield-check fs-4"></i>`
+                        ? `<button class="btn btn-sm btn-warning w-100 mb-1" onclick="reverseEscrow('${tx.id}')">Reverse</button>`
+                        : `<i class="bi bi-shield-check fs-4"></i>`
+                }
+                ${
+                    showAddInfo
+                        ? `<button class="btn btn-sm btn-info w-100" onclick="openAddInfo('${tx.id}')">Add Info</button>`
+                        : `<i class="bi bi-shield-check fs-4"></i>`
                 }
             </div>
             <div class="flex-grow-1">
@@ -2520,13 +2546,52 @@
                 <div class="small">${direction}</div>
                 <div class="small text-muted">${txDescription(tx) || "No description"}</div>
             </div>
-            <div class="small text-muted text-end">${new Date(tx.created_at).toLocaleString()} <br/> <strong> ${status} </strong> </div>
+            <div class="small text-muted text-end">
+                ${new Date(tx.created_at).toLocaleString()} <br/> <strong> ${status} </strong> 
+                ${
+                    confirmReceived
+                        ? `<button class="btn btn-sm btn-warning w-50" onclick="confirmReceivedOrder('${tx.id}')">Received</button>`
+                        : ``
+                }
+            </div>
         </div>`;
     }
 
     /* ================= Reverse escrow ================= */
     async function reverseEscrow(escrowId) {
         if (!confirm("Are you sure you want to request a REVERSAL for this HELD escrow?")) return;
+        try {
+            const accessToken = localStorage.getItem("access_token")?.trim();
+            if (!accessToken) return showLoginModal();
+
+            const res = await fetch(`/api/escrow/request-reversal/${encodeURIComponent(escrowId)}/`, {
+                method: "POST",
+                headers: {
+                    "Authorization": `Bearer ${accessToken}`,
+                    "Content-Type": "application/json"
+                }
+            });
+
+            const data = await res.json().catch(() => null);
+            if (!res.ok) throw new Error(data?.detail || "Failed to reverse escrow.");
+
+            alert("Escrow reversal requested successfully.");
+            loadWalletEscrows();
+        } catch (e) {
+            alert(`Reverse failed: ${e.message || 'An unexpected error occurred.'}`);
+            console.error(e);
+        }
+    }
+
+    async function confirmReceivedOrder(escrowId) {
+        const warning = `
+            ⚠ IMPORTANT NOTICE ⚠
+            Only proceed if:
+            • You have recevied the order
+            • You are aware once you confirm you can't reverse the action
+            • You are aware once funds are withdrawn from escrow account can not be reversed
+            `;
+        if (!confirm(`${warning}`)) return;
         try {
             const accessToken = localStorage.getItem("access_token")?.trim();
             if (!accessToken) return showLoginModal();
@@ -3607,6 +3672,21 @@
         });
     })();
     </script>
+
+    <!-- check if is staff and show staff links -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            // localStorage stores values as strings
+            const isStaff = localStorage.getItem("is_staff");
+
+            if (isStaff === "true") {
+                document.querySelectorAll(".staff-menu").forEach(el => {
+                    el.style.display = "block"; // or "list-item"
+                });
+            }
+        });
+    </script>
+
 
 </body>
 

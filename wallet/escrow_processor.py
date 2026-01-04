@@ -6,6 +6,7 @@ from django.utils import timezone
 from wallet.models import Wallet, WalletLedger, PaymentTransaction, EscrowAllocation
 from payments.get_customer_order import get_order_allocations
 
+from payments.utils import identify_account_number
 
 
 class EscrowProcessor:
@@ -17,11 +18,11 @@ class EscrowProcessor:
     @transaction.atomic
     def process_c2b_payment(txn: dict):
         """
-        C2B payments:
-        - Unique key: trans_id (MpesaReceiptNumber)
+        Process MPESA C2B payment.
+        Idempotent by MpesaReceiptNumber (trans_id).
         """
 
-        # Idempotency (C2B retries happen)
+        # ===== 1. Idempotency =====
         payment, created = PaymentTransaction.objects.get_or_create(
             trans_id=txn["trans_id"],
             defaults={
@@ -40,7 +41,7 @@ class EscrowProcessor:
         if not created and payment.reconciled:
             return
 
-        # Lock buyer wallet row
+        # ===== 2. Lock buyer wallet =====
         buyer_wallet, _ = Wallet.objects.select_for_update().get_or_create(
             identifier=txn["sender_phone"],
             defaults={"meta": {"auto_created": True}},
@@ -49,23 +50,18 @@ class EscrowProcessor:
         payment.wallet = buyer_wallet
         payment.save(update_fields=["wallet"])
 
-        # ===== Ledger: Deposit =====
-        before = buyer_wallet.available_balance
+        # ===== 3. Lock funds (deposit → escrow hold) =====
+        before_balance = buyer_wallet.available_balance
 
-        buyer_wallet.available_balance += txn["amount"]
         buyer_wallet.send_locked_balance += txn["amount"]
-        buyer_wallet.save(update_fields=[
-            "available_balance",
-            "send_locked_balance",
-            "updated_at"
-        ])
+        buyer_wallet.save(update_fields=["send_locked_balance", "updated_at"])
 
         WalletLedger.objects.create(
             wallet=buyer_wallet,
             entry_type="DEPOSIT",
             amount=txn["amount"],
-            balance_before=before,
-            balance_after=before + txn["amount"],
+            balance_before=before_balance,
+            balance_after=before_balance + txn["amount"],
             related_payment=payment,
         )
 
@@ -73,91 +69,122 @@ class EscrowProcessor:
             wallet=buyer_wallet,
             entry_type="ESCROW_HOLD",
             amount=-txn["amount"],
-            balance_before=before + txn["amount"],
-            balance_after=before,
+            balance_before=before_balance + txn["amount"],
+            balance_after=before_balance,
             related_payment=payment,
         )
 
-        # ===== Allocation =====
+        # ===== 4. Build allocations (NO DB WRITES YET) =====
         allocations = []
+        acct_type = identify_account_number(txn["bill_ref"])
 
-        if txn["account_type"] == "ORDER":
-            items = get_order_allocations(txn["bill_ref"])
-            for item in items:
-                seller_wallet = Wallet.objects.select_for_update().get(
-                    identifier=item["seller_identifier"]
+        try:
+            if acct_type == "BUSINESS_TILL":
+                seller_wallet, _ = Wallet.objects.select_for_update().get(
+                    identifier=txn["bill_ref"],
+                    is_business=True,
+                    defaults={"meta": {"auto_created": True}},
                 )
-                allocations.append(
-                    (seller_wallet, item["amount"], item["description"])
+                allocations.append((seller_wallet, txn["amount"], "Direct till payment"))
+
+            elif acct_type == "PHONE":
+                seller_wallet, _ = Wallet.objects.select_for_update().get_or_create(
+                    identifier=txn["bill_ref"],
+                    defaults={"meta": {"auto_created": True}},
                 )
-        else:
-            seller_wallet, _ = Wallet.objects.select_for_update().get_or_create(
-                identifier=txn["bill_ref"],
-                defaults={"meta": {"auto_created": True}},
-            )
-            allocations.append(
-                (seller_wallet, txn["amount"], "Direct escrow payment")
-            )
+                allocations.append((seller_wallet, txn["amount"], "Direct phone payment"))
 
-        if sum(a[1] for a in allocations) != txn["amount"]:
-            raise ValueError("Allocation mismatch")
+            elif acct_type == "ORDER":
+                items = get_order_allocations(txn["bill_ref"])
 
-        for seller_wallet, amount, desc in allocations:
+                for item in items:
+                    seller_wallet = Wallet.objects.select_for_update().get(
+                        identifier=item["seller_identifier"]
+                    )
+                    allocations.append(
+                        (seller_wallet, item["amount"], item["description"])
+                    )
+
+            else:
+                raise ValueError("Unsupported account number")
+
+        except Exception as exc:
+            # ===== 5. Reversal (automatic via transaction.atomic) =====
+            raise ValueError(f"Allocation failed: {exc}")
+
+        # ===== 6. Validate allocation total =====
+        total_allocated = sum(a[1] for a in allocations)
+        if total_allocated != txn["amount"]:
+            raise ValueError("Allocation amount mismatch")
+
+        # ===== 7. Create escrow allocations =====
+        for seller_wallet, amount, description in allocations:
             EscrowAllocation.objects.create(
                 payment=payment,
                 payer_wallet=buyer_wallet,
                 receiver_wallet=seller_wallet,
                 receiver_phone=seller_wallet.identifier,
                 amount=amount,
-                description=desc,
+                description=description,
                 status="HELD",
             )
 
             seller_wallet.receive_locked_balance += amount
-            seller_wallet.save(update_fields=[
-                "receive_locked_balance",
-                "updated_at"
-            ])
+            seller_wallet.save(update_fields=["receive_locked_balance", "updated_at"])
 
+        # ===== 8. Mark reconciled =====
         payment.reconciled = True
         payment.save(update_fields=["reconciled"])
 
+        
     # =========================
     # STK (LIPA NA MPESA) PROCESSOR
     # =========================
+    
     @staticmethod
     @transaction.atomic
     def process_lipa_na_mpesa_payment(txn: dict):
         """
-        STK Push payments:
-        - Unique key: checkout_request_id
-        - trans_id (MpesaReceiptNumber) arrives AFTER success
+        Process an STK Push payment safely.
+        txn keys:
+            - checkout_request_id
+            - sender_phone
+            - amount
+            - bill_ref
+            - raw
+            - trans_id (MpesaReceiptNumber, optional)
         """
 
-        # Idempotency guard (Safaricom retries callbacks)
+        checkout_request_id = txn["checkout_request_id"]
+        amount = txn["amount"]
+        sender_phone = txn["sender_phone"]
+        bill_ref = txn["bill_ref"]
+
+        # --- 1. Idempotency guard ---
         existing = PaymentTransaction.objects.filter(
-            checkout_request_id=txn["checkout_request_id"],
+            checkout_request_id=checkout_request_id,
             reconciled=True
         ).exists()
-
         if existing:
-            return
+            return  # Already processed, ignore
 
+        # --- 2. Buyer wallet ---
         buyer_wallet, _ = Wallet.objects.select_for_update().get_or_create(
-            identifier=txn["sender_phone"],
+            identifier=sender_phone,
             defaults={"meta": {"auto_created": True}},
         )
 
+        # --- 3. Payment transaction record ---
         payment, _ = PaymentTransaction.objects.update_or_create(
-            checkout_request_id=txn["checkout_request_id"],
+            checkout_request_id=checkout_request_id,
             defaults={
-                "trans_id": txn.get("trans_id"),  # MpesaReceiptNumber
+                "trans_id": txn.get("trans_id"),
                 "transaction_type": "DEPOSIT",
                 "status": "SUCCESS",
                 "wallet": buyer_wallet,
-                "amount": txn["amount"],
-                "sender_phone": txn["sender_phone"],
-                "account_number": txn["bill_ref"],
+                "amount": amount,
+                "sender_phone": sender_phone,
+                "account_number": bill_ref,
                 "external_provider": "MPESA",
                 "received_at": timezone.now(),
                 "processed_at": timezone.now(),
@@ -165,76 +192,85 @@ class EscrowProcessor:
             }
         )
 
-        # ===== Ledger: Deposit =====
-        before = buyer_wallet.available_balance
+        # --- 4. Ledger: deposit + escrow hold ---
+        before_balance = buyer_wallet.available_balance
+        buyer_wallet.send_locked_balance += amount
+        buyer_wallet.save(update_fields=["send_locked_balance", "updated_at"])
 
-        buyer_wallet.available_balance += txn["amount"]
-        buyer_wallet.send_locked_balance += txn["amount"]
-        buyer_wallet.save(update_fields=[
-            "available_balance",
-            "send_locked_balance",
-            "updated_at"
+        WalletLedger.objects.bulk_create([
+            WalletLedger(
+                wallet=buyer_wallet,
+                entry_type="DEPOSIT",
+                amount=amount,
+                balance_before=before_balance,
+                balance_after=before_balance + amount,
+                related_payment=payment
+            ),
+            WalletLedger(
+                wallet=buyer_wallet,
+                entry_type="ESCROW_HOLD",
+                amount=-amount,
+                balance_before=before_balance + amount,
+                balance_after=before_balance,
+                related_payment=payment
+            )
         ])
 
-        WalletLedger.objects.create(
-            wallet=buyer_wallet,
-            entry_type="DEPOSIT",
-            amount=txn["amount"],
-            balance_before=before,
-            balance_after=before + txn["amount"],
-            related_payment=payment,
-        )
-
-        WalletLedger.objects.create(
-            wallet=buyer_wallet,
-            entry_type="ESCROW_HOLD",
-            amount=-txn["amount"],
-            balance_before=before + txn["amount"],
-            balance_after=before,
-            related_payment=payment,
-        )
-
-        # ===== Allocation =====
+        # --- 5. Allocation ---
         allocations = []
-
-        if txn["account_type"] == "ORDER":
-            items = get_order_allocations(txn["bill_ref"])
-            for item in items:
+        acct_type = identify_account_number(bill_ref)
+        customer_description = payment.metadata.get("description", "")
+        try:
+            if acct_type == "BUSINESS_TILL":
                 seller_wallet = Wallet.objects.select_for_update().get(
-                    identifier=item["seller_identifier"]
+                    identifier=bill_ref,
+                    is_business=True
                 )
-                allocations.append(
-                    (seller_wallet, item["amount"], item["description"])
+                allocations.append((seller_wallet, amount, customer_description))
+
+            elif acct_type == "PHONE":
+                seller_wallet, _ = Wallet.objects.select_for_update().get_or_create(
+                    identifier=bill_ref,
+                    defaults={"meta": {"auto_created": True}},
                 )
-        else:
-            seller_wallet, _ = Wallet.objects.select_for_update().get_or_create(
-                identifier=txn["bill_ref"],
-                defaults={"meta": {"auto_created": True}},
-            )
-            allocations.append(
-                (seller_wallet, txn["amount"], "Direct escrow payment")
-            )
+                allocations.append((seller_wallet, amount, customer_description))
 
-        if sum(a[1] for a in allocations) != txn["amount"]:
-            raise ValueError("Allocation mismatch")
+            elif acct_type == "ORDER":
+                items = get_order_allocations(bill_ref)
+                for item in items:
+                    seller_wallet = Wallet.objects.select_for_update().get(
+                        identifier=item["seller_identifier"]
+                    )
+                    allocations.append(
+                        (seller_wallet, item["amount"], item["description"])
+                    )
 
-        for seller_wallet, amount, desc in allocations:
+            else:
+                raise ValueError(f"Unsupported account number type: {bill_ref}")
+
+        except Exception as exc:
+            # Automatic rollback via transaction.atomic
+            raise ValueError(f"Allocation preparation failed: {exc}")
+
+        # --- 6. Validate allocations ---
+        total_allocated = sum(a[1] for a in allocations)
+        if total_allocated != amount:
+            raise ValueError(f"Allocation total mismatch: txn={amount}, allocated={total_allocated}")
+
+        # --- 7. Perform allocations ---
+        for seller_wallet, alloc_amount, desc in allocations:
             EscrowAllocation.objects.create(
                 payment=payment,
                 payer_wallet=buyer_wallet,
                 receiver_wallet=seller_wallet,
                 receiver_phone=seller_wallet.identifier,
-                amount=amount,
+                amount=alloc_amount,
                 description=desc,
-                status="HELD",
+                status="HELD"
             )
+            seller_wallet.receive_locked_balance += alloc_amount
+            seller_wallet.save(update_fields=["receive_locked_balance", "updated_at"])
 
-            seller_wallet.receive_locked_balance += amount
-            seller_wallet.save(update_fields=[
-                "receive_locked_balance",
-                "updated_at"
-            ])
-
+        # --- 8. Mark payment reconciled ---
         payment.reconciled = True
         payment.save(update_fields=["reconciled"])
-
