@@ -12,7 +12,7 @@ def register_url():
     headers = {"Authorization": "Bearer %s" % my_access_token}
 
     request = {
-        "ShortCode": settings.MPESA_SHORTCODE,
+        "ShortCode": "4002785",
         "ResponseType": "Completed",
         "ConfirmationURL": "https://garantiipay.vercel.app/payment/api/c2b-confirmation-url/",
         "ValidationURL":   "https://garantiipay.vercel.app/payment/api/c2b-validation-url/",
@@ -26,7 +26,7 @@ def register_url():
     print(response.text)
 
 
-register_url()
+
 
 
 # def simulate_c2b_transaction():

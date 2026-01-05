@@ -34,7 +34,7 @@ logger = logging.getLogger(__name__)
 
 @csrf_exempt
 @require_POST
-def mpesa_c2b_validation(request):
+def MpesaC2BValidationView(request):
     data = request.POST or request.body
 
     try:
@@ -65,7 +65,7 @@ def mpesa_c2b_validation(request):
 
 @csrf_exempt
 @require_POST
-def mpesa_c2b_confirmation(request):
+def MpesaC2BConfirmationView(request):
     txn = None
 
     try:
