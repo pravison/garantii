@@ -238,7 +238,10 @@ SESSION_COOKIE_HTTPONLY = True
 # SESSION_COOKIE_SECURE = True  # production only
 SESSION_COOKIE_SAMESITE = 'Lax'
 
+
+########################################################################
 # The Mpesa environment to use
+######################################################################
 # Possible values: sandbox, production
 
 MPESA_ENVIRONMENT = 'sandbox'
@@ -279,3 +282,13 @@ MPESA_INITIATOR_USERNAME=env('MPESA_SHORTCODE')
 # Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
 
 MPESA_INITIATOR_SECURITY_CREDENTIAL = 'initiator_security_credential'
+
+##########################################################
+# Business to Customer and customer to business setting
+# you can not use one app on mpesa for both lipa na mpesa, b2c and c2b 
+##########################################################
+
+# Credentials for the daraja app
+# MPESA_B2C_CONSUMER_KEY=env('MPESA_CONSUMER_KEY')
+# MPESA_B2C_CONSUMER_SECRET=env('MPESA_CONSUMER_SECRET')
+# MPESA_B2C_PASSKEY=env('MPESA_PASSKEY')
