@@ -1028,10 +1028,7 @@ def initiate_stk_push(request):
         # --- Trigger STK Push ---
         try:
             response = lipa_na_mpesa(
-                amount=amount,
-                phone_number=receiver_phone,
-                account_reference=f"Wallet:{wallet.id}",
-                transaction_desc=description,
+                payment,
                 callback_url=request.build_absolute_uri("/stk_push/callback/").strip()
             )
 
