@@ -997,7 +997,7 @@ def initiate_stk_push(request):
         return Response({"detail": "wallet_id, amount, and receiver required"}, status=400)
 
     try:
-        amount = Decimal(amount).quantize(Decimal("0.01"))
+        amount = int(amount)
     except:
         return Response({"detail": "Invalid amount"}, status=400)
 
