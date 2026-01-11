@@ -1,14 +1,4 @@
-# import requests
-# from requests.auth import HTTPBasicAuth
 
-# from .access_token import generate_access_token
-# from .encode import generate_password
-# from .utils import get_timestamp
-
-# from django.conf import settings
-
-
-# from django.shortcuts import render
 from django.http import HttpResponse
 from django_daraja.mpesa.core import MpesaClient
 
@@ -17,75 +7,17 @@ def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, cal
     # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
     
     response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
-    return HttpResponse(response)
+    return response
 
-# def lipa_na_mpesa(amount, phone_number, account_reference, transaction_desc, callback_url):
-#     """
-#     Initiates an STK Push (Lipa na M-Pesa) transaction.
-    
-#     Parameters:
-#         amount (str|int): The amount to charge the customer.
-#         phone_number (str): The customer's phone number in format 2547XXXXXXXX.
-#         account_reference (str): Account reference for tracking, e.g., Wallet ID.
-#         transaction_desc (str): Description of the transaction.
-#         callback_url (str): URL for receiving payment confirmation.
-        
-#     Returns:
-#         dict: Response from M-Pesa API.
-#     """
-#     formatted_time = get_timestamp()
-#     decoded_password = generate_password(formatted_time)
-#     access_token = generate_access_token()
+# from django_daraja.mpesa.core import MpesaClient
 
-#     api_url = "https://sandbox.safaricom.co.ke/mpesa/stkpush/v1/processrequest"
-#     headers = {"Authorization": f"Bearer {access_token}"}
-
-
-
-#     payload ={
-#         "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjI4MTkyNTIz",
-#         "BusinessShortCode": "174379",
-#         "Timestamp": "20251228192523",
-#         "Amount": "1",
-#         "PartyA": "254706420043",
-#         "PartyB": "174379",
-#         "TransactionType": "CustomerPayBillOnline",
-#         "PhoneNumber": "254706420043",
-#         "TransactionDesc": "Test",
-#         "AccountReference": "Test",
-#         "CallBackURL": callback_url
-#         }
-
-#     response = requests.post(api_url, json=payload, headers=headers)
-    
-#     try:
-#         return response.json()
-#     except ValueError:
-#         # In case the response isn't JSON
-#         return {"error": "Invalid response from M-Pesa", "response_text": response.text}
-
-
-# import requests
-
-# url = "https://api.safaricom.co.ke/YOUR_ENDPOINT"
-# payload = {
-#   "Password": "MTc0Mzc5YmZiMjc5ZjlhYTliZGJjZjE1OGU5N2RkNzFhNDY3Y2QyZTBjODkzMDU5YjEwZjc4ZTZiNzJhZGExZWQyYzkxOTIwMjUxMjI4MDkzMjI5",
-#   "BusinessShortCode": "174379",
-#   "Timestamp": "20251228093229",
-#   "Amount": "1",
-#   "PartyA": "254708374149",
-#   "PartyB": "174379",
-#   "TransactionType": "CustomerPayBillOnline",
-#   "PhoneNumber": "254708374149",
-#   "TransactionDesc": "Test",
-#   "AccountReference": "Test",
-#   "CallBackURL": "https://mydomain.com/mpesa-express-simulate/"
-# }
-
-# headers = {
-#     "Content-Type": "application/json",
-#     "Authorization": "Bearer <ACCESS_TOKEN>"
-# }
-
-# response = requests.post(url, json=payload, headers=headers)
-# print(response.json())
+# def index(request):
+#     cl = MpesaClient()
+#     # Use a Safaricom phone number that you have access to, for you to be able to view the prompt.
+#     phone_number = '07xxxxxxxx'
+#     amount = 1
+#     account_reference = 'reference'
+#     transaction_desc = 'Description'
+#     callback_url = 'https://api.darajambili.com/express-payment'
+#     response = cl.stk_push(phone_number, amount, account_reference, transaction_desc, callback_url)
+#     return HttpResponse(response)

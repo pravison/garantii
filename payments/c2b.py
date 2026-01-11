@@ -29,27 +29,27 @@ def register_url():
 
 
 
-# def simulate_c2b_transaction():
-#     my_access_token = generate_access_token()
+def simulate_c2b_transaction():
+    my_access_token = generate_access_token()
 
-#     api_url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate"
+    api_url = "https://sandbox.safaricom.co.ke/mpesa/c2b/v1/simulate"
 
-#     headers = {"Authorization": "Bearer %s" % my_access_token}
+    headers = {"Authorization": "Bearer %s" % my_access_token}
 
-#     request = {
-#         "ShortCode": keys.shortcode,
-#         "CommandID": "CustomerPayBillOnline",
-#         "Amount": "4",
-#         "Msisdn": keys.test_msisdn,
-#         "BillRefNumber": "myaccnumber",
-#     }
-#     try:
-#         response = requests.post(api_url, json=request, headers=headers)
+    request = {
+        "ShortCode": settings.MPESA_SHORTCODE,
+        "CommandID": "CustomerPayBillOnline",
+        "Amount": "4",
+        "Msisdn": settings.test_msisdn,
+        "BillRefNumber": "myaccnumber",
+    }
+    try:
+        response = requests.post(api_url, json=request, headers=headers)
 
-#     except:
-#         response = requests.post(api_url, json=request, headers=headers, verify=False)
+    except:
+        response = requests.post(api_url, json=request, headers=headers, verify=False)
 
-#     print(response.text)
+    print(response.text)
 
 
 # simulate_c2b_transaction()

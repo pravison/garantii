@@ -244,7 +244,7 @@ SESSION_COOKIE_SAMESITE = 'Lax'
 ######################################################################
 # Possible values: sandbox, production
 
-MPESA_ENVIRONMENT = 'sandbox'
+MPESA_ENVIRONMENT = 'production'
 
 # Credentials for the daraja app
 
@@ -281,7 +281,7 @@ MPESA_INITIATOR_USERNAME=env('MPESA_SHORTCODE')
 
 # Plaintext password for initiator (to be used in B2C, B2B, AccountBalance and TransactionStatusQuery Transactions)
 
-MPESA_INITIATOR_SECURITY_CREDENTIAL = 'initiator_security_credential'
+MPESA_INITIATOR_SECURITY_CREDENTIAL=env('MPESA_INITIATOR_SECURITY_CREDENTIAL')
 
 ##########################################################
 # Business to Customer and customer to business setting
