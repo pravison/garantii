@@ -140,3 +140,6 @@ class FeeRuleAdmin(admin.ModelAdmin):
 from .models import FailedMpesaTransaction
 admin.site.register(FailedMpesaTransaction)
 
+from .models import MpesaCallbackLog
+admin.site.register(MpesaCallbackLog)
+

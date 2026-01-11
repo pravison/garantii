@@ -1029,7 +1029,7 @@ def initiate_stk_push(request):
         try:
             response = lipa_na_mpesa(
                 payment,
-                callback_url=request.build_absolute_uri("/stk_push/callback/").strip()
+                callback_url="https://garantiipay.vercel.app/stk_push/callback/"
             )
 
             checkout_request_id = response.get("CheckoutRequestID")

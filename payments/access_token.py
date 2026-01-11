@@ -40,7 +40,7 @@ def generate_access_token():
     r = requests.get(
         api_URL,
         auth=HTTPBasicAuth(consumer_key, consumer_secret),
-        timeout=10,
+        # timeout=10,
     )
 
     # 🔴 HARD FAIL WITH REAL MESSAGE
