@@ -1,15 +1,12 @@
-# Standard library
-import random
 from decimal import Decimal
 import json
 from django.core.exceptions import ValidationError
 
-from django.shortcuts import redirect, render, get_object_or_404
+from django.shortcuts import redirect, render
 from django.contrib import messages
 
 from django.http import JsonResponse
 from django.views.decorators.http import require_POST
-from django.views.decorators.csrf import csrf_exempt
 from django.core.exceptions import PermissionDenied
 # Django imports
 from django.utils import timezone
@@ -24,14 +21,8 @@ from rest_framework.views import APIView
 from rest_framework.permissions import IsAuthenticated
 
 # Local app imports
-from .models import (
-    Wallet, PaymentTransaction, EscrowAllocation, WalletLedger,
-    Testimonial, UserPin, WithdrawalAudit, MpesaCallbackLog
-)
-from .serializers import (
-    WalletSerializer, WalletCreateSerializer, PaymentTransactionSerializer,
-    TestimonialSerializer, CustomerFeedbackSerializer, EscrowAllocationSerializer
-)
+from .models import *
+from .serializers import *
 from .services.walet_balance import get_withdrawable_balance
 from wallet.services.fees import calculate_withdrawal_fees
 
@@ -41,7 +32,6 @@ from payments.b2c import trigger_mpesa_b2c
 
 from wallet.models import EscrowAllocation
 from payments.lipanampesa import lipa_na_mpesa
-from wallet.escrow_processor import EscrowProcessor
 
 import logging
 
@@ -53,8 +43,6 @@ from django.db.models import Sum
 
 from django.contrib.admin.views.decorators import staff_member_required
 from django.contrib.auth.decorators import permission_required
-from django.shortcuts import render
-
 from django.db.models import Case, When, IntegerField
 from datetime import timedelta
 
@@ -419,205 +407,6 @@ def escrow_reversal_action(request):
             {"message": e.messages},
             status=400
         )
-
-    
-
-def wallet(request):
-    context ={}
-    return render(request, 'wallet.html', context)
-
-
-class UserWalletsView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        user = request.user
-        wallet_id = request.query_params.get("wallet_id", None)
-
-        # GET ALL USER WALLETS
-        wallets = Wallet.objects.filter(owner=user).order_by("created_at")
-
-        # IF USER HAS NO WALLETS → FRONTEND SHOULD OPEN CREATE-WALLET MODAL
-        if not wallets.exists():
-            return Response({
-                "requires_wallet": True,
-                "detail": "User has no wallets."
-            }, status=status.HTTP_200_OK)
-
-        # SELECT WALLET
-        if wallet_id:
-            try:
-                selected_wallet = wallets.get(id=wallet_id)
-            except Wallet.DoesNotExist:
-                return Response({"detail": "Wallet not found or not owned by user."},
-                                status=status.HTTP_404_NOT_FOUND)
-        else:
-            selected_wallet = wallets.first()
-
-        selected_wallet_data = WalletSerializer(selected_wallet).data
-
-        # --- UPDATED: FULL WALLET DATA FOR OTHER WALLETS ---
-        other_wallets_qs = wallets.exclude(id=selected_wallet.id)
-        other_wallets = WalletSerializer(other_wallets_qs, many=True).data
-
-        return Response({
-            "selected_wallet": selected_wallet_data,
-            "other_wallets": other_wallets
-        }, status=status.HTTP_200_OK)
-
-
-class WalletCreateView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request):
-        user = request.user
-        identifier = request.data.get('identifier')
-        is_business = request.data.get('is_business', False)
-
-        # PERSONAL WALLET VALIDATION
-        if not is_business:
-            phone_number = format_kenyan_phone_number(identifier)
-            if not phone_number:
-                return Response({"detail": "Invalid phone number for personal wallet."},
-                                status=status.HTTP_400_BAD_REQUEST)
-
-            if Wallet.objects.filter(identifier=phone_number).exists():
-                return Response({"detail": "Wallet with this phone already exists."},
-                                status=status.HTTP_400_BAD_REQUEST)
-
-            identifier = phone_number
-
-        # BUSINESS WALLET — ensure unique
-        else:
-            while Wallet.objects.filter(identifier=identifier).exists():
-                identifier = str(random.randint(100000, 999999))
-
-        wallet = Wallet.objects.create(
-            owner=user,
-            identifier=identifier,
-            is_business=is_business
-        )
-
-        serializer = WalletCreateSerializer(wallet)
-        return Response(serializer.data, status=status.HTTP_201_CREATED)
-
-
-class WalletPaymentListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        wallet_id = request.GET.get("wallet_id")
-
-        if not wallet_id:
-            return Response({"detail": "wallet_id required"}, status=400)
-
-        qs = PaymentTransaction.objects.filter(wallet_id=wallet_id)
-
-        serializer = PaymentTransactionSerializer(qs, many=True)
-        return Response({"transactions": serializer.data})
-    
-
-def get_wallet_for_user(wallet_id_value, user):
-    """
-    Accept either wallet PK (UUID/int) or wallet.identifier (string).
-    Ensure the wallet belongs to user or user is staff.
-    Returns Wallet instance or raises Http404/PermissionDenied externally.
-    """
-    # Try primary key first
-    wallet = None
-    try:
-        wallet = Wallet.objects.get(pk=wallet_id_value)
-    except Exception:
-        # fallback to identifier
-        wallet = Wallet.objects.filter(identifier=wallet_id_value).first()
-
-    if wallet is None:
-        return None
-
-    # permission: either owner or staff
-    if getattr(user, 'is_staff', False) or getattr(wallet, 'owner', None) == user:
-        return wallet
-    return None
-
-
-class WalletEscrowListView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def get(self, request):
-        """
-        Returns all escrow transactions where the authenticated user is sender or receiver
-        for the provided wallet_id. wallet_id can be wallet.pk or wallet.identifier.
-        """
-        wallet_id = request.GET.get('wallet_id')
-        if not wallet_id:
-            return Response({"detail": "wallet_id required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        wallet = get_wallet_for_user(wallet_id, request.user)
-        if wallet is None:
-            return Response({"detail": "Wallet not found or access denied"}, status=status.HTTP_404_NOT_FOUND)
-
-        qs = EscrowAllocation.objects.filter(payer_wallet=wallet) | EscrowAllocation.objects.filter(receiver_wallet=wallet)
-        qs = qs.order_by('-created_at')
-
-        serializer = EscrowAllocationSerializer(qs, many=True)
-        return Response({"transactions": serializer.data}, status=status.HTTP_200_OK)
-
-
-class EscrowRequestReversalView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, escrow_id):
-        """
-        Request a reversal for HELD escrow transaction.
-        Only the payer (owner of payer_wallet) or staff can perform this.
-        """
-        escrow = get_object_or_404(EscrowAllocation, id=escrow_id)
-
-        # permission check
-        if not escrow.can_be_reversed_by(request.user):
-            return Response({"detail": "Not allowed to reverse this escrow or invalid status"}, status=status.HTTP_403_FORBIDDEN)
-
-        try:
-            with transaction.atomic():
-                updated = escrow.request_reversal(user=request.user)
-        except ValueError as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception as e:
-            return Response({"detail": "Failed to request reversal"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-        serializer = EscrowAllocationSerializer(updated)
-        return Response({"detail": "Reversal requested successfully", "transaction": serializer.data}, status=status.HTTP_200_OK)
-
-
-class EscrowAddExtraInfoView(APIView):
-    permission_classes = [IsAuthenticated]
-
-    def post(self, request, escrow_id):
-        """
-        Add extra info/description to an escrow, only if description is empty.
-        Only the payer (owner of payer_wallet) or staff can perform this.
-        Accepts either 'extra' or 'extra_info' in JSON body.
-        """
-        payload_extra = request.data.get('extra') or request.data.get('extra_info') or ''
-        extra_info = str(payload_extra).strip()
-        if not extra_info:
-            return Response({"detail": "extra info required"}, status=status.HTTP_400_BAD_REQUEST)
-
-        escrow = get_object_or_404(EscrowAllocation, id=escrow_id)
-
-        if not escrow.can_add_extra_by(request.user):
-            return Response({"detail": "Not allowed to add info (already exists or not owner)"}, status=status.HTTP_403_FORBIDDEN)
-
-        try:
-            with transaction.atomic():
-                updated = escrow.add_extra(extra_info, user=request.user)
-        except ValueError as e:
-            return Response({"detail": str(e)}, status=status.HTTP_400_BAD_REQUEST)
-        except Exception:
-            return Response({"detail": "Failed to save extra info"}, status=status.HTTP_500_INTERNAL_SERVER_ERROR)
-
-        serializer = EscrowAllocationSerializer(updated)
-        return Response({"detail": "Extra information added successfully", "transaction": serializer.data}, status=status.HTTP_200_OK)
 
 
 
@@ -1045,109 +834,6 @@ def initiate_stk_push(request):
         "payment_id": payment.id,
         "checkout_request_id": payment.checkout_request_id
     })
-
-class STKPushCallbackView(APIView):
-    authentication_classes = []
-    permission_classes = []
-
-    def post(self, request):
-        stk = request.data.get("Body", {}).get("stkCallback")
-        if not stk:
-            # Optional: log unknown callbacks for monitoring
-            log, created = MpesaCallbackLog.objects.update_or_create(
-                conversation_id=merchant_request_id,
-                defaults={
-                    "payload": stk,
-                    "error": "Missing stkCallback in payload"
-                }
-            )
-            # Invalid payload, ignore permanently
-            return Response({"ResultCode": 0, "ResultDesc": "Invalid payload"})
-
-        checkout_request_id = stk.get("CheckoutRequestID")
-        result_code = stk.get("ResultCode")
-        merchant_request_id = stk.get("MerchantRequestID")
-
-        # Parse metadata
-        metadata = {}
-        for item in stk.get("CallbackMetadata", {}).get("Item", []):
-            metadata[item["Name"]] = item.get("Value")
-
-        try:
-            payment = PaymentTransaction.objects.select_for_update().get(
-                checkout_request_id=checkout_request_id,
-                transaction_type="DEPOSIT"
-            )
-        except PaymentTransaction.DoesNotExist:
-            # Optional: log unexisting paymenttransaction for monitoring
-            log, created = MpesaCallbackLog.objects.update_or_create(
-                conversation_id=merchant_request_id,
-                defaults={
-                    "payload": stk,
-                    "error": "payment transaction does not exists"
-                }
-            )
-            # Unknown payment, ignore permanently
-            return Response({"ResultCode": 0, "ResultDesc": "Unknown payment, ignored"})
-
-        # Idempotency: already processed
-        if payment.status in ("SUCCESS", "FAILED"):
-            return Response({"ResultCode": 0, "ResultDesc": "Already processed"})
-
-        # M-Pesa reported failure
-        if result_code != 0:
-            payment.status = "FAILED"
-            payment.raw_payload = stk
-            payment.merchant_request_id = merchant_request_id
-            payment.processed_at = timezone.now()
-            payment.save(update_fields=["status", "raw_payload", "processed_at", "merchant_request_id"])
-            
-            # Only log transactions that failed to process safely
-            log, created = MpesaCallbackLog.objects.update_or_create(
-                conversation_id=merchant_request_id,
-                defaults={
-                    "payload": stk,
-                    "error": "transaction failed to be proccesed by mpesa"
-                }
-            )
-
-            return Response({"ResultCode": 0, "ResultDesc": "Failed transaction, recorded"})
-
-        # Construct txn dict for escrow processing
-        txn = {
-            "checkout_request_id": checkout_request_id,
-            "sender_phone": payment.sender_phone,
-            "amount": payment.amount,  # trust DB over metadata
-            "bill_ref": payment.account_number,
-            "account_type": payment.metadata.get("account_type", "DIRECT"),
-            "raw": stk,
-        }
-
-        try:
-            with transaction.atomic():
-                EscrowProcessor.process_lipa_na_mpesa_payment(txn)
-
-                # Mark payment as SUCCESS
-                payment.status = "SUCCESS"
-                payment.merchant_request_id = merchant_request_id
-                payment.processed_at = timezone.now()
-                payment.raw_payload = stk
-                payment.save(update_fields=["status", "processed_at", "raw_payload", "merchant_request_id"])
-
-        except Exception as e:
-            # Only log failed DB / processing errors
-            log, created = MpesaCallbackLog.objects.update_or_create(
-                conversation_id=merchant_request_id,
-                defaults={
-                    "payload": stk,
-                    "error":"transaction failed to be saved in our database"
-                }
-            )
-            # Tell M-Pesa to retry
-            return Response({"ResultCode": 1, "ResultDesc": "Processing error, retry later"})
-
-        # Success, no log needed
-        return Response({"ResultCode": 0, "ResultDesc": "Accepted"})
 
 
 @api_view(["GET"])
